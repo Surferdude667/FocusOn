@@ -60,6 +60,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F67981D624220E6200B518DE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F67981D724220E6D00B518DE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F6C1568124163FF800228264 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F67981D824220E7300B518DE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F6C1567F24163FF800228264 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F67981D924220EA800B518DE /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				F6C1568424163FF800228264 /* FocusOn.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		F67981DA24220EC700B518DE /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				F6C1567B24163FF800228264 /* AppDelegate.swift */,
+				F6C1567D24163FF800228264 /* SceneDelegate.swift */,
+				F6C1568924163FFB00228264 /* LaunchScreen.storyboard */,
+				F6C1568C24163FFB00228264 /* Info.plist */,
+			);
+			name = SupportingFiles;
+			sourceTree = "<group>";
+		};
 		F6C1566F24163FF800228264 = {
 			isa = PBXGroup;
 			children = (
@@ -81,14 +123,12 @@
 		F6C1567A24163FF800228264 /* FocusOn */ = {
 			isa = PBXGroup;
 			children = (
-				F6C1567B24163FF800228264 /* AppDelegate.swift */,
-				F6C1567D24163FF800228264 /* SceneDelegate.swift */,
-				F6C1567F24163FF800228264 /* ViewController.swift */,
-				F6C1568124163FF800228264 /* Main.storyboard */,
+				F67981D624220E6200B518DE /* Model */,
+				F67981D724220E6D00B518DE /* View */,
+				F67981D824220E7300B518DE /* Controller */,
+				F67981D924220EA800B518DE /* CoreData */,
+				F67981DA24220EC700B518DE /* SupportingFiles */,
 				F6C1568724163FFB00228264 /* Assets.xcassets */,
-				F6C1568924163FFB00228264 /* LaunchScreen.storyboard */,
-				F6C1568C24163FFB00228264 /* Info.plist */,
-				F6C1568424163FF800228264 /* FocusOn.xcdatamodeld */,
 			);
 			path = FocusOn;
 			sourceTree = "<group>";
@@ -376,7 +416,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = art.bjornlau.FocusOn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -394,7 +434,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = art.bjornlau.FocusOn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
