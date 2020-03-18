@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F67981DC2422137600B518DE /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67981DB2422137600B518DE /* HistoryController.swift */; };
+		F67981DE2422139C00B518DE /* ProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67981DD2422139C00B518DE /* ProgressController.swift */; };
 		F6C1567C24163FF800228264 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1567B24163FF800228264 /* AppDelegate.swift */; };
 		F6C1567E24163FF800228264 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1567D24163FF800228264 /* SceneDelegate.swift */; };
-		F6C1568024163FF800228264 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1567F24163FF800228264 /* ViewController.swift */; };
+		F6C1568024163FF800228264 /* TodayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1567F24163FF800228264 /* TodayController.swift */; };
 		F6C1568324163FF800228264 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C1568124163FF800228264 /* Main.storyboard */; };
 		F6C1568624163FF900228264 /* FocusOn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F6C1568424163FF800228264 /* FocusOn.xcdatamodeld */; };
 		F6C1568824163FFB00228264 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6C1568724163FFB00228264 /* Assets.xcassets */; };
@@ -28,10 +30,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F67981DB2422137600B518DE /* HistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
+		F67981DD2422139C00B518DE /* ProgressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressController.swift; sourceTree = "<group>"; };
 		F6C1567824163FF800228264 /* FocusOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6C1567B24163FF800228264 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F6C1567D24163FF800228264 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F6C1567F24163FF800228264 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F6C1567F24163FF800228264 /* TodayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayController.swift; sourceTree = "<group>"; };
 		F6C1568224163FF800228264 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F6C1568524163FF800228264 /* FocusOn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FocusOn.xcdatamodel; sourceTree = "<group>"; };
 		F6C1568724163FFB00228264 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -78,7 +82,9 @@
 		F67981D824220E7300B518DE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				F6C1567F24163FF800228264 /* ViewController.swift */,
+				F6C1567F24163FF800228264 /* TodayController.swift */,
+				F67981DB2422137600B518DE /* HistoryController.swift */,
+				F67981DD2422139C00B518DE /* ProgressController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -243,9 +249,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6C1568024163FF800228264 /* ViewController.swift in Sources */,
+				F6C1568024163FF800228264 /* TodayController.swift in Sources */,
 				F6C1568624163FF900228264 /* FocusOn.xcdatamodeld in Sources */,
+				F67981DE2422139C00B518DE /* ProgressController.swift in Sources */,
 				F6C1567C24163FF800228264 /* AppDelegate.swift in Sources */,
+				F67981DC2422137600B518DE /* HistoryController.swift in Sources */,
 				F6C1567E24163FF800228264 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
