@@ -46,14 +46,47 @@
                     <view key="view" contentMode="scaleToFill" id="YD1-9D-Yyp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JkM-vv-dZY">
+                                <rect key="frame" x="0.0" y="20" width="414" height="793"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell1" id="k1s-7n-Tky">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="k1s-7n-Tky" id="Jon-CA-Cqp">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="RQl-T8-yXA">
+                                        <rect key="frame" x="0.0" y="71.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RQl-T8-yXA" id="jsn-DM-EY2">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="JkM-vv-dZY" firstAttribute="top" secondItem="YD1-9D-Yyp" secondAttribute="top" constant="20" symbolic="YES" id="GPj-uj-dCW"/>
+                            <constraint firstItem="JkM-vv-dZY" firstAttribute="leading" secondItem="15z-DC-QRf" secondAttribute="leading" id="MBJ-BQ-sy5"/>
+                            <constraint firstItem="JkM-vv-dZY" firstAttribute="bottom" secondItem="15z-DC-QRf" secondAttribute="bottom" id="MNC-ly-yoz"/>
+                            <constraint firstItem="JkM-vv-dZY" firstAttribute="trailing" secondItem="15z-DC-QRf" secondAttribute="trailing" id="wu9-GA-cG2"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="15z-DC-QRf"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Today" id="zu4-Eb-MZp"/>
+                    <connections>
+                        <outlet property="tableView" destination="JkM-vv-dZY" id="v3Z-c4-WAm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yvz-A6-A9c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1313" y="-185"/>
+            <point key="canvasLocation" x="1311.5942028985507" y="-185.49107142857142"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="SMu-0s-bWr">
