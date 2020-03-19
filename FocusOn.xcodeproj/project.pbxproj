@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F6675A6C24239E9000958BFF /* DataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6675A6B24239E9000958BFF /* DataStructure.swift */; };
 		F67981DC2422137600B518DE /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67981DB2422137600B518DE /* HistoryController.swift */; };
 		F67981DE2422139C00B518DE /* ProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67981DD2422139C00B518DE /* ProgressController.swift */; };
 		F6C1567C24163FF800228264 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1567B24163FF800228264 /* AppDelegate.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F6675A6B24239E9000958BFF /* DataStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructure.swift; sourceTree = "<group>"; };
 		F67981DB2422137600B518DE /* HistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
 		F67981DD2422139C00B518DE /* ProgressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressController.swift; sourceTree = "<group>"; };
 		F6C1567824163FF800228264 /* FocusOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +69,7 @@
 		F67981D624220E6200B518DE /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F6675A6B24239E9000958BFF /* DataStructure.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			files = (
 				F6C1568024163FF800228264 /* TodayController.swift in Sources */,
 				F6C1568624163FF900228264 /* FocusOn.xcdatamodeld in Sources */,
+				F6675A6C24239E9000958BFF /* DataStructure.swift in Sources */,
 				F67981DE2422139C00B518DE /* ProgressController.swift in Sources */,
 				F6C1567C24163FF800228264 /* AppDelegate.swift in Sources */,
 				F67981DC2422137600B518DE /* HistoryController.swift in Sources */,
