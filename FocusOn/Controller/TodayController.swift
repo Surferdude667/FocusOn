@@ -45,15 +45,20 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         //  Set goal data
         if indexPath.row == 0 {
             let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: firstRow) as! GoalTableViewCell
-            goal.textLabel?.text = goalCollection[indexPath.section].goal
-            return goal
+            if let goalForSection = goalCollection[indexPath.section].goal {
+                goal.goalTextField.text = goalForSection
+                return goal
+            }
         }
         //  Set task data
         else {
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
-            task.textLabel?.text = goalCollection[indexPath.section].task[taskIndex]
-            return task
+            if let taskForRow = goalCollection[indexPath.section].task[taskIndex] {
+                task.taskTextField.text = taskForRow
+                return task
+            }
         }
+        return UITableViewCell()
     }
     
     //  Adjust section height

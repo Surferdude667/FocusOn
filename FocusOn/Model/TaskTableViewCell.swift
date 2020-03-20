@@ -9,5 +9,14 @@
 import UIKit
 
 class TaskTableViewCell: UITableViewCell {
+    @IBOutlet weak var taskTextField: UITextField!
+    @IBOutlet weak var taskCheckButton: UIButton!
     
+    
+    
+    
+    @IBAction func taskCheckButtonTapped(_ sender: Any) {
+        taskTextField = CellModifier.lockUnlockTextField(textField: taskTextField, locked: true)
+        print("Task checked!")
+    }
 }
