@@ -12,9 +12,9 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @IBOutlet weak var tableView: UITableView!
     
-    var data = [DataStructure(section: 0, goal: "Goal1", task: ["Task 1", "Task 2", "Task 3"]),
-                DataStructure(section: 1, goal: "Goal2", task: ["Task 11", "Task 22", "Task 33", "Task 44"]),
-                DataStructure(section: 0, goal: "Goal4", task: ["Task 14", "Task 24", "Task 34"])]
+    var goalCollection = [DataStructure(goal: "Goal 1", task: ["Task 1 (1)", "Task 2 (1)", "Task 3 (1)"]),
+                          DataStructure(goal: "Goal 2", task: ["Task 1 (2)", "Task 2 (2)", "Task 3 (2)", "Task 4 (2)", "Task 5 (2)"]),
+                          DataStructure(goal: "Goal 3", task: ["Task 1 (3)", "Task 2 (3)", "Task 3 (3)"])]
     
     
     //  MARK:- Configuration
@@ -28,35 +28,32 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //  Return the number of sections in table.
     func numberOfSections(in tableView: UITableView) -> Int {
-        return data.count
+        return goalCollection.count
     }
     
     //  Return the number of rows for the section.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data[section].task.count + 1
-    }
+        return goalCollection[section].task.count + 1
+    } 
     
     //  Provide a cell object for each row.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if let section = data[indexPath.section].section {
-            let firstRow = IndexPath(row: 0, section: section)
-            let taskIndex = indexPath.row-1
-            
-            //  Set goal data
-            if indexPath.row == 0 {
-                let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: firstRow)
-                goal.textLabel?.text = data[indexPath.section].goal
-                return goal
-            }
-            //  Set task data
-            else {
-                let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
-                task.textLabel?.text = data[indexPath.section].task[taskIndex]
-                return task
-            }
+        let firstRow = IndexPath(row: 0, section: indexPath.section)
+        let taskIndex = indexPath.row-1
+        
+        //  Set goal data
+        if indexPath.row == 0 {
+            let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: firstRow) as! GoalTableViewCell
+            goal.textLabel?.text = goalCollection[indexPath.section].goal
+            return goal
         }
-        return UITableViewCell()
+        //  Set task data
+        else {
+            let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
+            task.textLabel?.text = goalCollection[indexPath.section].task[taskIndex]
+            return task
+        }
     }
     
     //  Adjust section height

@@ -9,7 +9,6 @@
 import Foundation
 
 struct DataStructure {
-    var section: Int?
     var goal: String?
     var task = [String?]()
 }

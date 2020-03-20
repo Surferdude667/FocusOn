@@ -18,6 +18,8 @@
 		F6C1568824163FFB00228264 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6C1568724163FFB00228264 /* Assets.xcassets */; };
 		F6C1568B24163FFB00228264 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C1568924163FFB00228264 /* LaunchScreen.storyboard */; };
 		F6C1569624163FFB00228264 /* FocusOnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1569524163FFB00228264 /* FocusOnTests.swift */; };
+		F6C799D72424BE5C00B1C455 /* GoalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C799D62424BE5C00B1C455 /* GoalTableViewCell.swift */; };
+		F6C799D92424BE9900B1C455 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C799D82424BE9900B1C455 /* TaskTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,8 @@
 		F6C1569124163FFB00228264 /* FocusOnTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FocusOnTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6C1569524163FFB00228264 /* FocusOnTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusOnTests.swift; sourceTree = "<group>"; };
 		F6C1569724163FFB00228264 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6C799D62424BE5C00B1C455 /* GoalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTableViewCell.swift; sourceTree = "<group>"; };
+		F6C799D82424BE9900B1C455 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +74,8 @@
 			isa = PBXGroup;
 			children = (
 				F6675A6B24239E9000958BFF /* DataStructure.swift */,
+				F6C799D62424BE5C00B1C455 /* GoalTableViewCell.swift */,
+				F6C799D82424BE9900B1C455 /* TaskTableViewCell.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -252,7 +258,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6C799D72424BE5C00B1C455 /* GoalTableViewCell.swift in Sources */,
 				F6C1568024163FF800228264 /* TodayController.swift in Sources */,
+				F6C799D92424BE9900B1C455 /* TaskTableViewCell.swift in Sources */,
 				F6C1568624163FF900228264 /* FocusOn.xcdatamodeld in Sources */,
 				F6675A6C24239E9000958BFF /* DataStructure.swift in Sources */,
 				F67981DE2422139C00B518DE /* ProgressController.swift in Sources */,
