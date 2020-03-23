@@ -16,11 +16,12 @@ class GoalTableViewCell: UITableViewCell {
     @IBOutlet weak var goalCheckButton: UIButton!
     
     @IBAction func goalCheckButtonTapped(_ sender: Any) {
+        
         if test == 0 {
-        goalTextField = CellModifier.lockUnlockTextField(textField: goalTextField, locked: true)
+        goalTextField.isUserInteractionEnabled = false
             test = 1
         } else {
-            goalTextField = CellModifier.lockUnlockTextField(textField: goalTextField, locked: false)
+            goalTextField.isUserInteractionEnabled = true
             test = 0
         }
         

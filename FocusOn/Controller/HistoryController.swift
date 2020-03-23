@@ -1,5 +1,5 @@
 //
-//  HistoryViewController.swift
+//  HistoryController.swift
 //  FocusOn
 //
 //  Created by Bjørn Lau Jørgensen on 18/03/2020.

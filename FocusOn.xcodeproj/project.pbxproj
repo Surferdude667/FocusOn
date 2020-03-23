@@ -20,7 +20,6 @@
 		F6C1569624163FFB00228264 /* FocusOnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1569524163FFB00228264 /* FocusOnTests.swift */; };
 		F6C799D72424BE5C00B1C455 /* GoalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C799D62424BE5C00B1C455 /* GoalTableViewCell.swift */; };
 		F6C799D92424BE9900B1C455 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C799D82424BE9900B1C455 /* TaskTableViewCell.swift */; };
-		F6C799DB2424E2D800B1C455 /* CellModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C799DA2424E2D800B1C455 /* CellModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,7 +50,6 @@
 		F6C1569724163FFB00228264 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6C799D62424BE5C00B1C455 /* GoalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTableViewCell.swift; sourceTree = "<group>"; };
 		F6C799D82424BE9900B1C455 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
-		F6C799DA2424E2D800B1C455 /* CellModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +76,6 @@
 				F6675A6B24239E9000958BFF /* DataStructure.swift */,
 				F6C799D62424BE5C00B1C455 /* GoalTableViewCell.swift */,
 				F6C799D82424BE9900B1C455 /* TaskTableViewCell.swift */,
-				F6C799DA2424E2D800B1C455 /* CellModifier.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -267,7 +264,6 @@
 				F6C1568624163FF900228264 /* FocusOn.xcdatamodeld in Sources */,
 				F6675A6C24239E9000958BFF /* DataStructure.swift in Sources */,
 				F67981DE2422139C00B518DE /* ProgressController.swift in Sources */,
-				F6C799DB2424E2D800B1C455 /* CellModifier.swift in Sources */,
 				F6C1567C24163FF800228264 /* AppDelegate.swift in Sources */,
 				F67981DC2422137600B518DE /* HistoryController.swift in Sources */,
 				F6C1567E24163FF800228264 /* SceneDelegate.swift in Sources */,
