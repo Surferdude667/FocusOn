@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TodayController: UIViewController, UITableViewDataSource, UITableViewDelegate, TaskCellDelegate {
+class TodayController: UIViewController, UITableViewDataSource, UITableViewDelegate, TaskCellDelegate, GoalCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -25,6 +25,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         tableView.dataSource = self
     }
     
+    //MARK:- TableView Manipluation
+    
     //  TODO: If a cell is empty "" and not the last. Delete it.
     //  Adds an empty placeholder task cell if there is none.
     func addPlaceholderTask() {
@@ -40,7 +42,33 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
     }
     
-    //  MARK:- TableView
+    //  Add new empty section with 1 empty goal and 1 empty task
+    func addNewGoal() {
+        let sections = tableView.numberOfSections
+        let newGoal = DataStructure(goal: "", task: [""])
+        goalCollection.append(newGoal)
+        
+        tableView.beginUpdates()
+        tableView.insertSections(IndexSet(integer: sections), with: .automatic)
+        tableView.endUpdates()
+    }
+    
+    
+    // MARK:- TableViewCell Delegates
+    
+    func goalTextFieldChangedForCell(cell: GoalTableViewCell, newCaption: String?, oldCaption: String?) {
+        let cellSection = cell.indexPath?.section
+        
+        for section in 0..<tableView.numberOfSections {
+            if (cellSection == section) && (newCaption != oldCaption) {
+                goalCollection[section].goal = newCaption
+                
+                tableView.beginUpdates()
+                tableView.reloadRows(at: [IndexPath(row: 0, section: section)], with: .left)
+                tableView.endUpdates()
+            }
+        }
+    }
     
     func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?) {
         for section in 0..<tableView.numberOfSections {
@@ -59,8 +87,9 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
         addPlaceholderTask()
     }
-
     
+    //  MARK:- TableView Delegates
+        
     
     //  Return the number of sections in table.
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -83,6 +112,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: firstRow) as! GoalTableViewCell
             if let goalForSection = goalCollection[indexPath.section].goal {
                 goal.goalTextField.text = goalForSection
+                goal.indexPath = indexPath
+                goal.delegate = self
                 return goal
             }
         }
@@ -106,7 +137,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     
     @IBAction func addTaskButton(_ sender: Any) {
-        
+        addNewGoal()
     }
     
     //  MARK:- viewDidLoad

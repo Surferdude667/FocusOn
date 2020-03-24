@@ -35,7 +35,7 @@ class TaskTableViewCell: UITableViewCell {
             let newCaption = CellFunctions().fetchInput(textField: taskTextField)
             
             delegate?.taskTextFieldChangedForCell(cell: cell, newCaption: newCaption, oldCaption: oldCaption)
-            taskTextField.isUserInteractionEnabled = false
+            //taskTextField.isUserInteractionEnabled = false
         }
     }
     
