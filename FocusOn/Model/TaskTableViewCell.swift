@@ -9,51 +9,35 @@
 import UIKit
 
 protocol TaskCellDelegate {
-    func taskTextFieldChanged(cell: TaskTableViewCell, textField: UITextField, newCaption: String?, oldCaption: String?)
+    func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?)
 }
 
 class TaskTableViewCell: UITableViewCell {
     
     var indexPath: IndexPath?
-    
-    var oldCaption = ""
-    
+    var oldCaption: String?
     var delegate: TaskCellDelegate?
     
     @IBOutlet weak var taskTextField: UITextField!
     @IBOutlet weak var taskCheckButton: UIButton!
     
-    
-    
-    func fetchInput() -> String? {
-        if let caption = taskTextField.text {
-            return caption
-        }
-        return nil
-    }
-    
-    func saveCaption() {
-        if let caption = taskTextField.text {
-            oldCaption = caption
-        }
-    }
-    
     @IBAction func taskEditBegun(_ sender: Any) {
-        saveCaption()
+        let textField = sender as? UITextField
+        if let textField = textField {
+            oldCaption = CellFunctions().fetchInput(textField: textField)
+        }
     }
     
-    @IBAction func taskValueChanged(_ sender: Any) {
+    @IBAction func taskEditEnded(_ sender: Any) {
         let textField = sender as? UITextField
-        
         if let textField = textField {
             let cell = textField.superview?.superview as! TaskTableViewCell
-            let textField = sender as! UITextField
-            let newCaption = fetchInput()
+            let newCaption = CellFunctions().fetchInput(textField: taskTextField)
             
-            delegate?.taskTextFieldChanged(cell: cell, textField: textField, newCaption: newCaption, oldCaption: oldCaption)
+            delegate?.taskTextFieldChangedForCell(cell: cell, newCaption: newCaption, oldCaption: oldCaption)
+            taskTextField.isUserInteractionEnabled = false
         }
     }
-    
     
     @IBAction func taskCheckButtonTapped(_ sender: Any) {
         taskTextField.isUserInteractionEnabled = false

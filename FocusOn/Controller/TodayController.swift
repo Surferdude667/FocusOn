@@ -12,6 +12,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @IBOutlet weak var tableView: UITableView!
     
+    //  TODO: Move the data out of controller. (CoreData).
     var goalCollection = [DataStructure(goal: "Goal 1", task: ["Task 1 (1)", "Task 2 (1)", "Task 3 (1)", ""]),
                           DataStructure(goal: "Goal 2", task: ["Task 1 (2)", "Task 2 (2)", "Task 3 (2)", "Task 4 (2)", "Task 5 (2)", ""]),
                           DataStructure(goal: "Goal 3", task: ["Task 1 (3)", "Task 2 (3)", "Task 3 (3)", ""])]
@@ -24,18 +25,12 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         tableView.dataSource = self
     }
     
-    
-    func addPlaceholderTask(oldCaption: String?, newCaption: String?) {
-        
-        print("Old: \(oldCaption) New: \(newCaption)")
-        
-        
+    //  TODO: If a cell is empty "" and not the last. Delete it.
+    //  Adds an empty placeholder task cell if there is none.
+    func addPlaceholderTask() {
         for section in 0 ..< goalCollection.count {
-            
             if goalCollection[section].task.last == "" {
-                
             } else {
-                print("Hey")
                 goalCollection[section].task.append("")
                 let indexPath = IndexPath(row: goalCollection[section].task.count, section: section)
                 tableView.beginUpdates()
@@ -47,14 +42,10 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //  MARK:- TableView
     
-    
-    func taskTextFieldChanged(cell: TaskTableViewCell, textField: UITextField, newCaption: String?, oldCaption: String?) {
-    
-        
-        
+    func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?) {
         for section in 0..<tableView.numberOfSections {
-            let rows = tableView.numberOfRows(inSection: section)
-            for row in 0..<rows {
+            for row in 0..<tableView.numberOfRows(inSection: section) {
+                
                 let indexPath = IndexPath(row: row, section: section)
                 
                 if (cell.indexPath == indexPath) && (oldCaption != newCaption) {
@@ -66,24 +57,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 }
             }
         }
-        
-        //        print(cell.indexPath)
-        //
-        //        for section in 0 ..< goalCollection.count {
-        //            for element in 0 ..< goalCollection[section].task.count {
-        //
-        //                let indexPath = IndexPath(row: element + 1, section: section)
-        //
-        //                if goalCollection[section].task[element] == oldCaption && newCaption != oldCaption {
-        //                    goalCollection[section].task[element] = newCaption
-        //
-        //                    tableView.beginUpdates()
-        //                    tableView.reloadRows(at: [indexPath], with: .left)
-        //                    tableView.endUpdates()
-        //                }
-        //            }
-        
-        addPlaceholderTask(oldCaption: oldCaption, newCaption: newCaption)
+        addPlaceholderTask()
     }
 
     
