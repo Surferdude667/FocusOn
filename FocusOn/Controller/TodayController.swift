@@ -52,6 +52,15 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         tableView.beginUpdates()
         tableView.insertSections(IndexSet(integer: sections), with: .top)
         tableView.endUpdates()
+        
+        scrollToBottom()
+    }
+    
+    func scrollToBottom() {
+        let sections = tableView.numberOfSections-1
+        let bottomRow = tableView.numberOfRows(inSection: sections)-1
+        let bottomIndexPath = IndexPath(row: bottomRow, section: sections)
+        tableView.scrollToRow(at: bottomIndexPath, at: .top, animated: true)
     }
     
     
@@ -90,7 +99,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     //  MARK:- TableView Delegates
-        
+    
     
     //  Return the number of sections in table.
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -118,7 +127,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 return goal
             }
         }
-        //  Set task data
+            //  Set task data
         else {
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
             if let taskForRow = goalCollection[indexPath.section].task[taskIndex] {
