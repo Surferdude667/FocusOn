@@ -12,7 +12,7 @@ protocol TaskCellDelegate {
     func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?)
 }
 
-class TaskTableViewCell: UITableViewCell {
+class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     var indexPath: IndexPath?
     var oldCaption: String?
@@ -20,6 +20,31 @@ class TaskTableViewCell: UITableViewCell {
     
     @IBOutlet weak var taskTextField: UITextField!
     @IBOutlet weak var taskCheckButton: UIButton!
+    
+    func configure() {
+        taskTextField.delegate = self
+    }
+    
+    func processInput(from textField: UITextField?) {
+        if let textField = textField {
+            let cell = textField.superview?.superview as! TaskTableViewCell
+            let newCaption = CellFunctions().fetchInput(textField: textField)
+            
+            delegate?.taskTextFieldChangedForCell(cell: cell, newCaption: newCaption, oldCaption: oldCaption)
+        }
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configure()
+    }
+    
     
     @IBAction func taskEditBegun(_ sender: Any) {
         let textField = sender as? UITextField
@@ -30,13 +55,7 @@ class TaskTableViewCell: UITableViewCell {
     
     @IBAction func taskEditEnded(_ sender: Any) {
         let textField = sender as? UITextField
-        if let textField = textField {
-            let cell = textField.superview?.superview as! TaskTableViewCell
-            let newCaption = CellFunctions().fetchInput(textField: taskTextField)
-            
-            delegate?.taskTextFieldChangedForCell(cell: cell, newCaption: newCaption, oldCaption: oldCaption)
-            //taskTextField.isUserInteractionEnabled = false
-        }
+        processInput(from: textField)
     }
     
     @IBAction func taskCheckButtonTapped(_ sender: Any) {

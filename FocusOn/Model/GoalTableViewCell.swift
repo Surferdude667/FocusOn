@@ -12,7 +12,7 @@ protocol GoalCellDelegate {
     func goalTextFieldChangedForCell(cell: GoalTableViewCell, newCaption: String?, oldCaption: String?)
 }
 
-class GoalTableViewCell: UITableViewCell {
+class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     var indexPath: IndexPath?
     var oldCaption: String?
@@ -21,6 +21,30 @@ class GoalTableViewCell: UITableViewCell {
     @IBOutlet weak var goalTextField: UITextField!
     @IBOutlet weak var goalCheckButton: UIButton!
     
+    
+    func configure() {
+        goalTextField.delegate = self
+    }
+    
+    func processInput(from textField: UITextField?) {
+        if let textField = textField {
+            let cell = textField.superview?.superview as! GoalTableViewCell
+            let newCaption = CellFunctions().fetchInput(textField: textField)
+            
+            delegate?.goalTextFieldChangedForCell(cell: cell, newCaption: newCaption, oldCaption: oldCaption)
+        }
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configure()
+    }
     
     @IBAction func goalEditBegun(_ sender: Any) {
         let textField = sender as? UITextField
@@ -31,13 +55,7 @@ class GoalTableViewCell: UITableViewCell {
     
     @IBAction func goalEditEnded(_ sender: Any) {
         let textField = sender as? UITextField
-        if let textField = textField {
-            let cell = textField.superview?.superview as! GoalTableViewCell
-            let newCaption = CellFunctions().fetchInput(textField: textField)
-            
-            delegate?.goalTextFieldChangedForCell(cell: cell, newCaption: newCaption, oldCaption: oldCaption)
-            //goalTextField.isUserInteractionEnabled = false
-        }
+        processInput(from: textField)
     }
     
     @IBAction func goalCheckButtonTapped(_ sender: Any) {
