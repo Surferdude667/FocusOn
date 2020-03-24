@@ -55,7 +55,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="Add element"/>
                                     <connections>
-                                        <action selector="addTaskButton:" destination="G69-9R-9EF" eventType="touchUpInside" id="Xiv-6P-J8b"/>
+                                        <action selector="addNewGoalButton:" destination="G69-9R-9EF" eventType="touchUpInside" id="Xiv-6P-J8b"/>
                                     </connections>
                                 </button>
                                 <prototypes>

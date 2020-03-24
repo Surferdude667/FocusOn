@@ -23,6 +23,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     func configure() {
         tableView.delegate = self
         tableView.dataSource = self
+        registerForKeyboardNotifications()
     }
     
     //MARK:- TableView Manipluation
@@ -49,7 +50,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         goalCollection.append(newGoal)
         
         tableView.beginUpdates()
-        tableView.insertSections(IndexSet(integer: sections), with: .automatic)
+        tableView.insertSections(IndexSet(integer: sections), with: .top)
         tableView.endUpdates()
     }
     
@@ -130,13 +131,29 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         return UITableViewCell()
     }
     
-    //  Adjust section height
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 40
+    
+    //  MARK:- Keyboard handling
+    
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        let keyboardFrame = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+        adjustLayoutForKeyboard(targetHeight: keyboardFrame.size.height)
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        adjustLayoutForKeyboard(targetHeight: 0)
+    }
+    
+    func adjustLayoutForKeyboard(targetHeight: CGFloat) {
+        tableView.contentInset.bottom = targetHeight
     }
     
     
-    @IBAction func addTaskButton(_ sender: Any) {
+    @IBAction func addNewGoalButton(_ sender: Any) {
         addNewGoal()
     }
     
