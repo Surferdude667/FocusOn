@@ -150,7 +150,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @objc func keyboardWillShow(notification: NSNotification) {
         let keyboardFrame = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
-        adjustLayoutForKeyboard(targetHeight: keyboardFrame.size.height)
+        let tabBarHeight = self.tabBarController!.tabBar.frame.size.height
+        adjustLayoutForKeyboard(targetHeight: keyboardFrame.size.height - tabBarHeight)
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
