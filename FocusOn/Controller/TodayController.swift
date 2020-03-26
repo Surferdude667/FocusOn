@@ -7,15 +7,56 @@
 //
 
 import UIKit
+import CoreData
 
 class TodayController: UIViewController, UITableViewDataSource, UITableViewDelegate, TaskCellDelegate, GoalCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
+    var goals = [NSManagedObject]()
+    
+    
     //  TODO: Move the data out of controller. (CoreData).
-    var goalCollection = [DataStructure(goal: "Goal 1", task: ["Task 1 (1)", "Task 2 (1)", "Task 3 (1)", ""]),
-                          DataStructure(goal: "Goal 2", task: ["Task 1 (2)", "Task 2 (2)", "Task 3 (2)", "Task 4 (2)", "Task 5 (2)", ""]),
-                          DataStructure(goal: "Goal 3", task: ["Task 1 (3)", "Task 2 (3)", "Task 3 (3)", ""])]
+    var todayTodos = [DataModel(goal: "Goal 1", tasks: ["Task 1 (1)", "Task 2 (1)", "Task 3 (1)", ""]),
+                          DataModel(goal: "Goal 2", tasks: ["Task 1 (2)", "Task 2 (2)", "Task 3 (2)", "Task 4 (2)", "Task 5 (2)", ""]),
+                          DataModel(goal: "Goal 3", tasks: ["Task 1 (3)", "Task 2 (3)", "Task 3 (3)", ""])]
+    
+    
+    
+    func save(goal: DataModel) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Goal", in: managedContext)!
+        let goalObject = NSManagedObject(entity: entity, insertInto: managedContext)
+        
+        goalObject.setValue(goal.goal, forKey: "goal")
+        goalObject.setValue(goal.tasks, forKey: "tasks")
+        
+        do {
+            try managedContext.save()
+            goals.append(goalObject)
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+        
+    }
+    
+    func fetch() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Goal")
+        
+        do {
+            goals = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
     
     
     //  MARK:- Configuration
@@ -31,11 +72,11 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //  TODO: If a cell is empty "" and not the last. Delete it.
     //  Adds an empty placeholder task cell if there is none.
     func addPlaceholderTask() {
-        for section in 0 ..< goalCollection.count {
-            if goalCollection[section].task.last == "" {
+        for section in 0 ..< todayTodos.count {
+            if todayTodos[section].tasks.last == "" {
             } else {
-                goalCollection[section].task.append("")
-                let indexPath = IndexPath(row: goalCollection[section].task.count, section: section)
+                todayTodos[section].tasks.append("")
+                let indexPath = IndexPath(row: todayTodos[section].tasks.count, section: section)
                 tableView.beginUpdates()
                 tableView.insertRows(at: [indexPath], with: .automatic)
                 tableView.endUpdates()
@@ -46,8 +87,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //  Add new empty section with 1 empty goal and 1 empty task
     func addNewGoal() {
         let sections = tableView.numberOfSections
-        let newGoal = DataStructure(goal: "", task: [""])
-        goalCollection.append(newGoal)
+        let newGoal = DataModel(goal: "", tasks: [""])
+        todayTodos.append(newGoal)
         
         tableView.beginUpdates()
         tableView.insertSections(IndexSet(integer: sections), with: .top)
@@ -71,7 +112,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         for section in 0..<tableView.numberOfSections {
             if (cellSection == section) && (newCaption != oldCaption) {
-                goalCollection[section].goal = newCaption
+                todayTodos[section].goal = newCaption
                 
                 tableView.beginUpdates()
                 tableView.reloadRows(at: [IndexPath(row: 0, section: section)], with: .left)
@@ -87,7 +128,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 let indexPath = IndexPath(row: row, section: section)
                 
                 if (cell.indexPath == indexPath) && (oldCaption != newCaption) {
-                    goalCollection[section].task[row-1] = newCaption
+                    todayTodos[section].tasks[row-1] = newCaption
                     
                     tableView.beginUpdates()
                     tableView.reloadRows(at: [indexPath], with: .left)
@@ -103,12 +144,12 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //  Return the number of sections in table.
     func numberOfSections(in tableView: UITableView) -> Int {
-        return goalCollection.count
+        return todayTodos.count
     }
     
     //  Return the number of rows for the section.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return goalCollection[section].task.count + 1
+        return todayTodos[section].tasks.count + 1
     } 
     
     //  Provide a cell object for each row.
@@ -120,7 +161,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         //  Set goal data
         if indexPath.row == 0 {
             let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: firstRow) as! GoalTableViewCell
-            if let goalForSection = goalCollection[indexPath.section].goal {
+            if let goalForSection = todayTodos[indexPath.section].goal {
                 goal.goalTextField.text = goalForSection
                 goal.indexPath = indexPath
                 goal.delegate = self
@@ -130,7 +171,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             //  Set task data
         else {
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
-            if let taskForRow = goalCollection[indexPath.section].task[taskIndex] {
+            if let taskForRow = todayTodos[indexPath.section].tasks[taskIndex] {
                 task.taskTextField.text = taskForRow
                 task.indexPath = indexPath
                 task.delegate = self
@@ -150,7 +191,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @objc func keyboardWillShow(notification: NSNotification) {
         let keyboardFrame = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
-        let tabBarHeight = self.tabBarController!.tabBar.frame.size.height
+        let tabBarHeight = self.tabBarController?.tabBar.frame.size.height ?? 49.0
         adjustLayoutForKeyboard(targetHeight: keyboardFrame.size.height - tabBarHeight)
     }
     
@@ -165,12 +206,26 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @IBAction func addNewGoalButton(_ sender: Any) {
         addNewGoal()
+        save(goal: todayTodos[0])
+        
+        for i in 0..<goals.count {
+            print(goals[i].value(forKey: "tasks") as! [String])
+        }
+        
+        
+        
     }
     
     //  MARK:- viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+    }
+    
+    //  MARK- viewWillApear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //fetch()
     }
 }
 

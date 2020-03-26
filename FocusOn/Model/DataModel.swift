@@ -1,5 +1,5 @@
 //
-//  DataStructure.swift
+//  DataModel.swift
 //  FocusOn
 //
 //  Created by Bjørn Lau Jørgensen on 19/03/2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DataStructure {
+struct DataModel {
     var goal: String?
-    var task = [String?]()
+    var tasks = [String?]()
 }
