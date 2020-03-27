@@ -21,17 +21,20 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                           DataModel(goal: "Goal 2", tasks: ["Task 1 (2)", "Task 2 (2)", "Task 3 (2)", "Task 4 (2)", "Task 5 (2)", ""]),
                           DataModel(goal: "Goal 3", tasks: ["Task 1 (3)", "Task 2 (3)", "Task 3 (3)", ""])]
     
+    func addDemoData() {
+        
+    }
     
     
-    func save(goal: DataModel) {
+    func saveNewGoal(goal: String, tasks: [String?]) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Goal", in: managedContext)!
         let goalObject = NSManagedObject(entity: entity, insertInto: managedContext)
         
-        goalObject.setValue(goal.goal, forKey: "goal")
-        goalObject.setValue(goal.tasks, forKey: "tasks")
+        goalObject.setValue(goal, forKey: "goal")
+        goalObject.setValue(tasks, forKey: "tasks")
         
         do {
             try managedContext.save()
@@ -42,13 +45,39 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         
     }
     
-    func fetch() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
+    
+
+    
+    func update() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Goal")
+        fetchRequest.predicate = NSPredicate(format: "goal = %@", "NEW CALUE")
+
+        do {
+            let test = try managedContext.fetch(fetchRequest)
+
+            let objectUpdate = test[0] as! NSManagedObject
+            let array = ["TEST1","TEST2","TEST3"]
+            objectUpdate.setValue("NEW CALUE", forKey: "goal")
+            objectUpdate.setValue(array, forKey: "tasks")
+
+            do {
+                try managedContext.save()
+            } catch {
+                print(error)
+            }
+        } catch {
+            print(error)
         }
+
+    }
+    
+    func fetch() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         let managedContext = appDelegate.persistentContainer.viewContext
-        
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Goal")
         
         do {
@@ -206,14 +235,15 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @IBAction func addNewGoalButton(_ sender: Any) {
         addNewGoal()
-        save(goal: todayTodos[0])
+        
+        //saveNewGoal(goal: todayTodos[0].goal!, tasks: todayTodos[0].tasks)
+        
         
         for i in 0..<goals.count {
-            print(goals[i].value(forKey: "tasks") as! [String])
+            print("GOALS: \(goals[i].value(forKey: "goal") as! String)")
+            print("TASKS: \(goals[i].value(forKey: "tasks") as! [String])")
         }
-        
-        
-        
+        update()
     }
     
     //  MARK:- viewDidLoad
@@ -225,7 +255,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //  MARK- viewWillApear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //fetch()
+        fetch()
     }
 }
 
