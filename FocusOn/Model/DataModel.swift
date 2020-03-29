@@ -8,6 +8,7 @@
 
 import Foundation
 
+//  Will be removed
 struct DataModel {
     var goal: String?
     var tasks = [String?]()
