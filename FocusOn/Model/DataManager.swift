@@ -16,7 +16,7 @@ protocol DataManagerDelegate {
 
 class DataManager {
     
-    var delegate: DataManagerDelegate?
+    var delegate: DataManagerDelegate!
     
     // Adds a new goal to CoreData.
     // TODO: Return id
@@ -25,16 +25,26 @@ class DataManager {
         let managedContext = appDelegate.persistentContainer.viewContext
         let goal = NSEntityDescription.insertNewObject(forEntityName: Goal.entityName, into: managedContext) as! Goal
         
-        goal.id = Int16(5)
-        goal.title = "Goal #1"
+        // Experiment
+        let task = Task(context: managedContext)
+        task.title = "Empty"
+        task.completed = false
+        task.goal = goal
+        
+        
+        //goal.id = Int16(delegate.goals.count)
+        goal.id = Int16(99)
+        goal.title = "Goal #10"
         goal.completed = false
         goal.creation = nil
+        goal.tasks = NSSet(array: [task])        
         
         do {
             try managedContext.save()
-            delegate?.goals.append(goal)
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            delegate.goals.append(goal)
+            delegate.tasks.append(task)
+        } catch {
+            print("Could not save. \(error)")
             managedContext.rollback()
         }
     }
@@ -44,11 +54,11 @@ class DataManager {
         let managedContext = appDelegate.persistentContainer.viewContext
         let task = NSEntityDescription.insertNewObject(forEntityName: Task.entityName, into: managedContext) as! Task
         
-        let goalID = delegate?.goals.filter { $0.id == Int16(5) }
+        let goalWithCorrespondingID = delegate.goals.filter { $0.id == Int16(5) }
         
         task.title = "Task #2"
         task.completed = false
-        task.goal = goalID!.first!
+        task.goal = goalWithCorrespondingID.first!
         
         do {
             try managedContext.save()
@@ -60,31 +70,76 @@ class DataManager {
     }
     
     
-    func updateAndSave() {
+    func UpdateGoal() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Goal.entityName)
         
-        fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Goal.id), "10")
+        fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Goal.id), "99")
         
         do {
             let result = try managedContext.fetch(fetchRequest)
-            if let result = result as? [Goal] {
-                if result.count != 0 {
-                    let objectUpdate = result.first!
+            if let returnedResult = result as? [Goal] {
+                if returnedResult.count != 0 {
+                    let objectUpdate = returnedResult.first!
                     
-                    objectUpdate.id = Int16(11)
                     
-                } else {
-                    print("Could not find specified ID")
+                    // Set new values.
+                    objectUpdate.title = "New title"
+                
+                    
+                    do { try managedContext.save() } catch { print(error); managedContext.rollback() }
+                } else { print("Could not find specified ID") }
+            }
+        } catch { print("Damn: \(error)") }
+    }
+    
+    
+    
+    func updateTask() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Task.entityName)
+        
+        let withGoalIDPredicate = NSPredicate(format: "%K == %@", #keyPath(Task.goal.id), "7")
+        let findTaskPredicate = NSPredicate(format: "%K == %@", #keyPath(Task.title), "Task #2")
+        
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [withGoalIDPredicate, findTaskPredicate])
+        
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            if let value = result as? [Task] {
+                if value.count != 0 {
+                    let objectUpdate = value.first!
+                    
+                    
+                    // Set new values
+                    objectUpdate.title = "Du blev opdateret!"
+                    objectUpdate.completed = true
+                    
+                    do {
+                        try managedContext.save()
+                    } catch {
+                        print(error)
+                        managedContext.rollback()
+                    }
+                    
+//                    for element in value {
+//                        print(element.title)
+//                    }
                 }
             }
             
-            do { try managedContext.save() }
-            catch { print(error) }
             
-        } catch { print(error) }
+        } catch {
+            print(error)
+        }
     }
+    
+    
+    
+    
+    // MARK:- Fetch
     
     func fetchAllGoals() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -94,8 +149,8 @@ class DataManager {
         do {
             let goals = try managedContext.fetch(fetchRequest)
             delegate?.goals.append(contentsOf: goals)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
+        } catch {
+            print("Could not fetch goals. \(error)")
         }
     }
     
@@ -107,8 +162,8 @@ class DataManager {
         do {
             let tasks = try managedContext.fetch(fetchRequest)
             delegate?.tasks.append(contentsOf: tasks)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
+        } catch {
+            print("Could not fetch tasks. \(error)")
         }
     }
     
