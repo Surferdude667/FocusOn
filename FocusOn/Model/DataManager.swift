@@ -10,7 +10,8 @@ import UIKit
 import CoreData
 
 protocol DataManagerDelegate {
-    var goals: [NSManagedObject] { get set }
+    var goals: [Goal] { get set }
+    var tasks: [Task] { get set }
 }
 
 class DataManager {
@@ -24,7 +25,7 @@ class DataManager {
         let managedContext = appDelegate.persistentContainer.viewContext
         let goal = NSEntityDescription.insertNewObject(forEntityName: Goal.entityName, into: managedContext) as! Goal
         
-        goal.id = Int16(0)
+        goal.id = Int16(5)
         goal.title = "Goal #1"
         goal.completed = false
         goal.creation = nil
@@ -37,37 +38,55 @@ class DataManager {
             managedContext.rollback()
         }
     }
-//    
-//    
-//    //  Works as expected now.
-//    func updateAndSave(goalId: Int16, newGoal: String?, newTasks: [Task]?, newDate: Date?, goalCompleted: Bool?) {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Goal")
-//        fetchRequest.predicate = NSPredicate(format: "id == \(goalId)")
-//        
-//        do {
-//            let result = try managedContext.fetch(fetchRequest)
-//            if let result = result as? [NSManagedObject] {
-//                if result.count != 0 {
-//                    let objectUpdate = result.first!
-//                    
-//                    if let newGoal = newGoal { objectUpdate.setValue(newGoal, forKey: "goal") }
-//                    if let newTasks = newTasks { objectUpdate.setValue(newTasks, forKey: "tasks") }
-//                    if let newDate = newDate { objectUpdate.setValue(newDate, forKey: "date") }
-//                    if let goalCompleted = goalCompleted { objectUpdate.setValue(goalCompleted, forKey: "goalCompleted") }
-//                } else {
-//                    print("Could not find specified NSManagedObject with id: \(goalId), to update.")
-//                }
-//            }
-//            
-//            do { try managedContext.save() }
-//            catch { print(error) }
-//            
-//        } catch { print(error) }
-//    }
-//    
-    func fetchAllData() {
+    
+    func addNewTaskAndSave() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let task = NSEntityDescription.insertNewObject(forEntityName: Task.entityName, into: managedContext) as! Task
+        
+        let goalID = delegate?.goals.filter { $0.id == Int16(5) }
+        
+        task.title = "Task #2"
+        task.completed = false
+        task.goal = goalID!.first!
+        
+        do {
+            try managedContext.save()
+            delegate?.tasks.append(task)
+        } catch {
+            print("There was a problem on update \(error)")
+            managedContext.rollback()
+        }
+    }
+    
+    
+    func updateAndSave() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Goal.entityName)
+        
+        fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Goal.id), "10")
+        
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            if let result = result as? [Goal] {
+                if result.count != 0 {
+                    let objectUpdate = result.first!
+                    
+                    objectUpdate.id = Int16(11)
+                    
+                } else {
+                    print("Could not find specified ID")
+                }
+            }
+            
+            do { try managedContext.save() }
+            catch { print(error) }
+            
+        } catch { print(error) }
+    }
+    
+    func fetchAllGoals() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
@@ -75,6 +94,19 @@ class DataManager {
         do {
             let goals = try managedContext.fetch(fetchRequest)
             delegate?.goals.append(contentsOf: goals)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func fetchAllTasks() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<Task>(entityName: Task.entityName)
+        
+        do {
+            let tasks = try managedContext.fetch(fetchRequest)
+            delegate?.tasks.append(contentsOf: tasks)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }

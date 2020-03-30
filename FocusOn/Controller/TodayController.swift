@@ -13,7 +13,9 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @IBOutlet weak var tableView: UITableView!
     
-    var goals = [NSManagedObject]()
+    var goals = [Goal]()
+    var tasks = [Task]()
+    
     let dataManager = DataManager()
     
     
@@ -180,11 +182,12 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         addNewGoal()
         
         //dataManager.addNewGoalAndSave()
+        //dataManager.updateAndSave()
         
+        //dataManager.addNewTaskAndSave()
         
-        
-        for objects in goals {
-            print(objects.value(forKey: "title"))
+        for objects in tasks {
+            print("\(objects.title) ID: \(objects.goal.id)")
         }
         
     }
@@ -198,7 +201,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //  MARK- viewWillApear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        dataManager.fetchAllData()
+        dataManager.fetchAllGoals()
+        dataManager.fetchAllTasks()
     }
 }
 
