@@ -1,5 +1,5 @@
 //
-//  Task.swift
+//  Goal.swift
 //  FocusOn
 //
 //  Created by Bjørn Lau Jørgensen on 30/03/2020.
@@ -9,14 +9,16 @@
 import Foundation
 import CoreData
 
-class Task: NSManagedObject {
+class Goal: NSManagedObject {
     
-    static var entityName: String { return "Task" }
+    static var entityName: String { return "Goal" }
     
     // Attributes
+    @NSManaged var id: Int16
     @NSManaged var title: String
     @NSManaged var completed: Bool
+    @NSManaged var creation: Date?
     
     // Relationships
-    @NSManaged var goal: Goal
+    @NSManaged var tasks: NSSet?
 }

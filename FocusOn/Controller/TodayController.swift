@@ -178,23 +178,14 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @IBAction func addNewGoalButton(_ sender: Any) {
         addNewGoal()
-    
-        let task1 = Task(task: "Hey")
-        let task2 = Task(task: "YO!")
-        let tasks = [task1, task2]
         
-//        let testTaskArray : [Task] = [Task(task: "000"), Task(task: "111")]
-//        _ = dataManager.addNewGoalAndSave(goal: "Sup!", tasks: tasks)
+        //dataManager.addNewGoalAndSave()
         
-        for i in 0..<goals.count {
-            print("Goal: \(goals[i].value(forKey: "goal") as! String) ID: \(goals[i].value(forKey: "id") as! Int16)")
-            let taskArray = goals[i].value(forKey: "tasks") as! [Task]
-            for element in taskArray {
-                print("\(element.task)")
-            }
+        
+        
+        for objects in goals {
+            print(objects.value(forKey: "title"))
         }
-        
-        //dataManager.updateAndSave(goalId: Int16(0), newGoal: "DET VIRKER!3", newTasks: testTaskArray, newDate: nil, goalCompleted: nil)
         
     }
     
