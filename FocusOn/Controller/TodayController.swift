@@ -184,11 +184,13 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         //dataManager.addNewGoalAndSave()
         //dataManager.updateAndSaveGoal()
         //dataManager.addNewTaskAndSave()
-        dataManager.updateTask()
+        //dataManager.updateTask()
+        //dataManager.deleteTask()
+        //dataManager.deleteGoal()
         
         for objects in goals {
             print("\(objects.title) ID: \(objects.id)")
-            
+
             let tasks = objects.tasks?.allObjects as! [Task]
             for element in tasks {
                 print(element.title, element.goal.id)

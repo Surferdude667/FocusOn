@@ -86,7 +86,7 @@ class DataManager {
                     
                     // Set new values.
                     objectUpdate.title = "New title"
-                
+                    
                     
                     do { try managedContext.save() } catch { print(error); managedContext.rollback() }
                 } else { print("Could not find specified ID") }
@@ -123,10 +123,6 @@ class DataManager {
                         print(error)
                         managedContext.rollback()
                     }
-                    
-//                    for element in value {
-//                        print(element.title)
-//                    }
                 }
             }
             
@@ -135,6 +131,62 @@ class DataManager {
             print(error)
         }
     }
+    
+    func deleteTask() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Task.entityName)
+        
+        let withGoalIDPredicate = NSPredicate(format: "%K == %@", #keyPath(Task.goal.id), "7")
+        let findTaskPredicate = NSPredicate(format: "%K == %@", #keyPath(Task.title), "Du blev opdateret!")
+        
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [withGoalIDPredicate, findTaskPredicate])
+        
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            if let value = result as? [Task] {
+                if value.count != 0 {
+                    let objectUpdate = value.first!
+                    
+                    managedContext.delete(objectUpdate)
+                    
+                    do {
+                        try managedContext.save()
+                    } catch {
+                        print(error)
+                        managedContext.rollback()
+                    }
+                }
+            }
+            
+        } catch {
+            print(error)
+        }
+        
+    }
+    
+    func deleteGoal() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Goal.entityName)
+        
+        fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Goal.id), "99")
+        
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            if let returnedResult = result as? [Goal] {
+                if returnedResult.count != 0 {
+                    let objectUpdate = returnedResult.first!
+                    
+                    managedContext.delete(objectUpdate)
+                    
+                    do { try managedContext.save() } catch { print(error); managedContext.rollback() }
+                } else { print("Could not find specified ID") }
+            }
+        } catch { print("Damn: \(error)") }
+    }
+    
+    
     
     
     
