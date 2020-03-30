@@ -14,7 +14,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     @IBOutlet weak var tableView: UITableView!
     
     var goals = [NSManagedObject]()
-    
     let dataManager = DataManager()
     
     
@@ -180,8 +179,12 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     @IBAction func addNewGoalButton(_ sender: Any) {
         addNewGoal()
     
-//        let testTaskArray = [Task(task: "000"), Task(task: "111")]
-//        _ = dataManager.addNewGoalAndSave(goal: "Sup!", tasks: testTaskArray)
+        let task1 = Task(task: "Hey")
+        let task2 = Task(task: "YO!")
+        let tasks = [task1, task2]
+        
+//        let testTaskArray : [Task] = [Task(task: "000"), Task(task: "111")]
+//        _ = dataManager.addNewGoalAndSave(goal: "Sup!", tasks: tasks)
         
         for i in 0..<goals.count {
             print("Goal: \(goals[i].value(forKey: "goal") as! String) ID: \(goals[i].value(forKey: "id") as! Int16)")
@@ -191,7 +194,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             }
         }
         
-        //dataManager.updateAndSave(goalId: Int16(0), newGoal: "DET VIRKER!", newTasks: testTaskArray, newDate: nil, goalCompleted: nil)
+        //dataManager.updateAndSave(goalId: Int16(0), newGoal: "DET VIRKER!3", newTasks: testTaskArray, newDate: nil, goalCompleted: nil)
         
     }
     

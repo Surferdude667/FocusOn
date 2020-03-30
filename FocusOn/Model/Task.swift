@@ -13,13 +13,13 @@ import Foundation
 public class Task: NSObject, NSCoding {
     //public static var supportsSecureCoding = true
     
-    var task: String?
+    var task = ""
     var completed = false
     
     public func encode(with coder: NSCoder) { }
     public required init?(coder: NSCoder) { }
     
-    init(task: String?) {
+    init(task: String) {
         self.task = task
     }
 }
