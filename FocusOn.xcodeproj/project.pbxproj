@@ -76,12 +76,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F62CE63E2432072B00731DA6 /* Cells */ = {
+		F6017B0F2433AC10009C15C6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				F66330C5242A1AFF008FA137 /* CellFunctions.swift */,
 				F6C799D62424BE5C00B1C455 /* GoalTableViewCell.swift */,
 				F6C799D82424BE9900B1C455 /* TaskTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F62CE63E2432072B00731DA6 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			name = Cells;
 			path = Controller;
@@ -94,6 +101,7 @@
 				F689AAB6242E28E30037D003 /* DataManager.swift */,
 				F62CE63F243207D900731DA6 /* Goal.swift */,
 				F62CE64124320EDB00731DA6 /* Task.swift */,
+				F6017B0F2433AC10009C15C6 /* Cells */,
 				F62CE63E2432072B00731DA6 /* Cells */,
 			);
 			path = Model;
