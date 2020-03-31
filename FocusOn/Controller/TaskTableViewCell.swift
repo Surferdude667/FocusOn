@@ -16,6 +16,8 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     var indexPath: IndexPath?
     var oldCaption: String?
+    var task: Task?
+    var goal: Goal?
     var delegate: TaskCellDelegate?
     
     @IBOutlet weak var taskTextField: UITextField!

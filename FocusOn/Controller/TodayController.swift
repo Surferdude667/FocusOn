@@ -19,12 +19,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     let dataManager = DataManager()
     
     
-    //  TODO: Move the data out of controller. (CoreData).
-    var todayTodos = [DataModel(goal: "Goal 1", tasks: ["Task 1 (1)", "Task 2 (1)", "Task 3 (1)", ""]),
-                      DataModel(goal: "Goal 2", tasks: ["Task 1 (2)", "Task 2 (2)", "Task 3 (2)", "Task 4 (2)", "Task 5 (2)", ""]),
-                      DataModel(goal: "Goal 3", tasks: ["Task 1 (3)", "Task 2 (3)", "Task 3 (3)", ""])]
-        
-    
     //  MARK:- Configuration
     
     func configure() {
@@ -39,11 +33,18 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //  TODO: If a cell is empty "" and not the last. Delete it.
     //  Adds an empty placeholder task cell if there is none.
     func addPlaceholderTask() {
-        for section in 0 ..< todayTodos.count {
-            if todayTodos[section].tasks.last == "" {
+        for section in 0 ..< goals.count {
+            
+            var tasksInSection = goals[section].tasks?.allObjects as! [Task]
+            tasksInSection.sort(by: { $0.id < $1.id })
+            
+            if tasksInSection.last?.title == "" {
+
             } else {
-                todayTodos[section].tasks.append("")
-                let indexPath = IndexPath(row: todayTodos[section].tasks.count, section: section)
+                let goalID = goals[section].id
+                dataManager.addNewEmptyTask(forGoal: goalID)
+                
+                let indexPath = IndexPath(row: tasksInSection.count+1, section: section)
                 tableView.beginUpdates()
                 tableView.insertRows(at: [indexPath], with: .automatic)
                 tableView.endUpdates()
@@ -54,8 +55,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //  Add new empty section with 1 empty goal and 1 empty task
     func addNewGoal() {
         let sections = tableView.numberOfSections
-        let newGoal = DataModel(goal: "", tasks: [""])
-        todayTodos.append(newGoal)
+        
+        dataManager.addNewEmptyGoal()
         
         tableView.beginUpdates()
         tableView.insertSections(IndexSet(integer: sections), with: .top)
@@ -79,7 +80,10 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         for section in 0..<tableView.numberOfSections {
             if (cellSection == section) && (newCaption != oldCaption) {
-                todayTodos[section].goal = newCaption
+                
+                if let goalID = cell.goal?.id {
+                   dataManager.UpdateOrDeleteGoal(goalID: goalID, newTitle: newCaption, completed: nil, delete: false)
+                }
                 
                 tableView.beginUpdates()
                 tableView.reloadRows(at: [IndexPath(row: 0, section: section)], with: .left)
@@ -95,7 +99,12 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 let indexPath = IndexPath(row: row, section: section)
                 
                 if (cell.indexPath == indexPath) && (oldCaption != newCaption) {
-                    todayTodos[section].tasks[row-1] = newCaption
+                    
+                    if let taskID = cell.task?.id {
+                        if let goalID = cell.goal?.id {
+                            dataManager.updateOrDeleteTask(taskID: Int(taskID), goalID: goalID, newTitle: newCaption, completed: nil, delete: false)
+                        }
+                    }
                     
                     tableView.beginUpdates()
                     tableView.reloadRows(at: [indexPath], with: .left)
@@ -124,31 +133,33 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let firstRow = IndexPath(row: 0, section: indexPath.section)
-        //let taskIndex = indexPath.row
         
         //  Set goal data
         if indexPath.row == 0 {
             let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: firstRow) as! GoalTableViewCell
+            goal.goalTextField.text = goals[indexPath.section].title
+            goal.indexPath = indexPath
+            goal.goal = goals[indexPath.section]
+            goal.delegate = self
             
-            if goals.count > indexPath.section {
-                goal.goalTextField.text = goals[indexPath.section].title
-                goal.delegate = self
-                return goal
-            }
+            return goal
         }
             //  Set task data
         else {
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
-            
             var tasksInSection = goals[indexPath.section].tasks?.allObjects as! [Task]
             tasksInSection.sort(by: { $0.id < $1.id })
             let taskForRow = tasksInSection[indexPath.row-1]
             task.taskTextField.text = taskForRow.title
+            
+            task.task = taskForRow
+            task.goal = goals[indexPath.section]
+            
+            task.indexPath = indexPath
             task.delegate = self
             return task
-            
         }
-        return UITableViewCell()
+        //return UITableViewCell()
     }
     
     
@@ -176,24 +187,10 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @IBAction func addNewGoalButton(_ sender: Any) {
         addNewGoal()
-        
-        // Add
-        //dataManager.addNewEmptyGoal()
-        //dataManager.addNewEmptyTask(forGoal: goals[0].id)
-        
-        //Update
-        //dataManager.UpdateOrDeleteGoal(goalID: goals[2].id, newTitle: "New title 3", completed: nil, delete: false)
-        //dataManager.updateOrDeleteTask(taskID: 2, goalID: goals[0].id, newTitle: "New Task title 3", completed: nil, delete: false)
-        
-        
-        // Delete
-        //dataManager.UpdateOrDeleteGoal(goalID: goals[0].id, newTitle: nil, completed: nil, delete: true)
-        //dataManager.updateOrDeleteTask(taskID: 0, goalID: goals[0].id, newTitle: nil, completed: nil, delete: true)
-        
-        
+                
         for objects in goals {
             print("\(objects.title) ID: \(objects.id)")
-
+            
             let tasks = objects.tasks?.allObjects as! [Task]
             for element in tasks {
                 print(element.title, element.id)

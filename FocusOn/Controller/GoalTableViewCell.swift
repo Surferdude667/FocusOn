@@ -15,6 +15,7 @@ protocol GoalCellDelegate {
 class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     var indexPath: IndexPath?
+    var goal: Goal?
     var oldCaption: String?
     var delegate: GoalCellDelegate?
     
