@@ -14,7 +14,7 @@ class Goal: NSManagedObject {
     static var entityName: String { return "Goal" }
     
     // Attributes
-    @NSManaged var id: Int16
+    @NSManaged var id: UUID
     @NSManaged var title: String
     @NSManaged var completed: Bool
     @NSManaged var creation: Date?

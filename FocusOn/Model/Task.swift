@@ -14,6 +14,7 @@ class Task: NSManagedObject {
     static var entityName: String { return "Task" }
     
     // Attributes
+    @NSManaged var id: Int16
     @NSManaged var title: String
     @NSManaged var completed: Bool
     

@@ -181,12 +181,12 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     @IBAction func addNewGoalButton(_ sender: Any) {
         addNewGoal()
         
-        //dataManager.addNewGoalAndSave()
-        //dataManager.updateAndSaveGoal()
-        //dataManager.addNewTaskAndSave()
-        //dataManager.updateTask()
-        //dataManager.deleteTask()
-        //dataManager.deleteGoal()
+        //dataManager.addNewEmptyGoal()
+        //dataManager.UpdateOrDeleteGoal(goalID: goals[0].id, newTitle: "New title", completed: nil, delete: false)
+        //dataManager.updateOrDeleteTask(taskID: 0, goalID: goals[0].id, newTitle: "New Task title", completed: nil, delete: false)
+        //dataManager.UpdateOrDeleteGoal(goalID: goals[0].id, newTitle: nil, completed: nil, delete: true)
+        //dataManager.updateOrDeleteTask(taskID: 0, goalID: goals[0].id, newTitle: nil, completed: nil, delete: true)
+        
         
         for objects in goals {
             print("\(objects.title) ID: \(objects.id)")

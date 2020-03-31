@@ -34,9 +34,9 @@
             filePath = "FocusOn/Model/DataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "UpdateGoal()"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "UpdateOrDeleteGoal(goalID:newTitle:completed:delete:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -50,25 +50,9 @@
             filePath = "FocusOn/Model/DataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "fetchAllGoals()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "36CE5985-0356-4136-90F2-1FABDB9A2C52"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FocusOn/Controller/TodayController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
-            landmarkName = "addNewGoalButton(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -82,9 +66,9 @@
             filePath = "FocusOn/Model/DataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "addNewGoalAndSave()"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "addNewEmptyGoal()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
