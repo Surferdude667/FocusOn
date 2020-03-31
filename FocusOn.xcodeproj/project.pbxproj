@@ -79,19 +79,22 @@
 		F62CE63E2432072B00731DA6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				F66330C5242A1AFF008FA137 /* CellFunctions.swift */,
 				F6C799D62424BE5C00B1C455 /* GoalTableViewCell.swift */,
 				F6C799D82424BE9900B1C455 /* TaskTableViewCell.swift */,
 			);
 			name = Cells;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		F67981D624220E6200B518DE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F66330C5242A1AFF008FA137 /* CellFunctions.swift */,
+				F6C1568424163FF800228264 /* FocusOn.xcdatamodeld */,
 				F689AAB6242E28E30037D003 /* DataManager.swift */,
 				F62CE63F243207D900731DA6 /* Goal.swift */,
 				F62CE64124320EDB00731DA6 /* Task.swift */,
+				F62CE63E2432072B00731DA6 /* Cells */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -107,20 +110,11 @@
 		F67981D824220E7300B518DE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				F62CE63E2432072B00731DA6 /* Cells */,
 				F6C1567F24163FF800228264 /* TodayController.swift */,
 				F67981DB2422137600B518DE /* HistoryController.swift */,
 				F67981DD2422139C00B518DE /* ProgressController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		F67981D924220EA800B518DE /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				F6C1568424163FF800228264 /* FocusOn.xcdatamodeld */,
-			);
-			path = CoreData;
 			sourceTree = "<group>";
 		};
 		F67981DA24220EC700B518DE /* SupportingFiles */ = {
@@ -155,7 +149,6 @@
 		F6C1567A24163FF800228264 /* FocusOn */ = {
 			isa = PBXGroup;
 			children = (
-				F67981D924220EA800B518DE /* CoreData */,
 				F67981D624220E6200B518DE /* Model */,
 				F67981D724220E6D00B518DE /* View */,
 				F67981D824220E7300B518DE /* Controller */,

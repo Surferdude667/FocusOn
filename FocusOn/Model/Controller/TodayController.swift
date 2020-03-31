@@ -39,7 +39,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             tasksInSection.sort(by: { $0.id < $1.id })
             
             if tasksInSection.last?.title == "" {
-
+                
             } else {
                 let goalID = goals[section].id
                 dataManager.addNewEmptyTask(forGoal: goalID)
@@ -52,6 +52,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
     }
     
+    //  TODO: Prevent this if there is alrady an empty goal.
+    //  TODO: Automaticly set the cursor in the new field.
     //  Add new empty section with 1 empty goal and 1 empty task
     func addNewGoal() {
         let sections = tableView.numberOfSections
@@ -141,7 +143,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             goal.indexPath = indexPath
             goal.goal = goals[indexPath.section]
             goal.delegate = self
-            
             return goal
         }
             //  Set task data
@@ -151,15 +152,12 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             tasksInSection.sort(by: { $0.id < $1.id })
             let taskForRow = tasksInSection[indexPath.row-1]
             task.taskTextField.text = taskForRow.title
-            
             task.task = taskForRow
             task.goal = goals[indexPath.section]
-            
             task.indexPath = indexPath
             task.delegate = self
             return task
         }
-        //return UITableViewCell()
     }
     
     
@@ -184,28 +182,32 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         tableView.contentInset.bottom = targetHeight
     }
     
+    //  MARK:- Actions
     
     @IBAction func addNewGoalButton(_ sender: Any) {
         addNewGoal()
-                
+        
+        // DEMO
         for objects in goals {
-            print("\(objects.title) ID: \(objects.id)")
+            print("Goal: \(objects.title) ID: \(objects.id)")
             
             let tasks = objects.tasks?.allObjects as! [Task]
             for element in tasks {
-                print(element.title, element.id)
+                print("Task: \(element.title) ID: \(element.id)")
             }
         }
         
     }
     
     //  MARK:- viewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
     }
     
-    //  MARK- viewWillApear
+    //  MARK:- viewWillApear
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         dataManager.fetchAllGoals()
