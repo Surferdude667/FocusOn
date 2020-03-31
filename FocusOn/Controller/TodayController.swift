@@ -23,14 +23,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     var todayTodos = [DataModel(goal: "Goal 1", tasks: ["Task 1 (1)", "Task 2 (1)", "Task 3 (1)", ""]),
                       DataModel(goal: "Goal 2", tasks: ["Task 1 (2)", "Task 2 (2)", "Task 3 (2)", "Task 4 (2)", "Task 5 (2)", ""]),
                       DataModel(goal: "Goal 3", tasks: ["Task 1 (3)", "Task 2 (3)", "Task 3 (3)", ""])]
-    
-    
-    func addDemoData() {
         
-    }
-    
-    
-    
     
     //  MARK:- Configuration
     
@@ -118,26 +111,27 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //  Return the number of sections in table.
     func numberOfSections(in tableView: UITableView) -> Int {
-        return todayTodos.count
+        return goals.count
     }
     
     //  Return the number of rows for the section.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todayTodos[section].tasks.count + 1
+        // TODO: Fix this unsafe unwrapping
+        return goals[section].tasks!.count+1
     } 
     
     //  Provide a cell object for each row.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let firstRow = IndexPath(row: 0, section: indexPath.section)
-        let taskIndex = indexPath.row-1
+        //let taskIndex = indexPath.row
         
         //  Set goal data
         if indexPath.row == 0 {
             let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: firstRow) as! GoalTableViewCell
-            if let goalForSection = todayTodos[indexPath.section].goal {
-                goal.goalTextField.text = goalForSection
-                goal.indexPath = indexPath
+            
+            if goals.count > indexPath.section {
+                goal.goalTextField.text = goals[indexPath.section].title
                 goal.delegate = self
                 return goal
             }
@@ -145,12 +139,14 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             //  Set task data
         else {
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
-            if let taskForRow = todayTodos[indexPath.section].tasks[taskIndex] {
-                task.taskTextField.text = taskForRow
-                task.indexPath = indexPath
-                task.delegate = self
-                return task
-            }
+            
+            var tasksInSection = goals[indexPath.section].tasks?.allObjects as! [Task]
+            tasksInSection.sort(by: { $0.id < $1.id })
+            let taskForRow = tasksInSection[indexPath.row-1]
+            task.taskTextField.text = taskForRow.title
+            task.delegate = self
+            return task
+            
         }
         return UITableViewCell()
     }
@@ -181,9 +177,16 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     @IBAction func addNewGoalButton(_ sender: Any) {
         addNewGoal()
         
+        // Add
         //dataManager.addNewEmptyGoal()
-        //dataManager.UpdateOrDeleteGoal(goalID: goals[0].id, newTitle: "New title", completed: nil, delete: false)
-        //dataManager.updateOrDeleteTask(taskID: 0, goalID: goals[0].id, newTitle: "New Task title", completed: nil, delete: false)
+        //dataManager.addNewEmptyTask(forGoal: goals[0].id)
+        
+        //Update
+        //dataManager.UpdateOrDeleteGoal(goalID: goals[2].id, newTitle: "New title 3", completed: nil, delete: false)
+        //dataManager.updateOrDeleteTask(taskID: 2, goalID: goals[0].id, newTitle: "New Task title 3", completed: nil, delete: false)
+        
+        
+        // Delete
         //dataManager.UpdateOrDeleteGoal(goalID: goals[0].id, newTitle: nil, completed: nil, delete: true)
         //dataManager.updateOrDeleteTask(taskID: 0, goalID: goals[0].id, newTitle: nil, completed: nil, delete: true)
         
@@ -193,7 +196,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
 
             let tasks = objects.tasks?.allObjects as! [Task]
             for element in tasks {
-                print(element.title, element.goal.id)
+                print(element.title, element.id)
             }
         }
         

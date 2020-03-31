@@ -56,18 +56,19 @@ class DataManager {
         }
     }
     
-    func addNewTaskAndSave() {
-        let task = NSEntityDescription.insertNewObject(forEntityName: Task.entityName, into: managedContext) as! Task
+    func addNewEmptyTask(forGoal goalID: UUID) {
+        let emptyTask = NSEntityDescription.insertNewObject(forEntityName: Task.entityName, into: managedContext) as! Task
         
-        //let goalWithCorrespondingID = delegate.goals.filter { $0.id == UUi }
+        let goalWithCorrespondingID = delegate.goals.filter { $0.id == goalID }
         
-        task.title = "Task #2"
-        task.completed = false
-        //task.goal = goalWithCorrespondingID.first!
+        emptyTask.id = Int16(goalWithCorrespondingID.first!.tasks!.count)
+        emptyTask.title = ""
+        emptyTask.completed = false
+        emptyTask.goal = goalWithCorrespondingID.first!
         
         do {
             try managedContext.save()
-            delegate?.tasks.append(task)
+            delegate?.tasks.append(emptyTask)
         } catch {
             print("There was a problem on update \(error)")
             managedContext.rollback()
