@@ -15,11 +15,11 @@ protocol TaskCellDelegate {
 
 class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
     
+    var delegate: TaskCellDelegate?
     var indexPath: IndexPath?
     var oldCaption: String?
     var task: Task?
     var goal: Goal?
-    var delegate: TaskCellDelegate?
     
     @IBOutlet weak var taskTextField: UITextField!
     @IBOutlet weak var taskCheckButton: UIButton!
@@ -33,6 +33,7 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
             let cell = textField.superview?.superview as! TaskTableViewCell
             let newCaption = CellFunctions().fetchInput(textField: textField)
             
+            print("New Caption: \(newCaption) Old Caption: \(oldCaption)")
             delegate?.taskTextFieldChangedForCell(cell: cell, newCaption: newCaption, oldCaption: oldCaption)
         }
     }

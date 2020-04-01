@@ -29,36 +29,19 @@ class DataManager {
     
     func addNewEmptyGoalAndTask() {
         let emptyGoal = NSEntityDescription.insertNewObject(forEntityName: Goal.entityName, into: managedContext) as! Goal
-        
         let creationDate = Date()
         
-        // Empty task
-        let emptyTask = Task(context: managedContext)
-        emptyTask.id = Int16(0)
-        emptyTask.title = ""
-        emptyTask.completed = false
-        emptyTask.goal = emptyGoal
-        
-        // Empty goal
         emptyGoal.id = UUID()
         emptyGoal.title = ""
         emptyGoal.completed = false
         emptyGoal.creation = creationDate
-        emptyGoal.tasks = NSSet(array: [emptyTask])        
+        delegate.goals.append(emptyGoal)
         
-        do {
-            try managedContext.save()
-            delegate.goals.append(emptyGoal)
-            delegate.tasks.append(emptyTask)
-        } catch {
-            print("Could not save. \(error)")
-            managedContext.rollback()
-        }
+        addNewEmptyTask(forGoal: emptyGoal.id)
     }
     
     func addNewEmptyTask(forGoal goalID: UUID) {
         let emptyTask = NSEntityDescription.insertNewObject(forEntityName: Task.entityName, into: managedContext) as! Task
-        
         let goalWithCorrespondingID = delegate.goals.filter { $0.id == goalID }
         
         emptyTask.id = Int16(goalWithCorrespondingID.first!.tasks!.count)
@@ -70,7 +53,7 @@ class DataManager {
             try managedContext.save()
             delegate?.tasks.append(emptyTask)
         } catch {
-            print("There was a problem on update \(error)")
+            print("Failed to save managed context. \(error)")
             managedContext.rollback()
         }
     }
@@ -81,7 +64,6 @@ class DataManager {
     // Provided nill values for optionals will stay untouched.
     func UpdateOrDeleteGoal(goalID: UUID, newTitle: String?, completed: Bool?, delete: Bool) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Goal.entityName)
-        
         fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Goal.id), goalID as CVarArg)
         
         do {
@@ -115,7 +97,6 @@ class DataManager {
     // Provided nill values for optionals will stay untouched.
     func updateOrDeleteTask(taskID: Int16, goalID: UUID, newTitle: String?, completed: Bool?, delete: Bool) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Task.entityName)
-        
         let withGoalIDPredicate = NSPredicate(format: "%K == %@", #keyPath(Task.goal.id), "\(goalID)")
         let findTaskPredicate = NSPredicate(format: "%K == %@", #keyPath(Task.id), "\(taskID)")
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [withGoalIDPredicate, findTaskPredicate])

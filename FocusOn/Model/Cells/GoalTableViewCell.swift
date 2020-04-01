@@ -15,14 +15,13 @@ protocol GoalCellDelegate {
 
 class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
     
-    var indexPath: IndexPath?
-    var goal: Goal?
-    var oldCaption: String?
     var delegate: GoalCellDelegate?
+    var indexPath: IndexPath?
+    var oldCaption: String?
+    var goal: Goal?
     
     @IBOutlet weak var goalTextField: UITextField!
     @IBOutlet weak var goalCheckButton: UIButton!
-    
     
     func configure() {
         goalTextField.delegate = self
@@ -37,12 +36,10 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

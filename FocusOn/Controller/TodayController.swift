@@ -30,21 +30,31 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //MARK:- TableView Manipluation
     
     func reloadTableViewRow(at indexPath: IndexPath, with rowAnimation: UITableView.RowAnimation) {
-        tableView.beginUpdates()
+        //tableView.beginUpdates()
+
         tableView.reloadRows(at: [indexPath], with: rowAnimation)
-        tableView.endUpdates()
+        //tableView.endUpdates()
     }
     
     func insertTableViewRow(at indexPath: IndexPath, with rowAnimation: UITableView.RowAnimation) {
-        tableView.beginUpdates()
+        //tableView.beginUpdates()
         tableView.insertRows(at: [indexPath], with: rowAnimation)
-        tableView.endUpdates()
+        //tableView.endUpdates()
     }
     
     func insertTableViewSection(with rowAnimation: UITableView.RowAnimation) {
-        tableView.beginUpdates()
+        //tableView.beginUpdates()
         tableView.insertSections(IndexSet(integer: tableView.numberOfSections), with: rowAnimation)
-        tableView.endUpdates()
+        //tableView.endUpdates()
+    }
+    
+    func removeTableViewRow(at indexPath: IndexPath) {
+        tableView.deleteRows(at: [indexPath], with: .fade)
+    }
+    
+    func removeTableViewSection(at section: Int) {
+        tableView.deleteSections(IndexSet(integer: section), with: .fade)
+        
     }
     
     
@@ -79,6 +89,83 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     
+    // MARK:- DELETE
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let swipeAction = UISwipeActionsConfiguration(actions: [editContextualAction(forRowAt: indexPath), deleteContextualAction(forRowAt: indexPath)])
+        return swipeAction
+    }
+    
+    func editContextualAction(forRowAt indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .normal, title: "Edit") {
+            (contextualAction: UIContextualAction, swipeButton: UIView, completionHandler: (Bool) -> Void) in
+            
+            print("Edit!")
+            
+            // Call true if edit succeded
+            completionHandler(false)
+        }
+        
+        action.backgroundColor = .magenta
+        return action
+    }
+    
+    // Delete action
+    func deleteContextualAction(forRowAt indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .destructive, title: "Delete") {
+            (contextualAction: UIContextualAction, swipeButton: UIView, completionHandler: (Bool) -> Void) in
+            
+            let goalCell = self.tableView.cellForRow(at: indexPath) as? GoalTableViewCell
+            let taskCell = self.tableView.cellForRow(at: indexPath) as? TaskTableViewCell
+            
+            
+            if indexPath.row == 0 {
+                self.tableView.beginUpdates()
+                
+                self.dataManager.UpdateOrDeleteGoal(goalID: goalCell!.goal!.id, newTitle: nil, completed: nil, delete: true)
+                
+                self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic)
+                
+                self.tableView.endUpdates()
+                //self.removeTableViewSection(at: indexPath.section)
+                    
+            } else {
+                self.dataManager.updateOrDeleteTask(taskID: taskCell!.task!.id, goalID: taskCell!.goal!.id, newTitle: nil, completed: nil, delete: true)
+                self.removeTableViewRow(at: indexPath)
+                //self.addNewPlaceholderTaskIfNeeded()
+            }
+            
+            
+            
+            
+//            for section in 0 ..< self.goals.count {
+//                var tasksInSection = self.goals[section].tasks?.allObjects as! [Task]
+//                let goalInSection = self.goals[section]
+//                tasksInSection.sort(by: { $0.id < $1.id })
+//
+//
+//                if indexPath == IndexPath(row: 0, section: section) {
+//                    self.dataManager.UpdateOrDeleteGoal(goalID: goalInSection.id, newTitle: nil, completed: nil, delete: true)
+//                } else {
+//                    let goal = self.tableView.cellForRow(at: IndexPath(row: <#T##Int#>, section: <#T##Int#>))
+//
+//                }
+//            }
+            
+            print("Delete")
+            //self.notifications.remove(at: indexPath.row)
+            //self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        
+            // Call true if delete succeded
+            completionHandler(true)
+        }
+        
+        action.backgroundColor = .magenta
+        //action.image = .remove
+        return action
+    }
+    
+    
     // MARK:- TableViewCell Delegates
     
     func goalTextFieldChangedForCell(cell: GoalTableViewCell, newCaption: String?, oldCaption: String?) {
@@ -96,21 +183,23 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?) {
+        
+        // TODO: This is redundant! Indexpath already provided. But not updated when something is deleted.
         for section in 0..<tableView.numberOfSections {
             for row in 0..<tableView.numberOfRows(inSection: section) {
                 let indexPath = IndexPath(row: row, section: section)
                 
-                if (cell.indexPath == indexPath) && (oldCaption != newCaption) {
+                if oldCaption != newCaption {
                     if let taskID = cell.task?.id {
                         if let goalID = cell.goal?.id {
                             dataManager.updateOrDeleteTask(taskID: taskID, goalID: goalID, newTitle: newCaption, completed: nil, delete: false)
-                            reloadTableViewRow(at: indexPath, with: .left)
+                            reloadTableViewRow(at: cell.indexPath!, with: .left)
+                            addNewPlaceholderTaskIfNeeded()
                         }
                     }
                 }
             }
         }
-        addNewPlaceholderTaskIfNeeded()
     }
     
     //  TODO: Mark all corosponding tasks completed with this check.
@@ -120,9 +209,9 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         for section in 0..<tableView.numberOfSections {
             if (cellSection == section) {
                 if let goalID = cell.goal?.id {
+                    let goalWithCorrespondingID = goals.filter { $0.id == goalID }.first!
                     
-                    let goalWithCorrespondingID = goals.filter { $0.id == goalID }
-                    if goalWithCorrespondingID.first!.completed == false {
+                    if goalWithCorrespondingID.completed == false {
                         dataManager.UpdateOrDeleteGoal(goalID: goalID, newTitle: nil, completed: true, delete: false)
                     } else {
                         dataManager.UpdateOrDeleteGoal(goalID: goalID, newTitle: nil, completed: false, delete: false)
@@ -138,16 +227,13 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     func taskCheckMarkChangedForCell(cell: TaskTableViewCell) {
         for section in 0..<tableView.numberOfSections {
             for row in 0..<tableView.numberOfRows(inSection: section) {
-                
-                let indexPath = IndexPath(row: row, section: section)
-                
-                if (cell.indexPath == indexPath) {
+                if (cell.indexPath == IndexPath(row: row, section: section)) {
                     if cell.task!.completed == false {
                         dataManager.updateOrDeleteTask(taskID: cell.task!.id, goalID: cell.goal!.id, newTitle: nil, completed: true, delete: false)
                     } else {
                         dataManager.updateOrDeleteTask(taskID: cell.task!.id, goalID: cell.goal!.id, newTitle: nil, completed: false, delete: false)
                     }
-                    reloadTableViewRow(at: indexPath, with: .fade)
+                    reloadTableViewRow(at: IndexPath(row: row, section: section), with: .fade)
                 }
             }
         }
@@ -164,14 +250,20 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //  Return the number of rows for the section.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // TODO: Fix this unsafe unwrapping
-        return goals[section].tasks!.count+1
+        //print(goals[section].tasks!.count+1)
+        
+        if let numberOfRows = goals[section].tasks {
+            return numberOfRows.count+1
+        }
+        
+        return 0
     } 
     
     //  Provide a cell object for each row.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let firstRow = IndexPath(row: 0, section: indexPath.section)
         
-        //  Set goal data
+        //  Set goal data in first row.
         if indexPath.row == 0 {
             let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: firstRow) as! GoalTableViewCell
             goal.goalTextField.text = goals[indexPath.section].title
@@ -187,7 +279,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             
             return goal
         }
-        //  Set task data
+            //  Set task data in remaining rows.
         else {
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
             var tasksInSection = goals[indexPath.section].tasks?.allObjects as! [Task]
@@ -260,10 +352,18 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         super.viewWillAppear(animated)
         
         // TODO: Look at this!
+        // Load today goals only. (On date).
+        // If no today goals available.
+        // Load yestadays goals.
+        // If any uncompleted goals, ask user if they should be transfered to today.
+        // If yes, change date to today on those goals.
+        // Reload today.
+        // If user says no, do nothing. (Will keep asking until there is any goal on today).
+        // If no yestaday do nothing.
+        // Present empy tableview ready to add goals for the day.
         if goals.count == 0 {
             dataManager.fetchAllGoals()
             dataManager.fetchAllTasks()
         }
     }
 }
-
