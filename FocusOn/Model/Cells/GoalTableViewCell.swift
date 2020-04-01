@@ -10,9 +10,14 @@ import UIKit
 
 protocol GoalCellDelegate {
     func goalTextFieldChangedForCell(cell: GoalTableViewCell, newCaption: String?, oldCaption: String?)
+    func goalCheckMarkChangedForCell(cell: GoalTableViewCell)
 }
 
-class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
+class GoalTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelegate {
+    
+    var goals = [Goal]()
+    var tasks = [Task]()
+    
     
     var indexPath: IndexPath?
     var goal: Goal?
@@ -42,6 +47,7 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
         return true
     }
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
@@ -60,6 +66,6 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     @IBAction func goalCheckButtonTapped(_ sender: Any) {
-        print("Goal checked!")
+        delegate?.goalCheckMarkChangedForCell(cell: self)
     }
 }

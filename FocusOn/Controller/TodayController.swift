@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class TodayController: UIViewController, UITableViewDataSource, UITableViewDelegate, TaskCellDelegate, GoalCellDelegate, DataManagerDelegate {
-    
+        
     @IBOutlet weak var tableView: UITableView!
     
     var goals = [Goal]()
@@ -117,11 +117,55 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         addPlaceholderTask()
     }
     
+    func goalCheckMarkChangedForCell(cell: GoalTableViewCell) {
+        let cellSection = cell.indexPath?.section
+        
+        for section in 0..<tableView.numberOfSections {
+            if (cellSection == section) {
+                if let goalID = cell.goal?.id {
+                    
+                    let goalWithCorrespondingID = goals.filter { $0.id == goalID }
+                    if goalWithCorrespondingID.first!.completed == false {
+                        dataManager.UpdateOrDeleteGoal(goalID: goalID, newTitle: nil, completed: true, delete: false)
+                    } else {
+                        dataManager.UpdateOrDeleteGoal(goalID: goalID, newTitle: nil, completed: false, delete: false)
+                    }
+                }
+                
+                tableView.beginUpdates()
+                tableView.reloadRows(at: [IndexPath(row: 0, section: section)], with: .fade)
+                tableView.endUpdates()
+            }
+        }
+    }
+    
+    
+    func taskCheckMarkChangedForCell(cell: TaskTableViewCell) {
+        for section in 0..<tableView.numberOfSections {
+            for row in 0..<tableView.numberOfRows(inSection: section) {
+
+                let indexPath = IndexPath(row: row, section: section)
+
+                if (cell.indexPath == indexPath) {
+                        if cell.task!.completed == false {
+                            dataManager.updateOrDeleteTask(taskID: Int(cell.task!.id), goalID: cell.goal!.id, newTitle: nil, completed: true, delete: false)
+                            } else {
+                                dataManager.updateOrDeleteTask(taskID: Int(cell.task!.id), goalID: cell.goal!.id, newTitle: nil, completed: false, delete: false)
+                            }
+                    tableView.beginUpdates()
+                    tableView.reloadRows(at: [indexPath], with: .fade)
+                    tableView.endUpdates()
+                }
+            }
+        }
+    }
+    
     //  MARK:- TableView Delegates
     
     
     //  Return the number of sections in table.
     func numberOfSections(in tableView: UITableView) -> Int {
+        print(goals.count)
         return goals.count
     }
     
@@ -143,6 +187,13 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             goal.indexPath = indexPath
             goal.goal = goals[indexPath.section]
             goal.delegate = self
+            
+            if goals[indexPath.section].completed {
+                goal.goalCheckButton.backgroundColor = UIColor.green
+            } else {
+                goal.goalCheckButton.backgroundColor = UIColor.red
+            }
+            
             return goal
         }
             //  Set task data
@@ -156,6 +207,13 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             task.goal = goals[indexPath.section]
             task.indexPath = indexPath
             task.delegate = self
+            
+            if taskForRow.completed {
+                task.taskCheckButton.backgroundColor = UIColor.green
+            } else {
+                task.taskCheckButton.backgroundColor = UIColor.red
+            }
+            
             return task
         }
     }
@@ -210,8 +268,12 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        dataManager.fetchAllGoals()
-        dataManager.fetchAllTasks()
+        
+        // TODO: Look at this!
+        if goals.count == 0 {
+            dataManager.fetchAllGoals()
+            dataManager.fetchAllTasks()
+        }
     }
 }
 

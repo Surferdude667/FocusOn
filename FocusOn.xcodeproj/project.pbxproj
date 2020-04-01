@@ -86,14 +86,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		F62CE63E2432072B00731DA6 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Cells;
-			path = Controller;
-			sourceTree = "<group>";
-		};
 		F67981D624220E6200B518DE /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -102,7 +94,6 @@
 				F62CE63F243207D900731DA6 /* Goal.swift */,
 				F62CE64124320EDB00731DA6 /* Task.swift */,
 				F6017B0F2433AC10009C15C6 /* Cells */,
-				F62CE63E2432072B00731DA6 /* Cells */,
 			);
 			path = Model;
 			sourceTree = "<group>";

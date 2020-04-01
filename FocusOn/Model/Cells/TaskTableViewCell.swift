@@ -10,6 +10,7 @@ import UIKit
 
 protocol TaskCellDelegate {
     func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?)
+    func taskCheckMarkChangedForCell(cell: TaskTableViewCell)
 }
 
 class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -61,7 +62,7 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     @IBAction func taskCheckButtonTapped(_ sender: Any) {
-        taskTextField.isUserInteractionEnabled = false
-        print("Task button clicked!")
+        //taskTextField.isUserInteractionEnabled = false
+        delegate?.taskCheckMarkChangedForCell(cell: self)
     }
 }
