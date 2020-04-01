@@ -27,7 +27,7 @@ class DataManager {
     
     // MARK:- Add new data
     
-    func addNewEmptyGoal() {
+    func addNewEmptyGoalAndTask() {
         let emptyGoal = NSEntityDescription.insertNewObject(forEntityName: Goal.entityName, into: managedContext) as! Goal
         
         let creationDate = Date()
@@ -113,7 +113,7 @@ class DataManager {
     
     // Update or delete task on specified IDs.
     // Provided nill values for optionals will stay untouched.
-    func updateOrDeleteTask(taskID: Int, goalID: UUID, newTitle: String?, completed: Bool?, delete: Bool) {
+    func updateOrDeleteTask(taskID: Int16, goalID: UUID, newTitle: String?, completed: Bool?, delete: Bool) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Task.entityName)
         
         let withGoalIDPredicate = NSPredicate(format: "%K == %@", #keyPath(Task.goal.id), "\(goalID)")

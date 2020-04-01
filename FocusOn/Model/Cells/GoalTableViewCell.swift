@@ -13,11 +13,7 @@ protocol GoalCellDelegate {
     func goalCheckMarkChangedForCell(cell: GoalTableViewCell)
 }
 
-class GoalTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelegate {
-    
-    var goals = [Goal]()
-    var tasks = [Task]()
-    
+class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     var indexPath: IndexPath?
     var goal: Goal?

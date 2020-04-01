@@ -37,7 +37,6 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
