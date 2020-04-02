@@ -11,7 +11,6 @@ import CoreData
 
 protocol DataManagerDelegate {
     var goals: [Goal] { get set }
-    var tasks: [Task] { get set }
 }
 
 class DataManager {
@@ -43,18 +42,14 @@ class DataManager {
     func addNewEmptyTask(forGoal goalID: UUID) {
         let emptyTask = NSEntityDescription.insertNewObject(forEntityName: Task.entityName, into: managedContext) as! Task
         let goalWithCorrespondingID = delegate.goals.filter { $0.id == goalID }
-        let creationDate = Date()
         
-        // TODO: This ID will fail. When the cell is deleted the ID get's recreated...
         emptyTask.id = UUID()
         emptyTask.title = ""
         emptyTask.completed = false
-        emptyTask.creation = creationDate
         emptyTask.goal = goalWithCorrespondingID.first!
         
         do {
             try managedContext.save()
-            delegate?.tasks.append(emptyTask)
         } catch {
             print("Failed to save managed context. \(error)")
             managedContext.rollback()
@@ -145,17 +140,6 @@ class DataManager {
             delegate?.goals.append(contentsOf: goals)
         } catch {
             print("Could not fetch goals. \(error)")
-        }
-    }
-    
-    func fetchAllTasks() {
-        let fetchRequest = NSFetchRequest<Task>(entityName: Task.entityName)
-        
-        do {
-            let tasks = try managedContext.fetch(fetchRequest)
-            delegate?.tasks.append(contentsOf: tasks)
-        } catch {
-            print("Could not fetch tasks. \(error)")
         }
     }
     

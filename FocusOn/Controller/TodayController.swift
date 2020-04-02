@@ -13,9 +13,9 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @IBOutlet weak var tableView: UITableView!
     
-    var goals = [Goal]()
-    var tasks = [Task]()
     let dataManager = DataManager()
+    var goals = [Goal]()
+    
     
     
     //  MARK:- Configuration
@@ -328,10 +328,9 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         else {
             //print("Task cell creation called")
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
-            var tasksInSection = goals[indexPath.section].tasks?.allObjects as! [Task]
+            let tasksInSection = goals[indexPath.section].tasks?.allObjects as! [Task]
             
-            // TODO: Check if the checkbox "ordered" in xcdatam.. file fixes this..
-            tasksInSection.sort(by: { $0.creation < $1.creation })
+
             
             let taskForRow = tasksInSection[indexPath.row-1]
             task.taskTextField.text = taskForRow.title
@@ -412,7 +411,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         // Present empy tableview ready to add goals for the day.
         if goals.count == 0 {
             dataManager.fetchAllGoals()
-            dataManager.fetchAllTasks()
         }
     }
 }

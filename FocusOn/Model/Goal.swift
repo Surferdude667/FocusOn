@@ -20,5 +20,5 @@ class Goal: NSManagedObject {
     @NSManaged var creation: Date
     
     // Relationships
-    @NSManaged var tasks: NSSet?
+    @NSManaged var tasks: NSMutableSet?
 }
