@@ -17,7 +17,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     var goals = [Goal]()
     
     
-    
     //  MARK:- Configuration
     
     func configure() {
@@ -30,43 +29,25 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //MARK:- TableView Manipluation
     
     func reloadTableViewRow(at indexPath: IndexPath, with rowAnimation: UITableView.RowAnimation) {
-        //tableView.beginUpdates()
         tableView.reloadRows(at: [indexPath], with: rowAnimation)
-        //tableView.endUpdates()
     }
     
     func insertTableViewRow(at indexPath: IndexPath, with rowAnimation: UITableView.RowAnimation) {
-        //tableView.beginUpdates()
         tableView.insertRows(at: [indexPath], with: rowAnimation)
-        //tableView.endUpdates()
     }
     
     func insertTableViewSection(with rowAnimation: UITableView.RowAnimation) {
-        //tableView.beginUpdates()
         tableView.insertSections(IndexSet(integer: tableView.numberOfSections), with: rowAnimation)
-        //tableView.endUpdates()
     }
     
     func removeTableViewRow(at indexPath: IndexPath) {
-        //tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .fade)
-        //tableView.endUpdates()
-        
-        // TODO: This seems to solve the indexIssue
         updateIndexPathForCells()
-        
-        //TEST - This is not working.
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//            self.tableView.reloadData()
-//        }
     }
     
     func removeTableViewSection(at section: Int) {
-        //tableView.beginUpdates()
         tableView.deleteSections(IndexSet(integer: section), with: .bottom)
-        //tableView.endUpdates()
         updateIndexPathForCells()
-        
     }
     
     
@@ -75,34 +56,13 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         for section in 0..<tableView.numberOfSections {
             let numberOfRows = tableView.numberOfRows(inSection: section)
             
-            if numberOfRows >= 1 {
-                //print("Indexpath: \(IndexPath(row: numberOfRows-1, section: section))")
-                if let lastCell = tableView.cellForRow(at: IndexPath(row: numberOfRows-1, section: section)) as? TaskTableViewCell {
-                    //print("Last cell: \(lastCell.taskTextField.text)")
-                    if lastCell.taskTextField.text != "" {
-                        dataManager.addNewEmptyTask(forGoal: lastCell.goal!.id)
-                        insertTableViewRow(at: IndexPath(row: numberOfRows, section: section), with: .automatic)
-                }
-
+            if let lastCell = tableView.cellForRow(at: IndexPath(row: numberOfRows-1, section: section)) as? TaskTableViewCell {
+                if lastCell.taskTextField.text != "" {
+                    dataManager.addNewEmptyTask(forGoal: lastCell.goal.id)
+                    insertTableViewRow(at: IndexPath(row: numberOfRows, section: section), with: .automatic)
                 }
             }
         }
-        
-//        for section in 0 ..< goals.count {
-//            var tasksInSection = goals[section].tasks?.allObjects as! [Task]
-//
-//
-//
-//            tasksInSection.sort(by: { $0.id < $1.id })
-//
-//            if tasksInSection.last?.title == "" { } else {
-//                let goalID = goals[section].id
-//                let indexPath = IndexPath(row: tasksInSection.count+1, section: section)
-//
-//                dataManager.addNewEmptyTask(forGoal: goalID)
-//                insertTableViewRow(at: indexPath, with: .automatic)
-//            }
-//        }
     }
     
     //  Add new empty section with 1 empty goal and 1 empty task
@@ -149,31 +109,15 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             let goalCell = self.tableView.cellForRow(at: indexPath) as? GoalTableViewCell
             let taskCell = self.tableView.cellForRow(at: indexPath) as? TaskTableViewCell
             
-            
             if indexPath.row == 0 {
-                
-                //self.tableView.beginUpdates()
                 self.goals.remove(at: indexPath.section)
-                self.dataManager.UpdateOrDeleteGoal(goalID: goalCell!.goal!.id, newTitle: nil, completed: nil, delete: true)
-                //self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .bottom)
-                print(indexPath.section)
-               
-                
+                self.dataManager.UpdateOrDeleteGoal(goalID: goalCell!.goal.id, newTitle: nil, completed: nil, delete: true)
                 self.removeTableViewSection(at: indexPath.section)
-                    
             } else {
-                self.dataManager.updateOrDeleteTask(taskID: taskCell!.task!.id, goalID: taskCell!.goal!.id, newTitle: nil, completed: nil, delete: true)
+                self.dataManager.updateOrDeleteTask(taskID: taskCell!.task.id, goalID: taskCell!.goal.id, newTitle: nil, completed: nil, delete: true)
                 self.removeTableViewRow(at: indexPath)
-                //self.addNewPlaceholderTaskIfNeeded()
             }
             
-        
-            
-            print("Delete")
-            //self.notifications.remove(at: indexPath.row)
-            //self.tableView.deleteRows(at: [indexPath], with: .automatic)
-        
-            // Call true if delete succeded
             completionHandler(true)
         }
         
@@ -186,83 +130,48 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     // MARK:- TableViewCell Delegates
     
     func goalTextFieldChangedForCell(cell: GoalTableViewCell, newCaption: String?, oldCaption: String?) {
-        let cellSection = cell.indexPath?.section
-        
-        //TODO: Again redundant! Indexpath is provided.
-        for section in 0..<tableView.numberOfSections {
-            if (cellSection == section) && (newCaption != oldCaption) {
-                
-                if let goalID = cell.goal?.id {
-                    dataManager.UpdateOrDeleteGoal(goalID: goalID, newTitle: newCaption, completed: nil, delete: false)
-                    reloadTableViewRow(at: IndexPath(row: 0, section: section), with: .left)
-                }
-            }
+        if newCaption != oldCaption {
+            dataManager.UpdateOrDeleteGoal(goalID: cell.goal.id, newTitle: newCaption, completed: nil, delete: false)
+            reloadTableViewRow(at: IndexPath(row: 0, section: cell.indexPath!.section), with: .left)
         }
     }
     
     func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?) {
-        
-        // TODO: This is redundant! Indexpath already provided. But not updated when something is deleted.
-//        for section in 0..<tableView.numberOfSections {
-//            for row in 0..<tableView.numberOfRows(inSection: section) {
-//                let indexPath = IndexPath(row: row, section: section)
-                
-                if oldCaption != newCaption {
-                    if let taskID = cell.task?.id {
-                        if let goalID = cell.goal?.id {
-                            //print("Cell reload called, cell: \(cell.indexPath)")
-                            
-                            dataManager.updateOrDeleteTask(taskID: taskID, goalID: goalID, newTitle: newCaption, completed: nil, delete: false)
-                            reloadTableViewRow(at: cell.indexPath!, with: .left)
-                            addNewPlaceholderTaskIfNeeded()
-                        }
-//                    }
-//                }
-            }
+        if oldCaption != newCaption {
+            dataManager.updateOrDeleteTask(taskID: cell.task.id, goalID: cell.goal.id, newTitle: newCaption, completed: nil, delete: false)
+            reloadTableViewRow(at: cell.indexPath!, with: .left)
+            addNewPlaceholderTaskIfNeeded()
         }
     }
     
     //  TODO: Mark all corosponding tasks completed with this check.
     func goalCheckMarkChangedForCell(cell: GoalTableViewCell) {
-        let cellSection = cell.indexPath?.section
+        let goalID = cell.goal.id
+        let goalWithCorrespondingID = goals.filter { $0.id == goalID }.first!
         
-        // TODO: Completley redundant indexpath is provided.
-        for section in 0..<tableView.numberOfSections {
-            if (cellSection == section) {
-                if let goalID = cell.goal?.id {
-                    let goalWithCorrespondingID = goals.filter { $0.id == goalID }.first!
-                    
-                    if goalWithCorrespondingID.completed == false {
-                        dataManager.UpdateOrDeleteGoal(goalID: goalID, newTitle: nil, completed: true, delete: false)
-                    } else {
-                        dataManager.UpdateOrDeleteGoal(goalID: goalID, newTitle: nil, completed: false, delete: false)
-                    }
-                    
-                    reloadTableViewRow(at: IndexPath(row: 0, section: section), with: .fade)
-                }
-            }
+        if goalWithCorrespondingID.completed == false {
+            dataManager.UpdateOrDeleteGoal(goalID: goalID, newTitle: nil, completed: true, delete: false)
+        } else {
+            dataManager.UpdateOrDeleteGoal(goalID: goalID, newTitle: nil, completed: false, delete: false)
         }
+        
+        reloadTableViewRow(at: IndexPath(row: 0, section: cell.indexPath!.section), with: .fade)
     }
+    
     
     //  TODO: Mark goal completed if all tasks in that goal is checked.
     func taskCheckMarkChangedForCell(cell: TaskTableViewCell) {
-        // TODO: Completely redundant indexpath is provided with cell...
-        for section in 0..<tableView.numberOfSections {
-            for row in 0..<tableView.numberOfRows(inSection: section) {
-                if (cell.indexPath == IndexPath(row: row, section: section)) {
-                    if cell.task!.completed == false {
-                        dataManager.updateOrDeleteTask(taskID: cell.task!.id, goalID: cell.goal!.id, newTitle: nil, completed: true, delete: false)
-                    } else {
-                        dataManager.updateOrDeleteTask(taskID: cell.task!.id, goalID: cell.goal!.id, newTitle: nil, completed: false, delete: false)
-                    }
-                    reloadTableViewRow(at: IndexPath(row: row, section: section), with: .fade)
-                }
-            }
+        if cell.task.completed == false {
+            dataManager.updateOrDeleteTask(taskID: cell.task.id, goalID: cell.goal.id, newTitle: nil, completed: true, delete: false)
+        } else {
+            dataManager.updateOrDeleteTask(taskID: cell.task.id, goalID: cell.goal.id, newTitle: nil, completed: false, delete: false)
         }
+        reloadTableViewRow(at: IndexPath(row: cell.indexPath!.row, section: cell.indexPath!.section), with: .fade)
     }
     
+    
+    //  Updates the indexPath propaty on all available cells in tableView.
     func updateIndexPathForCells() {
-        
         for section in 0..<tableView.numberOfSections {
             for row in 0..<tableView.numberOfRows(inSection: section) {
                 let indexPath = IndexPath(row: row, section: section)
@@ -272,12 +181,10 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                     if let goal = cell as? GoalTableViewCell {
                         goal.indexPath = indexPath
                     }
-                    
                 } else {
                     if let task = cell as? TaskTableViewCell {
                         task.indexPath = indexPath
                     }
-                    
                 }
             }
         }
@@ -293,15 +200,11 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //  Return the number of rows for the section.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // TODO: Fix this unsafe unwrapping
-        //print(goals[section].tasks!.count+1)
-        
         if let numberOfRows = goals[section].tasks {
             return numberOfRows.count+1
         }
-        
         return 0
-    } 
+    }
     
     //  Provide a cell object for each row.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -309,13 +212,13 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         //  Set goal data in first row.
         if indexPath.row == 0 {
-            //print("Goal cell creation called")
             let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: firstRow) as! GoalTableViewCell
             goal.goalTextField.text = goals[indexPath.section].title
             goal.indexPath = indexPath
             goal.goal = goals[indexPath.section]
             goal.delegate = self
             
+            // TODO: Move this to the cell instead (If possible).
             if goals[indexPath.section].completed {
                 goal.goalCheckButton.backgroundColor = UIColor.green
             } else {
@@ -326,12 +229,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
             //  Set task data in remaining rows.
         else {
-            //print("Task cell creation called")
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
             let tasksInSection = goals[indexPath.section].tasks?.allObjects as! [Task]
-            
-
-            
             let taskForRow = tasksInSection[indexPath.row-1]
             task.taskTextField.text = taskForRow.title
             task.task = taskForRow
@@ -339,6 +238,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             task.indexPath = indexPath
             task.delegate = self
             
+            // TODO: Move this to the cell instead (If possible).
             if taskForRow.completed {
                 task.taskCheckButton.backgroundColor = UIColor.green
             } else {

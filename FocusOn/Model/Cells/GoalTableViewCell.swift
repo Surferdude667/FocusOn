@@ -18,7 +18,7 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
     var delegate: GoalCellDelegate?
     var indexPath: IndexPath?
     var oldCaption: String?
-    var goal: Goal?
+    var goal: Goal!
     
     @IBOutlet weak var goalTextField: UITextField!
     @IBOutlet weak var goalCheckButton: UIButton!
