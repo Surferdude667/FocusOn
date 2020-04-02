@@ -30,28 +30,27 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //MARK:- TableView Manipluation
     
     func reloadTableViewRow(at indexPath: IndexPath, with rowAnimation: UITableView.RowAnimation) {
-        tableView.beginUpdates()
-
+        //tableView.beginUpdates()
         tableView.reloadRows(at: [indexPath], with: rowAnimation)
-        tableView.endUpdates()
+        //tableView.endUpdates()
     }
     
     func insertTableViewRow(at indexPath: IndexPath, with rowAnimation: UITableView.RowAnimation) {
-        tableView.beginUpdates()
+        //tableView.beginUpdates()
         tableView.insertRows(at: [indexPath], with: rowAnimation)
-        tableView.endUpdates()
+        //tableView.endUpdates()
     }
     
     func insertTableViewSection(with rowAnimation: UITableView.RowAnimation) {
-        tableView.beginUpdates()
+        //tableView.beginUpdates()
         tableView.insertSections(IndexSet(integer: tableView.numberOfSections), with: rowAnimation)
-        tableView.endUpdates()
+        //tableView.endUpdates()
     }
     
     func removeTableViewRow(at indexPath: IndexPath) {
-        tableView.beginUpdates()
+        //tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .fade)
-        tableView.endUpdates()
+        //tableView.endUpdates()
         
         // TODO: This seems to solve the indexIssue
         updateIndexPathForCells()
@@ -63,9 +62,10 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     func removeTableViewSection(at section: Int) {
-        tableView.beginUpdates()
-        tableView.deleteSections(IndexSet(integer: section), with: .fade)
-        tableView.endUpdates()
+        //tableView.beginUpdates()
+        tableView.deleteSections(IndexSet(integer: section), with: .bottom)
+        //tableView.endUpdates()
+        updateIndexPathForCells()
         
     }
     
@@ -76,13 +76,14 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             let numberOfRows = tableView.numberOfRows(inSection: section)
             
             if numberOfRows >= 1 {
+                //print("Indexpath: \(IndexPath(row: numberOfRows-1, section: section))")
+                if let lastCell = tableView.cellForRow(at: IndexPath(row: numberOfRows-1, section: section)) as? TaskTableViewCell {
+                    //print("Last cell: \(lastCell.taskTextField.text)")
+                    if lastCell.taskTextField.text != "" {
+                        dataManager.addNewEmptyTask(forGoal: lastCell.goal!.id)
+                        insertTableViewRow(at: IndexPath(row: numberOfRows, section: section), with: .automatic)
+                }
 
-                let lastCell = tableView.cellForRow(at: IndexPath(row: numberOfRows-1, section: section)) as! TaskTableViewCell
-                print("Last cell: \(lastCell.taskTextField.text)")
-                if lastCell.taskTextField.text != "" {
-                    dataManager.addNewEmptyTask(forGoal: lastCell.goal!.id)
-                    insertTableViewRow(at: IndexPath(row: numberOfRows, section: section), with: .automatic)
-                    //updateIndexPathForCells()
                 }
             }
         }
@@ -150,14 +151,15 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             
             
             if indexPath.row == 0 {
-                self.tableView.beginUpdates()
                 
+                //self.tableView.beginUpdates()
+                self.goals.remove(at: indexPath.section)
                 self.dataManager.UpdateOrDeleteGoal(goalID: goalCell!.goal!.id, newTitle: nil, completed: nil, delete: true)
+                //self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .bottom)
+                print(indexPath.section)
+               
                 
-                self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic)
-                
-                self.tableView.endUpdates()
-                //self.removeTableViewSection(at: indexPath.section)
+                self.removeTableViewSection(at: indexPath.section)
                     
             } else {
                 self.dataManager.updateOrDeleteTask(taskID: taskCell!.task!.id, goalID: taskCell!.goal!.id, newTitle: nil, completed: nil, delete: true)
@@ -267,11 +269,15 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 let cell = tableView.cellForRow(at: indexPath)
                 
                 if indexPath.row == 0 {
-                    let goal = cell as! GoalTableViewCell
-                    goal.indexPath = indexPath
+                    if let goal = cell as? GoalTableViewCell {
+                        goal.indexPath = indexPath
+                    }
+                    
                 } else {
-                    let task = cell as! TaskTableViewCell
-                    task.indexPath = indexPath
+                    if let task = cell as? TaskTableViewCell {
+                        task.indexPath = indexPath
+                    }
+                    
                 }
             }
         }
@@ -324,6 +330,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
             var tasksInSection = goals[indexPath.section].tasks?.allObjects as! [Task]
             
+            // TODO: Check if the checkbox "ordered" in xcdatam.. file fixes this..
             tasksInSection.sort(by: { $0.creation < $1.creation })
             
             let taskForRow = tasksInSection[indexPath.row-1]
