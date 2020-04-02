@@ -43,11 +43,13 @@ class DataManager {
     func addNewEmptyTask(forGoal goalID: UUID) {
         let emptyTask = NSEntityDescription.insertNewObject(forEntityName: Task.entityName, into: managedContext) as! Task
         let goalWithCorrespondingID = delegate.goals.filter { $0.id == goalID }
+        let creationDate = Date()
         
         // TODO: This ID will fail. When the cell is deleted the ID get's recreated...
-        emptyTask.id = Int16(goalWithCorrespondingID.first!.tasks!.count)
+        emptyTask.id = UUID()
         emptyTask.title = ""
         emptyTask.completed = false
+        emptyTask.creation = creationDate
         emptyTask.goal = goalWithCorrespondingID.first!
         
         do {
@@ -96,7 +98,7 @@ class DataManager {
     
     // Update or delete task on specified IDs.
     // Provided nill values for optionals will stay untouched.
-    func updateOrDeleteTask(taskID: Int16, goalID: UUID, newTitle: String?, completed: Bool?, delete: Bool) {
+    func updateOrDeleteTask(taskID: UUID, goalID: UUID, newTitle: String?, completed: Bool?, delete: Bool) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Task.entityName)
         let withGoalIDPredicate = NSPredicate(format: "%K == %@", #keyPath(Task.goal.id), "\(goalID)")
         let findTaskPredicate = NSPredicate(format: "%K == %@", #keyPath(Task.id), "\(taskID)")

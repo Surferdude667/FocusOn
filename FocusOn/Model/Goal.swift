@@ -17,7 +17,7 @@ class Goal: NSManagedObject {
     @NSManaged var id: UUID
     @NSManaged var title: String
     @NSManaged var completed: Bool
-    @NSManaged var creation: Date?
+    @NSManaged var creation: Date
     
     // Relationships
     @NSManaged var tasks: NSSet?

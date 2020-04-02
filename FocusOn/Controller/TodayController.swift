@@ -72,19 +72,36 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //  Adds an empty placeholder task cell if there is none.
     func addNewPlaceholderTaskIfNeeded() {
-        
-        for section in 0 ..< goals.count {
-            var tasksInSection = goals[section].tasks?.allObjects as! [Task]
-            tasksInSection.sort(by: { $0.id < $1.id })
+        for section in 0..<tableView.numberOfSections {
+            let numberOfRows = tableView.numberOfRows(inSection: section)
             
-            if tasksInSection.last?.title == "" { } else {
-                let goalID = goals[section].id
-                let indexPath = IndexPath(row: tasksInSection.count+1, section: section)
-                
-                dataManager.addNewEmptyTask(forGoal: goalID)
-                insertTableViewRow(at: indexPath, with: .automatic)
+            if numberOfRows >= 1 {
+
+                let lastCell = tableView.cellForRow(at: IndexPath(row: numberOfRows-1, section: section)) as! TaskTableViewCell
+                print("Last cell: \(lastCell.taskTextField.text)")
+                if lastCell.taskTextField.text != "" {
+                    dataManager.addNewEmptyTask(forGoal: lastCell.goal!.id)
+                    insertTableViewRow(at: IndexPath(row: numberOfRows, section: section), with: .automatic)
+                    //updateIndexPathForCells()
+                }
             }
         }
+        
+//        for section in 0 ..< goals.count {
+//            var tasksInSection = goals[section].tasks?.allObjects as! [Task]
+//
+//
+//
+//            tasksInSection.sort(by: { $0.id < $1.id })
+//
+//            if tasksInSection.last?.title == "" { } else {
+//                let goalID = goals[section].id
+//                let indexPath = IndexPath(row: tasksInSection.count+1, section: section)
+//
+//                dataManager.addNewEmptyTask(forGoal: goalID)
+//                insertTableViewRow(at: indexPath, with: .automatic)
+//            }
+//        }
     }
     
     //  Add new empty section with 1 empty goal and 1 empty task
@@ -191,7 +208,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 if oldCaption != newCaption {
                     if let taskID = cell.task?.id {
                         if let goalID = cell.goal?.id {
-                            print("Cell reload called, cell: \(cell.indexPath)")
+                            //print("Cell reload called, cell: \(cell.indexPath)")
                             
                             dataManager.updateOrDeleteTask(taskID: taskID, goalID: goalID, newTitle: newCaption, completed: nil, delete: false)
                             reloadTableViewRow(at: cell.indexPath!, with: .left)
@@ -286,7 +303,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         //  Set goal data in first row.
         if indexPath.row == 0 {
-            print("Goal cell creation called")
+            //print("Goal cell creation called")
             let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: firstRow) as! GoalTableViewCell
             goal.goalTextField.text = goals[indexPath.section].title
             goal.indexPath = indexPath
@@ -303,10 +320,12 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
             //  Set task data in remaining rows.
         else {
-            print("Task cell creation called")
+            //print("Task cell creation called")
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
             var tasksInSection = goals[indexPath.section].tasks?.allObjects as! [Task]
-            tasksInSection.sort(by: { $0.id < $1.id })
+            
+            tasksInSection.sort(by: { $0.creation < $1.creation })
+            
             let taskForRow = tasksInSection[indexPath.row-1]
             task.taskTextField.text = taskForRow.title
             task.task = taskForRow
