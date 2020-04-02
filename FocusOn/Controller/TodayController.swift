@@ -30,36 +30,49 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //MARK:- TableView Manipluation
     
     func reloadTableViewRow(at indexPath: IndexPath, with rowAnimation: UITableView.RowAnimation) {
-        //tableView.beginUpdates()
+        tableView.beginUpdates()
 
         tableView.reloadRows(at: [indexPath], with: rowAnimation)
-        //tableView.endUpdates()
+        tableView.endUpdates()
     }
     
     func insertTableViewRow(at indexPath: IndexPath, with rowAnimation: UITableView.RowAnimation) {
-        //tableView.beginUpdates()
+        tableView.beginUpdates()
         tableView.insertRows(at: [indexPath], with: rowAnimation)
-        //tableView.endUpdates()
+        tableView.endUpdates()
     }
     
     func insertTableViewSection(with rowAnimation: UITableView.RowAnimation) {
-        //tableView.beginUpdates()
+        tableView.beginUpdates()
         tableView.insertSections(IndexSet(integer: tableView.numberOfSections), with: rowAnimation)
-        //tableView.endUpdates()
+        tableView.endUpdates()
     }
     
     func removeTableViewRow(at indexPath: IndexPath) {
+        tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.endUpdates()
+        
+        // TODO: This seems to solve the indexIssue
+        updateIndexPathForCells()
+        
+        //TEST - This is not working.
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//            self.tableView.reloadData()
+//        }
     }
     
     func removeTableViewSection(at section: Int) {
+        tableView.beginUpdates()
         tableView.deleteSections(IndexSet(integer: section), with: .fade)
+        tableView.endUpdates()
         
     }
     
     
     //  Adds an empty placeholder task cell if there is none.
     func addNewPlaceholderTaskIfNeeded() {
+        
         for section in 0 ..< goals.count {
             var tasksInSection = goals[section].tasks?.allObjects as! [Task]
             tasksInSection.sort(by: { $0.id < $1.id })
@@ -135,22 +148,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 //self.addNewPlaceholderTaskIfNeeded()
             }
             
-            
-            
-            
-//            for section in 0 ..< self.goals.count {
-//                var tasksInSection = self.goals[section].tasks?.allObjects as! [Task]
-//                let goalInSection = self.goals[section]
-//                tasksInSection.sort(by: { $0.id < $1.id })
-//
-//
-//                if indexPath == IndexPath(row: 0, section: section) {
-//                    self.dataManager.UpdateOrDeleteGoal(goalID: goalInSection.id, newTitle: nil, completed: nil, delete: true)
-//                } else {
-//                    let goal = self.tableView.cellForRow(at: IndexPath(row: <#T##Int#>, section: <#T##Int#>))
-//
-//                }
-//            }
+        
             
             print("Delete")
             //self.notifications.remove(at: indexPath.row)
@@ -171,6 +169,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     func goalTextFieldChangedForCell(cell: GoalTableViewCell, newCaption: String?, oldCaption: String?) {
         let cellSection = cell.indexPath?.section
         
+        //TODO: Again redundant! Indexpath is provided.
         for section in 0..<tableView.numberOfSections {
             if (cellSection == section) && (newCaption != oldCaption) {
                 
@@ -185,19 +184,21 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?) {
         
         // TODO: This is redundant! Indexpath already provided. But not updated when something is deleted.
-        for section in 0..<tableView.numberOfSections {
-            for row in 0..<tableView.numberOfRows(inSection: section) {
-                let indexPath = IndexPath(row: row, section: section)
+//        for section in 0..<tableView.numberOfSections {
+//            for row in 0..<tableView.numberOfRows(inSection: section) {
+//                let indexPath = IndexPath(row: row, section: section)
                 
                 if oldCaption != newCaption {
                     if let taskID = cell.task?.id {
                         if let goalID = cell.goal?.id {
+                            print("Cell reload called, cell: \(cell.indexPath)")
+                            
                             dataManager.updateOrDeleteTask(taskID: taskID, goalID: goalID, newTitle: newCaption, completed: nil, delete: false)
                             reloadTableViewRow(at: cell.indexPath!, with: .left)
                             addNewPlaceholderTaskIfNeeded()
                         }
-                    }
-                }
+//                    }
+//                }
             }
         }
     }
@@ -206,6 +207,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     func goalCheckMarkChangedForCell(cell: GoalTableViewCell) {
         let cellSection = cell.indexPath?.section
         
+        // TODO: Completley redundant indexpath is provided.
         for section in 0..<tableView.numberOfSections {
             if (cellSection == section) {
                 if let goalID = cell.goal?.id {
@@ -225,6 +227,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //  TODO: Mark goal completed if all tasks in that goal is checked.
     func taskCheckMarkChangedForCell(cell: TaskTableViewCell) {
+        // TODO: Completely redundant indexpath is provided with cell...
         for section in 0..<tableView.numberOfSections {
             for row in 0..<tableView.numberOfRows(inSection: section) {
                 if (cell.indexPath == IndexPath(row: row, section: section)) {
@@ -234,6 +237,24 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                         dataManager.updateOrDeleteTask(taskID: cell.task!.id, goalID: cell.goal!.id, newTitle: nil, completed: false, delete: false)
                     }
                     reloadTableViewRow(at: IndexPath(row: row, section: section), with: .fade)
+                }
+            }
+        }
+    }
+    
+    func updateIndexPathForCells() {
+        
+        for section in 0..<tableView.numberOfSections {
+            for row in 0..<tableView.numberOfRows(inSection: section) {
+                let indexPath = IndexPath(row: row, section: section)
+                let cell = tableView.cellForRow(at: indexPath)
+                
+                if indexPath.row == 0 {
+                    let goal = cell as! GoalTableViewCell
+                    goal.indexPath = indexPath
+                } else {
+                    let task = cell as! TaskTableViewCell
+                    task.indexPath = indexPath
                 }
             }
         }
@@ -265,6 +286,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         //  Set goal data in first row.
         if indexPath.row == 0 {
+            print("Goal cell creation called")
             let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: firstRow) as! GoalTableViewCell
             goal.goalTextField.text = goals[indexPath.section].title
             goal.indexPath = indexPath
@@ -281,6 +303,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
             //  Set task data in remaining rows.
         else {
+            print("Task cell creation called")
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
             var tasksInSection = goals[indexPath.section].tasks?.allObjects as! [Task]
             tasksInSection.sort(by: { $0.id < $1.id })

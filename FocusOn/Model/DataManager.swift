@@ -44,6 +44,7 @@ class DataManager {
         let emptyTask = NSEntityDescription.insertNewObject(forEntityName: Task.entityName, into: managedContext) as! Task
         let goalWithCorrespondingID = delegate.goals.filter { $0.id == goalID }
         
+        // TODO: This ID will fail. When the cell is deleted the ID get's recreated...
         emptyTask.id = Int16(goalWithCorrespondingID.first!.tasks!.count)
         emptyTask.title = ""
         emptyTask.completed = false
