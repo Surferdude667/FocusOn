@@ -41,12 +41,36 @@ class DataManager {
     
     func addNewEmptyTask(forGoal goalID: UUID) {
         let emptyTask = NSEntityDescription.insertNewObject(forEntityName: Task.entityName, into: managedContext) as! Task
-        let goalWithCorrespondingID = delegate.goals.filter { $0.id == goalID }
         
-        emptyTask.id = UUID()
-        emptyTask.title = ""
-        emptyTask.completed = false
-        emptyTask.goal = goalWithCorrespondingID.first!
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Goal.entityName)
+        fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Goal.id), goalID as CVarArg)
+        
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            if let returnedResult = result as? [Goal] {
+                if returnedResult.count != 0 {
+                    let fetchedGoal = returnedResult.first!
+                    
+                    emptyTask.id = UUID()
+                    emptyTask.title = ""
+                    emptyTask.completed = false
+                    emptyTask.goal = fetchedGoal
+                    
+                    
+                    do {
+                        try managedContext.save()
+                    } catch {
+                        print("Save failed: \(error)")
+                        managedContext.rollback()
+                    }
+                } else { print("Fetch result was empty for specified goal id: \(goalID)") }
+            }
+        } catch { print("Fetch on goal id: \(goalID) failed. \(error)") }
+        
+        
+        //let goalWithCorrespondingID = delegate.goals.filter { $0.id == goalID }
+        
+
         
         do {
             try managedContext.save()
@@ -80,6 +104,7 @@ class DataManager {
                     }
                     
                     do {
+
                         try managedContext.save()
                     } catch {
                         print("Save failed: \(error)")
@@ -113,7 +138,7 @@ class DataManager {
                         if let newTitle = newTitle { fetchedTask.title = newTitle }
                         if let completed = completed { fetchedTask.completed = completed }
                     }
-                                        
+                    
                     do {
                         try managedContext.save()
                     } catch {

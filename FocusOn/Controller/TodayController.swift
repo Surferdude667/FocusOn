@@ -50,19 +50,10 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     
     //  Adds an empty placeholder task cell if there is none.
-    // TODO: Could probabley be moved to task cell. At least a lot of it.
-    func addNewPlaceholderTaskIfNeeded() {
-        for section in 0..<tableView.numberOfSections {
-            let numberOfRows = tableView.numberOfRows(inSection: section)
-            
-            if let lastCell = tableView.cellForRow(at: IndexPath(row: numberOfRows-1, section: section)) as? TaskTableViewCell {
-                if lastCell.taskTextField.text != "" {
-                    dataManager.addNewEmptyTask(forGoal: lastCell.goal.id)
-                    insertTableViewRow(at: IndexPath(row: numberOfRows, section: section), with: .automatic)
-                }
-            }
-        }
+    func addNewPlaceholderTask(at indexPath: IndexPath) {
+        insertTableViewRow(at: indexPath, with: .automatic)
     }
+    
     
     // Add new empty section with 1 empty goal and 1 empty task
     func addNewGoal() {
@@ -138,7 +129,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         if oldCaption != newCaption {
             dataManager.updateOrDeleteTask(taskID: cell.task.id, goalID: cell.goal.id, newTitle: newCaption)
             reloadTableViewRow(at: cell.indexPath!, with: .left)
-            addNewPlaceholderTaskIfNeeded()
+            //addNewPlaceholderTask()
         }
     }
     

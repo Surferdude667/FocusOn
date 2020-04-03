@@ -11,11 +11,13 @@ import UIKit
 protocol TaskCellDelegate {
     func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?)
     func taskCheckMarkChangedForCell(at indexPath: IndexPath)
+    func addNewPlaceholderTask(at indexPath: IndexPath)
 }
 
-class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
+class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelegate {
     
     var dataManager = DataManager()
+    var goals = [Goal]()
     var delegate: TaskCellDelegate?
     var indexPath: IndexPath!
     var oldCaption: String?
@@ -27,6 +29,7 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func configure() {
         taskTextField.delegate = self
+        //dataManager.delegate = self
     }
     
     func setTaskCheckMark() {
@@ -41,7 +44,21 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
         if let textField = textField {
             let cell = textField.superview?.superview as! TaskTableViewCell
             let newCaption = CellFunctions().fetchInput(textField: textField)
+            
+            // TODO: This also needs to do this inside here... No need to send new any captions.
             delegate?.taskTextFieldChangedForCell(cell: cell, newCaption: newCaption, oldCaption: oldCaption)
+        }
+    }
+    
+    // TODO: Rename this 
+    func addNewEmptyTask() {
+        if let lastTask = goal.tasks?.allObjects.last as? Task {
+            print("TITLE: \(lastTask.title)")
+            if lastTask.title != "" {
+                print(lastTask.goal.id)
+                dataManager.addNewEmptyTask(forGoal: lastTask.goal.id)
+                delegate?.addNewPlaceholderTask(at: IndexPath(row: indexPath.row+1, section: indexPath.section))
+            }
         }
     }
     
@@ -66,6 +83,7 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBAction func taskEditEnded(_ sender: Any) {
         let textField = sender as? UITextField
         processInput(from: textField)
+        addNewEmptyTask()
     }
     
     @IBAction func taskCheckButtonTapped(_ sender: Any) {
