@@ -60,7 +60,7 @@ class DataManager {
     
     // Update or delete goal on specified ID.
     // Provided nill values for optionals will stay untouched.
-    func UpdateOrDeleteGoal(goalID: UUID, newTitle: String?, completed: Bool?, delete: Bool) {
+    func updateOrDeleteGoal(goalID: UUID, newTitle: String? = nil, completed: Bool? = nil, delete: Bool = false) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Goal.entityName)
         fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Goal.id), goalID as CVarArg)
         
@@ -93,7 +93,7 @@ class DataManager {
     
     // Update or delete task on specified IDs.
     // Provided nill values for optionals will stay untouched.
-    func updateOrDeleteTask(taskID: UUID, goalID: UUID, newTitle: String?, completed: Bool?, delete: Bool) {
+    func updateOrDeleteTask(taskID: UUID, goalID: UUID, newTitle: String? = nil, completed: Bool? = nil, delete: Bool = false) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Task.entityName)
         let withGoalIDPredicate = NSPredicate(format: "%K == %@", #keyPath(Task.goal.id), "\(goalID)")
         let findTaskPredicate = NSPredicate(format: "%K == %@", #keyPath(Task.id), "\(taskID)")

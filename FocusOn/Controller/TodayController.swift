@@ -1,13 +1,9 @@
 //
-//  TodayController.swift
-//  FocusOn
-//
 //  Created by Bjørn Lau Jørgensen on 09/03/2020.
 //  Copyright © 2020 Bjørn Lau Jørgensen. All rights reserved.
 //
 
 import UIKit
-import CoreData
 
 class TodayController: UIViewController, UITableViewDataSource, UITableViewDelegate, TaskCellDelegate, GoalCellDelegate, DataManagerDelegate {
     
@@ -28,6 +24,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //MARK:- TableView Manipluation
     
+    
+    //  TODO: Some these functions will be including an alert controller in the future. That's why they are here.
     func reloadTableViewRow(at indexPath: IndexPath, with rowAnimation: UITableView.RowAnimation) {
         tableView.reloadRows(at: [indexPath], with: rowAnimation)
     }
@@ -52,6 +50,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     
     //  Adds an empty placeholder task cell if there is none.
+    // TODO: Could probabley be moved to task cell. At least a lot of it.
     func addNewPlaceholderTaskIfNeeded() {
         for section in 0..<tableView.numberOfSections {
             let numberOfRows = tableView.numberOfRows(inSection: section)
@@ -65,7 +64,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
     }
     
-    //  Add new empty section with 1 empty goal and 1 empty task
+    // Add new empty section with 1 empty goal and 1 empty task
     func addNewGoal() {
         dataManager.addNewEmptyGoalAndTask()
         insertTableViewSection(with: .top)
@@ -80,7 +79,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     
-    // MARK:- DELETE
+    // MARK:- SWIPE ACTIONS
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let swipeAction = UISwipeActionsConfiguration(actions: [editContextualAction(forRowAt: indexPath), deleteContextualAction(forRowAt: indexPath)])
@@ -111,17 +110,16 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             
             if indexPath.row == 0 {
                 self.goals.remove(at: indexPath.section)
-                self.dataManager.UpdateOrDeleteGoal(goalID: goalCell!.goal.id, newTitle: nil, completed: nil, delete: true)
+                self.dataManager.updateOrDeleteGoal(goalID: goalCell!.goal.id, delete: true)
                 self.removeTableViewSection(at: indexPath.section)
             } else {
-                self.dataManager.updateOrDeleteTask(taskID: taskCell!.task.id, goalID: taskCell!.goal.id, newTitle: nil, completed: nil, delete: true)
+                self.dataManager.updateOrDeleteTask(taskID: taskCell!.task.id, goalID: taskCell!.goal.id, delete: true)
                 self.removeTableViewRow(at: indexPath)
             }
-            
             completionHandler(true)
         }
         
-        action.backgroundColor = .magenta
+        action.backgroundColor = .red
         //action.image = .remove
         return action
     }
@@ -131,46 +129,30 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     func goalTextFieldChangedForCell(cell: GoalTableViewCell, newCaption: String?, oldCaption: String?) {
         if newCaption != oldCaption {
-            dataManager.UpdateOrDeleteGoal(goalID: cell.goal.id, newTitle: newCaption, completed: nil, delete: false)
+            dataManager.updateOrDeleteGoal(goalID: cell.goal.id, newTitle: newCaption)
             reloadTableViewRow(at: IndexPath(row: 0, section: cell.indexPath!.section), with: .left)
         }
     }
     
     func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?) {
         if oldCaption != newCaption {
-            dataManager.updateOrDeleteTask(taskID: cell.task.id, goalID: cell.goal.id, newTitle: newCaption, completed: nil, delete: false)
+            dataManager.updateOrDeleteTask(taskID: cell.task.id, goalID: cell.goal.id, newTitle: newCaption)
             reloadTableViewRow(at: cell.indexPath!, with: .left)
             addNewPlaceholderTaskIfNeeded()
         }
     }
     
-    //  TODO: Mark all corosponding tasks completed with this check.
-    func goalCheckMarkChangedForCell(cell: GoalTableViewCell) {
-        let goalID = cell.goal.id
-        let goalWithCorrespondingID = goals.filter { $0.id == goalID }.first!
-        
-        if goalWithCorrespondingID.completed == false {
-            dataManager.UpdateOrDeleteGoal(goalID: goalID, newTitle: nil, completed: true, delete: false)
-        } else {
-            dataManager.UpdateOrDeleteGoal(goalID: goalID, newTitle: nil, completed: false, delete: false)
-        }
-        
-        reloadTableViewRow(at: IndexPath(row: 0, section: cell.indexPath!.section), with: .fade)
+    func goalCheckMarkChangedForCell(at indexPath: IndexPath) {
+        reloadTableViewRow(at: indexPath, with: .fade)
     }
     
-    
-    //  TODO: Mark goal completed if all tasks in that goal is checked.
-    func taskCheckMarkChangedForCell(cell: TaskTableViewCell) {
-        if cell.task.completed == false {
-            dataManager.updateOrDeleteTask(taskID: cell.task.id, goalID: cell.goal.id, newTitle: nil, completed: true, delete: false)
-        } else {
-            dataManager.updateOrDeleteTask(taskID: cell.task.id, goalID: cell.goal.id, newTitle: nil, completed: false, delete: false)
-        }
-        reloadTableViewRow(at: IndexPath(row: cell.indexPath!.row, section: cell.indexPath!.section), with: .fade)
+    func taskCheckMarkChangedForCell(at indexPath: IndexPath) {
+        reloadTableViewRow(at: indexPath, with: .fade)
     }
     
     
     //  Updates the indexPath propaty on all available cells in tableView.
+    //  This needs to be performed on any type of deletion.
     func updateIndexPathForCells() {
         for section in 0..<tableView.numberOfSections {
             for row in 0..<tableView.numberOfRows(inSection: section) {
@@ -178,13 +160,9 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 let cell = tableView.cellForRow(at: indexPath)
                 
                 if indexPath.row == 0 {
-                    if let goal = cell as? GoalTableViewCell {
-                        goal.indexPath = indexPath
-                    }
+                    if let goal = cell as? GoalTableViewCell { goal.indexPath = indexPath }
                 } else {
-                    if let task = cell as? TaskTableViewCell {
-                        task.indexPath = indexPath
-                    }
+                    if let task = cell as? TaskTableViewCell { task.indexPath = indexPath }
                 }
             }
         }
@@ -216,15 +194,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             goal.goalTextField.text = goals[indexPath.section].title
             goal.indexPath = indexPath
             goal.goal = goals[indexPath.section]
+            goal.setGoalCheckMark()
             goal.delegate = self
-            
-            // TODO: Move this to the cell instead (If possible).
-            if goals[indexPath.section].completed {
-                goal.goalCheckButton.backgroundColor = UIColor.green
-            } else {
-                goal.goalCheckButton.backgroundColor = UIColor.red
-            }
-            
             return goal
         }
             //  Set task data in remaining rows.
@@ -237,14 +208,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             task.goal = goals[indexPath.section]
             task.indexPath = indexPath
             task.delegate = self
-            
-            // TODO: Move this to the cell instead (If possible).
-            if taskForRow.completed {
-                task.taskCheckButton.backgroundColor = UIColor.green
-            } else {
-                task.taskCheckButton.backgroundColor = UIColor.red
-            }
-            
+            task.setTaskCheckMark()
             return task
         }
     }
@@ -309,6 +273,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         // If user says no, do nothing. (Will keep asking until there is any goal on today).
         // If no yestaday do nothing.
         // Present empy tableview ready to add goals for the day.
+        
         if goals.count == 0 {
             dataManager.fetchAllGoals()
         }

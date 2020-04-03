@@ -10,13 +10,14 @@ import UIKit
 
 protocol TaskCellDelegate {
     func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?)
-    func taskCheckMarkChangedForCell(cell: TaskTableViewCell)
+    func taskCheckMarkChangedForCell(at indexPath: IndexPath)
 }
 
 class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
     
+    var dataManager = DataManager()
     var delegate: TaskCellDelegate?
-    var indexPath: IndexPath?
+    var indexPath: IndexPath!
     var oldCaption: String?
     var task: Task!
     var goal: Goal!
@@ -28,12 +29,18 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
         taskTextField.delegate = self
     }
     
+    func setTaskCheckMark() {
+        if task.completed {
+            taskCheckButton.backgroundColor = UIColor.green
+        } else {
+            taskCheckButton.backgroundColor = UIColor.red
+        }
+    }
+    
     func processInput(from textField: UITextField?) {
         if let textField = textField {
             let cell = textField.superview?.superview as! TaskTableViewCell
             let newCaption = CellFunctions().fetchInput(textField: textField)
-            
-            print("New Caption: \(newCaption) Old Caption: \(oldCaption)")
             delegate?.taskTextFieldChangedForCell(cell: cell, newCaption: newCaption, oldCaption: oldCaption)
         }
     }
@@ -63,6 +70,15 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     @IBAction func taskCheckButtonTapped(_ sender: Any) {
         //taskTextField.isUserInteractionEnabled = false
-        delegate?.taskCheckMarkChangedForCell(cell: self)
+        
+        // TODO: Mark goal completed if all tasks in that goal is checked.
+        // TODO: Move to seperate function
+        if task.completed == false {
+            dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: true)
+        } else {
+            dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: false)
+        }
+        
+        delegate?.taskCheckMarkChangedForCell(at: indexPath)
     }
 }
