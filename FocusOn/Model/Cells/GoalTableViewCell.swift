@@ -8,14 +8,9 @@
 
 import UIKit
 
-protocol GoalCellDelegate {
-    func goalTextFieldChangedForCell(cell: GoalTableViewCell, newCaption: String?, oldCaption: String?)
-    func goalCheckMarkChangedForCell(at indexPath: IndexPath)
-}
-
 class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
     
-    var delegate: GoalCellDelegate?
+    var delegate: CellDelegate?
     var dataManager = DataManager()
     var indexPath: IndexPath!
     var oldCaption: String?
@@ -38,9 +33,11 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func processInput(from textField: UITextField?) {
         if let textField = textField {
-            let cell = textField.superview?.superview as! GoalTableViewCell
             let newCaption = CellFunctions().fetchInput(textField: textField)
-            delegate?.goalTextFieldChangedForCell(cell: cell, newCaption: newCaption, oldCaption: oldCaption)
+            if newCaption != oldCaption {
+                dataManager.updateOrDeleteGoal(goalID: goal.id, newTitle: newCaption)
+                delegate?.cellChanged(at: indexPath)
+            }
         }
     }
     
@@ -53,7 +50,6 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
         super.awakeFromNib()
         configure()
     }
-    
     
     
     @IBAction func goalEditBegun(_ sender: Any) {
@@ -78,6 +74,6 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
             dataManager.updateOrDeleteGoal(goalID: goal.id, completed: false)
         }
         
-        delegate?.goalCheckMarkChangedForCell(at: indexPath)
+        delegate?.cellChanged(at: indexPath)
     }
 }

@@ -5,7 +5,8 @@
 
 import UIKit
 
-class TodayController: UIViewController, UITableViewDataSource, UITableViewDelegate, TaskCellDelegate, GoalCellDelegate, DataManagerDelegate {
+class TodayController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataManagerDelegate, CellDelegate {
+
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -69,6 +70,23 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         tableView.scrollToRow(at: bottomIndexPath, at: .top, animated: true)
     }
     
+    //  Updates the indexPath properties on all available cells in tableView.
+    //  This needs to be performed on any type of deletion.
+    func updateIndexPathForCells() {
+        for section in 0..<tableView.numberOfSections {
+            for row in 0..<tableView.numberOfRows(inSection: section) {
+                let indexPath = IndexPath(row: row, section: section)
+                let cell = tableView.cellForRow(at: indexPath)
+                
+                if indexPath.row == 0 {
+                    if let goal = cell as? GoalTableViewCell { goal.indexPath = indexPath }
+                } else {
+                    if let task = cell as? TaskTableViewCell { task.indexPath = indexPath }
+                }
+            }
+        }
+    }
+    
     
     // MARK:- SWIPE ACTIONS
     
@@ -116,48 +134,17 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     
-    // MARK:- TableViewCell Delegates
     
-    func goalTextFieldChangedForCell(cell: GoalTableViewCell, newCaption: String?, oldCaption: String?) {
-        if newCaption != oldCaption {
-            dataManager.updateOrDeleteGoal(goalID: cell.goal.id, newTitle: newCaption)
-            reloadTableViewRow(at: IndexPath(row: 0, section: cell.indexPath!.section), with: .left)
-        }
+    // MARK:- CellDelegate
+    
+    func cellChanged(at indexPath: IndexPath) {
+        reloadTableViewRow(at: indexPath, with: .left)
     }
     
-    func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?) {
-        if oldCaption != newCaption {
-            dataManager.updateOrDeleteTask(taskID: cell.task.id, goalID: cell.goal.id, newTitle: newCaption)
-            reloadTableViewRow(at: cell.indexPath!, with: .left)
-            //addNewPlaceholderTask()
-        }
+    func cellAdded(at indexPath: IndexPath) {
+        insertTableViewRow(at: indexPath, with: .top)
     }
     
-    func goalCheckMarkChangedForCell(at indexPath: IndexPath) {
-        reloadTableViewRow(at: indexPath, with: .fade)
-    }
-    
-    func taskCheckMarkChangedForCell(at indexPath: IndexPath) {
-        reloadTableViewRow(at: indexPath, with: .fade)
-    }
-    
-    
-    //  Updates the indexPath propaty on all available cells in tableView.
-    //  This needs to be performed on any type of deletion.
-    func updateIndexPathForCells() {
-        for section in 0..<tableView.numberOfSections {
-            for row in 0..<tableView.numberOfRows(inSection: section) {
-                let indexPath = IndexPath(row: row, section: section)
-                let cell = tableView.cellForRow(at: indexPath)
-                
-                if indexPath.row == 0 {
-                    if let goal = cell as? GoalTableViewCell { goal.indexPath = indexPath }
-                } else {
-                    if let task = cell as? TaskTableViewCell { task.indexPath = indexPath }
-                }
-            }
-        }
-    }
     
     
     //  MARK:- TableView Delegates
@@ -169,9 +156,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //  Return the number of rows for the section.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let numberOfRows = goals[section].tasks {
-            return numberOfRows.count+1
-        }
+        if let numberOfRows = goals[section].tasks { return numberOfRows.count + 1 }
         return 0
     }
     

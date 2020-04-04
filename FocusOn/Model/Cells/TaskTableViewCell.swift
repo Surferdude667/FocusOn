@@ -8,17 +8,11 @@
 
 import UIKit
 
-protocol TaskCellDelegate {
-    func taskTextFieldChangedForCell(cell: TaskTableViewCell, newCaption: String?, oldCaption: String?)
-    func taskCheckMarkChangedForCell(at indexPath: IndexPath)
-    func addNewPlaceholderTask(at indexPath: IndexPath)
-}
-
 class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelegate {
     
     var dataManager = DataManager()
     var goals = [Goal]()
-    var delegate: TaskCellDelegate?
+    var delegate: CellDelegate?
     var indexPath: IndexPath!
     var oldCaption: String?
     var task: Task!
@@ -42,22 +36,22 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
     
     func processInput(from textField: UITextField?) {
         if let textField = textField {
-            let cell = textField.superview?.superview as! TaskTableViewCell
             let newCaption = CellFunctions().fetchInput(textField: textField)
             
-            // TODO: This also needs to do this inside here... No need to send new any captions.
-            delegate?.taskTextFieldChangedForCell(cell: cell, newCaption: newCaption, oldCaption: oldCaption)
+            if oldCaption != newCaption {
+                dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, newTitle: newCaption)
+                delegate?.cellChanged(at: indexPath)
+            }
         }
     }
     
     // TODO: Rename this 
-    func addNewEmptyTask() {
+    func addNewEmptyTaskIfNone() {
         if let lastTask = goal.tasks?.allObjects.last as? Task {
-            print("TITLE: \(lastTask.title)")
             if lastTask.title != "" {
                 print(lastTask.goal.id)
                 dataManager.addNewEmptyTask(forGoal: lastTask.goal.id)
-                delegate?.addNewPlaceholderTask(at: IndexPath(row: indexPath.row+1, section: indexPath.section))
+                delegate?.cellAdded(at: IndexPath(row: indexPath.row+1, section: indexPath.section))
             }
         }
     }
@@ -83,7 +77,7 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
     @IBAction func taskEditEnded(_ sender: Any) {
         let textField = sender as? UITextField
         processInput(from: textField)
-        addNewEmptyTask()
+        addNewEmptyTaskIfNone()
     }
     
     @IBAction func taskCheckButtonTapped(_ sender: Any) {
@@ -97,6 +91,6 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
             dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: false)
         }
         
-        delegate?.taskCheckMarkChangedForCell(at: indexPath)
+        delegate?.cellChanged(at: indexPath)
     }
 }

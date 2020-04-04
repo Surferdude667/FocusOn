@@ -50,9 +50,9 @@
             filePath = "FocusOn/Model/Cells/TaskTableViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "addNewEmptyTask()"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "addNewEmptyTaskIfNone()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -66,9 +66,9 @@
             filePath = "FocusOn/Model/Cells/TaskTableViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "addNewEmptyTask()"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "addNewEmptyTaskIfNone()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
