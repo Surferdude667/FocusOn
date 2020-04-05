@@ -7,7 +7,6 @@ import UIKit
 
 class TodayController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataManagerDelegate, CellDelegate {
 
-    
     @IBOutlet weak var tableView: UITableView!
     
     let dataManager = DataManager()
@@ -26,40 +25,10 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //MARK:- TableView Manipluation
     
     
-    //  TODO: Some these functions will be including an alert controller in the future. That's why they are here.
-    func reloadTableViewRow(at indexPath: IndexPath, with rowAnimation: UITableView.RowAnimation) {
-        tableView.reloadRows(at: [indexPath], with: rowAnimation)
-    }
-    
-    func insertTableViewRow(at indexPath: IndexPath, with rowAnimation: UITableView.RowAnimation) {
-        tableView.insertRows(at: [indexPath], with: rowAnimation)
-    }
-    
-    func insertTableViewSection(with rowAnimation: UITableView.RowAnimation) {
-        tableView.insertSections(IndexSet(integer: tableView.numberOfSections), with: rowAnimation)
-    }
-    
-    func removeTableViewRow(at indexPath: IndexPath) {
-        tableView.deleteRows(at: [indexPath], with: .fade)
-        updateIndexPathForCells()
-    }
-    
-    func removeTableViewSection(at section: Int) {
-        tableView.deleteSections(IndexSet(integer: section), with: .bottom)
-        updateIndexPathForCells()
-    }
-    
-    
-    //  Adds an empty placeholder task cell if there is none.
-    func addNewPlaceholderTask(at indexPath: IndexPath) {
-        insertTableViewRow(at: indexPath, with: .automatic)
-    }
-    
-    
     // Add new empty section with 1 empty goal and 1 empty task
     func addNewGoal() {
         dataManager.addNewEmptyGoalAndTask()
-        insertTableViewSection(with: .top)
+        tableView.insertSections(IndexSet(integer: tableView.numberOfSections), with: .top)
         scrollToBottom()
     }
     
@@ -70,8 +39,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         tableView.scrollToRow(at: bottomIndexPath, at: .top, animated: true)
     }
     
-    //  Updates the indexPath properties on all available cells in tableView.
-    //  This needs to be performed on any type of deletion.
+    //  Updates the indexPath property on all available cells in the TableView.
+    //  This needs to be performed after any type of deletion in the TabelView.
     func updateIndexPathForCells() {
         for section in 0..<tableView.numberOfSections {
             for row in 0..<tableView.numberOfRows(inSection: section) {
@@ -99,10 +68,21 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         let action = UIContextualAction(style: .normal, title: "Edit") {
             (contextualAction: UIContextualAction, swipeButton: UIView, completionHandler: (Bool) -> Void) in
             
-            print("Edit!")
+            let goalCell = self.tableView.cellForRow(at: indexPath) as? GoalTableViewCell
+            let taskCell = self.tableView.cellForRow(at: indexPath) as? TaskTableViewCell
             
-            // Call true if edit succeded
-            completionHandler(false)
+            if indexPath.row == 0 {
+                goalCell?.goalTextField.isUserInteractionEnabled = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    goalCell?.goalTextField.becomeFirstResponder()
+                }
+            } else {
+                taskCell?.isUserInteractionEnabled = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    taskCell?.taskTextField.becomeFirstResponder()
+                }
+            }
+            completionHandler(true)
         }
         
         action.backgroundColor = .magenta
@@ -118,13 +98,15 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             let taskCell = self.tableView.cellForRow(at: indexPath) as? TaskTableViewCell
             
             if indexPath.row == 0 {
+                // TODO: Present alert controller to confirm deletion.
                 self.goals.remove(at: indexPath.section)
                 self.dataManager.updateOrDeleteGoal(goalID: goalCell!.goal.id, delete: true)
-                self.removeTableViewSection(at: indexPath.section)
+                self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .bottom)
             } else {
                 self.dataManager.updateOrDeleteTask(taskID: taskCell!.task.id, goalID: taskCell!.goal.id, delete: true)
-                self.removeTableViewRow(at: indexPath)
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
             }
+            self.updateIndexPathForCells()
             completionHandler(true)
         }
         
@@ -137,17 +119,16 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     // MARK:- CellDelegate
     
-    func cellChanged(at indexPath: IndexPath) {
-        reloadTableViewRow(at: indexPath, with: .left)
+    func cellChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
+        tableView.reloadRows(at: [indexPath], with: animation)
     }
     
-    func cellAdded(at indexPath: IndexPath) {
-        insertTableViewRow(at: indexPath, with: .top)
+    func cellAdded(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
+        tableView.insertRows(at: [indexPath], with: animation)
     }
     
     
-    
-    //  MARK:- TableView Delegates
+    //  MARK:- TableView delegates
     
     //  Return the number of sections in table.
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -162,11 +143,10 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //  Provide a cell object for each row.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let firstRow = IndexPath(row: 0, section: indexPath.section)
         
         //  Set goal data in first row.
         if indexPath.row == 0 {
-            let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: firstRow) as! GoalTableViewCell
+            let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: indexPath) as! GoalTableViewCell
             goal.goalTextField.text = goals[indexPath.section].title
             goal.indexPath = indexPath
             goal.goal = goals[indexPath.section]
@@ -174,7 +154,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             goal.delegate = self
             return goal
         }
-            //  Set task data in remaining rows.
+        //  Set task data in remaining rows.
         else {
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
             let tasksInSection = goals[indexPath.section].tasks?.allObjects as! [Task]

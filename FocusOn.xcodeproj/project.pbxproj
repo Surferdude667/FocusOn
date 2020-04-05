@@ -93,10 +93,10 @@
 			children = (
 				F6C1568424163FF800228264 /* FocusOn.xcdatamodeld */,
 				F689AAB6242E28E30037D003 /* DataManager.swift */,
+				F6AE8FFA2438DED400EFC4B7 /* CellDelegate.swift */,
 				F62CE63F243207D900731DA6 /* Goal.swift */,
 				F62CE64124320EDB00731DA6 /* Task.swift */,
 				F6017B0F2433AC10009C15C6 /* Cells */,
-				F6AE8FFA2438DED400EFC4B7 /* CellDelegate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

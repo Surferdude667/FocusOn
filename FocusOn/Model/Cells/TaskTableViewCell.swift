@@ -40,18 +40,18 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
             
             if oldCaption != newCaption {
                 dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, newTitle: newCaption)
-                delegate?.cellChanged(at: indexPath)
+                delegate?.cellChanged(at: indexPath, with: .left)
             }
         }
     }
     
-    // TODO: Rename this 
+    
     func addNewEmptyTaskIfNone() {
         if let lastTask = goal.tasks?.allObjects.last as? Task {
             if lastTask.title != "" {
-                print(lastTask.goal.id)
+                let index = IndexPath(row: indexPath.row+1, section: indexPath.section)
                 dataManager.addNewEmptyTask(forGoal: lastTask.goal.id)
-                delegate?.cellAdded(at: IndexPath(row: indexPath.row+1, section: indexPath.section))
+                delegate?.cellAdded(at: index, with: .top)
             }
         }
     }
@@ -91,6 +91,6 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
             dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: false)
         }
         
-        delegate?.cellChanged(at: indexPath)
+        delegate?.cellChanged(at: indexPath, with: .fade)
     }
 }

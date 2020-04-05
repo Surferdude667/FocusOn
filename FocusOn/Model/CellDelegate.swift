@@ -6,9 +6,9 @@
 //  Copyright © 2020 Bjørn Lau Jørgensen. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol CellDelegate {
-    func cellChanged(at indexPath: IndexPath)
-    func cellAdded(at indexPath: IndexPath)
+    func cellChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation)
+    func cellAdded(at indexPath: IndexPath, with animation: UITableView.RowAnimation)
 }

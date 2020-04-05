@@ -34,41 +34,9 @@
             filePath = "FocusOn/Model/DataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "fetchAllGoals()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E45651EE-E463-4F3B-BBFE-62E310B605F6"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FocusOn/Model/Cells/TaskTableViewCell.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "addNewEmptyTaskIfNone()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "184EB94D-C25B-4438-B0E0-D11C12AF0AAE"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FocusOn/Model/Cells/TaskTableViewCell.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "addNewEmptyTaskIfNone()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -82,8 +50,8 @@
             filePath = "FocusOn/Model/DataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
             landmarkName = "updateOrDeleteGoal(goalID:newTitle:completed:delete:)"
             landmarkType = "7">
          </BreakpointContent>

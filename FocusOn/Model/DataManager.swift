@@ -56,21 +56,9 @@ class DataManager {
                     emptyTask.completed = false
                     emptyTask.goal = fetchedGoal
                     
-                    
-                    do {
-                        try managedContext.save()
-                    } catch {
-                        print("Save failed: \(error)")
-                        managedContext.rollback()
-                    }
                 } else { print("Fetch result was empty for specified goal id: \(goalID)") }
             }
         } catch { print("Fetch on goal id: \(goalID) failed. \(error)") }
-        
-        
-        //let goalWithCorrespondingID = delegate.goals.filter { $0.id == goalID }
-        
-
         
         do {
             try managedContext.save()
@@ -104,7 +92,6 @@ class DataManager {
                     }
                     
                     do {
-
                         try managedContext.save()
                     } catch {
                         print("Save failed: \(error)")

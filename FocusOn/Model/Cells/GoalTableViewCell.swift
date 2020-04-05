@@ -23,6 +23,7 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
         goalTextField.delegate = self
     }
     
+    
     func setGoalCheckMark() {
         if goal.completed {
             goalCheckButton.backgroundColor = UIColor.green
@@ -36,7 +37,7 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
             let newCaption = CellFunctions().fetchInput(textField: textField)
             if newCaption != oldCaption {
                 dataManager.updateOrDeleteGoal(goalID: goal.id, newTitle: newCaption)
-                delegate?.cellChanged(at: indexPath)
+                delegate?.cellChanged(at: indexPath, with: .left)
             }
         }
     }
@@ -49,19 +50,24 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
+        print("NIB")
     }
     
     
     @IBAction func goalEditBegun(_ sender: Any) {
         let textField = sender as? UITextField
         if let textField = textField {
-            oldCaption = CellFunctions().fetchInput(textField: textField)
+            oldCaption = textField.text
         }
     }
     
     @IBAction func goalEditEnded(_ sender: Any) {
         let textField = sender as? UITextField
         processInput(from: textField)
+        if goalTextField.text != "" {
+            print("HAHSHAH")
+            goalTextField.isUserInteractionEnabled = false
+        }
     }
     
     @IBAction func goalCheckButtonTapped(_ sender: Any) {
@@ -74,6 +80,6 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
             dataManager.updateOrDeleteGoal(goalID: goal.id, completed: false)
         }
         
-        delegate?.cellChanged(at: indexPath)
+        delegate?.cellChanged(at: indexPath, with: .fade)
     }
 }
