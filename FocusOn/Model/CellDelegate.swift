@@ -9,6 +9,7 @@
 import UIKit
 
 protocol CellDelegate {
+    func sectionChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation)
     func cellChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation)
     func cellAdded(at indexPath: IndexPath, with animation: UITableView.RowAnimation)
 }

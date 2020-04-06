@@ -32,6 +32,20 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
+    // TODO: Mark all corosponding tasks completed with this check.
+    func updateTaskGoalMark() {
+        if goal.completed == false {
+            var tasks = goal.tasks!.allObjects as! [Task]
+            tasks.removeLast()
+            for task in tasks {
+                dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: true)
+            }
+            dataManager.updateOrDeleteGoal(goalID: goal.id, completed: true)
+            delegate?.sectionChanged(at: indexPath, with: .middle)
+        }
+    }
+    
+    
     func processInput(from textField: UITextField?) {
         if let textField = textField {
             let newCaption = CellFunctions().fetchInput(textField: textField)
@@ -50,7 +64,6 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
-        print("NIB")
     }
     
     
@@ -64,22 +77,9 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBAction func goalEditEnded(_ sender: Any) {
         let textField = sender as? UITextField
         processInput(from: textField)
-        if goalTextField.text != "" {
-            print("HAHSHAH")
-            goalTextField.isUserInteractionEnabled = false
-        }
     }
     
     @IBAction func goalCheckButtonTapped(_ sender: Any) {
-        
-        // TODO: Mark all corosponding tasks completed with this check.
-        // TODO: Move to seperate function.
-        if goal.completed == false {
-            dataManager.updateOrDeleteGoal(goalID: goal.id, completed: true)
-        } else {
-            dataManager.updateOrDeleteGoal(goalID: goal.id, completed: false)
-        }
-        
-        delegate?.cellChanged(at: indexPath, with: .fade)
+        updateTaskGoalMark()
     }
 }

@@ -24,7 +24,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //MARK:- TableView Manipluation
     
-    
     // Add new empty section with 1 empty goal and 1 empty task
     func addNewGoal() {
         dataManager.addNewEmptyGoalAndTask()
@@ -60,34 +59,14 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     // MARK:- SWIPE ACTIONS
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let swipeAction = UISwipeActionsConfiguration(actions: [editContextualAction(forRowAt: indexPath), deleteContextualAction(forRowAt: indexPath)])
-        return swipeAction
+        let lastRow = tableView.numberOfRows(inSection: indexPath.section)-1
+        if indexPath.row != lastRow {
+            let swipeAction = UISwipeActionsConfiguration(actions: [deleteContextualAction(forRowAt: indexPath)])
+            return swipeAction
+        }
+        return nil
     }
     
-    func editContextualAction(forRowAt indexPath: IndexPath) -> UIContextualAction {
-        let action = UIContextualAction(style: .normal, title: "Edit") {
-            (contextualAction: UIContextualAction, swipeButton: UIView, completionHandler: (Bool) -> Void) in
-            
-            let goalCell = self.tableView.cellForRow(at: indexPath) as? GoalTableViewCell
-            let taskCell = self.tableView.cellForRow(at: indexPath) as? TaskTableViewCell
-            
-            if indexPath.row == 0 {
-                goalCell?.goalTextField.isUserInteractionEnabled = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    goalCell?.goalTextField.becomeFirstResponder()
-                }
-            } else {
-                taskCell?.isUserInteractionEnabled = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    taskCell?.taskTextField.becomeFirstResponder()
-                }
-            }
-            completionHandler(true)
-        }
-        
-        action.backgroundColor = .magenta
-        return action
-    }
     
     // Delete action
     func deleteContextualAction(forRowAt indexPath: IndexPath) -> UIContextualAction {
@@ -101,7 +80,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 // TODO: Present alert controller to confirm deletion.
                 self.goals.remove(at: indexPath.section)
                 self.dataManager.updateOrDeleteGoal(goalID: goalCell!.goal.id, delete: true)
-                self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .bottom)
+                self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
             } else {
                 self.dataManager.updateOrDeleteTask(taskID: taskCell!.task.id, goalID: taskCell!.goal.id, delete: true)
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
@@ -116,8 +95,11 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     
-    
     // MARK:- CellDelegate
+    
+    func sectionChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
+        tableView.reloadSections(IndexSet(integer: indexPath.section), with: animation)
+    }
     
     func cellChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
         tableView.reloadRows(at: [indexPath], with: animation)
@@ -199,14 +181,14 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         addNewGoal()
         
         // DEMO
-        for objects in goals {
-            print("Goal: \(objects.title) ID: \(objects.id)")
-            
-            let tasks = objects.tasks?.allObjects as! [Task]
-            for element in tasks {
-                print("Task: \(element.title) ID: \(element.id)")
-            }
-        }
+//        for objects in goals {
+//            print("Goal: \(objects.title) ID: \(objects.id)")
+//
+//            let tasks = objects.tasks?.allObjects as! [Task]
+//            for element in tasks {
+//                print("Task: \(element.title) ID: \(element.id)")
+//            }
+//        }
     }
     
     //  MARK:- ViewController lifecycle

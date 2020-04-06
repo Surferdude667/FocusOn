@@ -23,18 +23,57 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
     
     func configure() {
         taskTextField.delegate = self
-        //dataManager.delegate = self
+        dataManager.delegate = self
     }
     
     func setTaskCheckMark() {
         if task.completed {
             taskCheckButton.backgroundColor = UIColor.green
-        } else {
+        } else if task.title != "" {
             taskCheckButton.backgroundColor = UIColor.red
+        } else {
+            taskCheckButton.backgroundColor = UIColor.gray
+            taskCheckButton.isUserInteractionEnabled = false
         }
     }
     
-    func processInput(from textField: UITextField?) {
+    // TODO: Mark goal completed if all tasks in that goal is checked.
+    // TODO: Don't count the placeholder
+    func updateTaskCheckMark() {
+        
+        var tasks = goal.tasks!.allObjects as! [Task]
+        tasks.removeLast()
+        var tasksCompleted = 0
+    
+        func numberOfCompletedTasks() {
+            for task in tasks {
+                if task.completed {
+                    tasksCompleted += 1
+                }
+            }
+        }
+        
+        if task.completed == false {
+            dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: true)
+            numberOfCompletedTasks()
+            
+            if tasksCompleted == tasks.count {
+                dataManager.updateOrDeleteGoal(goalID: goal.id, completed: true)
+                delegate?.cellChanged(at: IndexPath(row: 0, section: indexPath.section), with: .fade)
+            }
+        } else {
+            dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: false)
+            numberOfCompletedTasks()
+            
+            if tasksCompleted != tasks.count {
+                dataManager.updateOrDeleteGoal(goalID: goal.id, completed: false)
+                delegate?.cellChanged(at: IndexPath(row: 0, section: indexPath.section), with: .fade)
+            }
+        }
+        delegate?.cellChanged(at: indexPath, with: .fade)
+    }
+    
+    func processTextInput(from textField: UITextField?) {
         if let textField = textField {
             let newCaption = CellFunctions().fetchInput(textField: textField)
             
@@ -52,6 +91,7 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
                 let index = IndexPath(row: indexPath.row+1, section: indexPath.section)
                 dataManager.addNewEmptyTask(forGoal: lastTask.goal.id)
                 delegate?.cellAdded(at: index, with: .top)
+                taskCheckButton.isUserInteractionEnabled = true
             }
         }
     }
@@ -76,21 +116,11 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
     
     @IBAction func taskEditEnded(_ sender: Any) {
         let textField = sender as? UITextField
-        processInput(from: textField)
+        processTextInput(from: textField)
         addNewEmptyTaskIfNone()
     }
     
     @IBAction func taskCheckButtonTapped(_ sender: Any) {
-        //taskTextField.isUserInteractionEnabled = false
-        
-        // TODO: Mark goal completed if all tasks in that goal is checked.
-        // TODO: Move to seperate function
-        if task.completed == false {
-            dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: true)
-        } else {
-            dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: false)
-        }
-        
-        delegate?.cellChanged(at: indexPath, with: .fade)
+        updateTaskCheckMark()
     }
 }
