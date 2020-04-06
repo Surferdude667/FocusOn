@@ -84,6 +84,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             } else {
                 self.dataManager.updateOrDeleteTask(taskID: taskCell!.task.id, goalID: taskCell!.goal.id, delete: true)
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
+                taskCell?.checkAndUpdateGroupCompletion()
             }
             self.updateIndexPathForCells()
             completionHandler(true)

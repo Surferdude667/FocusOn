@@ -27,49 +27,51 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
     }
     
     func setTaskCheckMark() {
-        if task.completed {
+        if task.completed && task.title != "" {
             taskCheckButton.backgroundColor = UIColor.green
-        } else if task.title != "" {
+            taskCheckButton.isUserInteractionEnabled = true
+        } else if task.completed == false && task.title != "" {
             taskCheckButton.backgroundColor = UIColor.red
+            taskCheckButton.isUserInteractionEnabled = true
         } else {
             taskCheckButton.backgroundColor = UIColor.gray
             taskCheckButton.isUserInteractionEnabled = false
         }
     }
     
-    // TODO: Mark goal completed if all tasks in that goal is checked.
-    // TODO: Don't count the placeholder
-    func updateTaskCheckMark() {
-        
+    func checkAndUpdateGroupCompletion() {
         var tasks = goal.tasks!.allObjects as! [Task]
         tasks.removeLast()
         var tasksCompleted = 0
-    
-        func numberOfCompletedTasks() {
-            for task in tasks {
-                if task.completed {
-                    tasksCompleted += 1
-                }
+        
+        for task in tasks {
+            if task.completed {
+                tasksCompleted += 1
             }
         }
         
+        if tasksCompleted == tasks.count {
+            dataManager.updateOrDeleteGoal(goalID: goal.id, completed: true)
+            delegate?.cellChanged(at: IndexPath(row: 0, section: indexPath.section), with: .fade)
+        }
+        
+        if tasksCompleted != tasks.count && goal.completed == true {
+            dataManager.updateOrDeleteGoal(goalID: goal.id, completed: false)
+            delegate?.cellChanged(at: IndexPath(row: 0, section: indexPath.section), with: .fade)
+        }
+    }
+    
+    // TODO: Mark goal completed if all tasks in that goal is checked.
+    // TODO: Don't count the placeholder
+    func updateTaskCheckMark() {
         if task.completed == false {
             dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: true)
-            numberOfCompletedTasks()
-            
-            if tasksCompleted == tasks.count {
-                dataManager.updateOrDeleteGoal(goalID: goal.id, completed: true)
-                delegate?.cellChanged(at: IndexPath(row: 0, section: indexPath.section), with: .fade)
-            }
+            checkAndUpdateGroupCompletion()
         } else {
             dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: false)
-            numberOfCompletedTasks()
-            
-            if tasksCompleted != tasks.count {
-                dataManager.updateOrDeleteGoal(goalID: goal.id, completed: false)
-                delegate?.cellChanged(at: IndexPath(row: 0, section: indexPath.section), with: .fade)
-            }
+            checkAndUpdateGroupCompletion()
         }
+        
         delegate?.cellChanged(at: indexPath, with: .fade)
     }
     
@@ -80,6 +82,7 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
             if oldCaption != newCaption {
                 dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, newTitle: newCaption)
                 delegate?.cellChanged(at: indexPath, with: .left)
+                taskCheckButton.isUserInteractionEnabled = true
             }
         }
     }
@@ -91,7 +94,7 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
                 let index = IndexPath(row: indexPath.row+1, section: indexPath.section)
                 dataManager.addNewEmptyTask(forGoal: lastTask.goal.id)
                 delegate?.cellAdded(at: index, with: .top)
-                taskCheckButton.isUserInteractionEnabled = true
+                checkAndUpdateGroupCompletion()
             }
         }
     }
