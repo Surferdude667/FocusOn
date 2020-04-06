@@ -8,10 +8,10 @@ import UIKit
 class TodayController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataManagerDelegate, CellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var addNewGoalButton: UIButton!
     
     let dataManager = DataManager()
     var goals = [Goal]()
-    
     
     //  MARK:- Configuration
     
@@ -22,6 +22,16 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         registerForKeyboardNotifications()
     }
     
+    func manageAddButton() {
+        if goals.last?.title == "" {
+            addNewGoalButton.backgroundColor = UIColor.gray
+            addNewGoalButton.isUserInteractionEnabled = false
+        } else {
+            addNewGoalButton.backgroundColor = UIColor.green
+            addNewGoalButton.isUserInteractionEnabled = true
+        }
+    }
+    
     //MARK:- TableView Manipluation
     
     // Add new empty section with 1 empty goal and 1 empty task
@@ -29,13 +39,21 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         dataManager.addNewEmptyGoalAndTask()
         tableView.insertSections(IndexSet(integer: tableView.numberOfSections), with: .top)
         scrollToBottom()
+        manageAddButton()
     }
     
     func scrollToBottom() {
         let sections = tableView.numberOfSections-1
         let bottomRow = tableView.numberOfRows(inSection: sections)-1
         let bottomIndexPath = IndexPath(row: bottomRow, section: sections)
-        tableView.scrollToRow(at: bottomIndexPath, at: .top, animated: true)
+        
+        
+        let newGoal = tableView.cellForRow(at: IndexPath(row: 0, section: bottomIndexPath.section)) as! GoalTableViewCell
+        newGoal.goalTextField.becomeFirstResponder()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.tableView.scrollToRow(at: bottomIndexPath, at: .top, animated: true)
+        }
     }
     
     //  Updates the indexPath property on all available cells in the TableView.
@@ -67,8 +85,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         return nil
     }
     
-    
-    // Delete action
+
     func deleteContextualAction(forRowAt indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Delete") {
             (contextualAction: UIContextualAction, swipeButton: UIView, completionHandler: (Bool) -> Void) in
@@ -81,10 +98,14 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 self.goals.remove(at: indexPath.section)
                 self.dataManager.updateOrDeleteGoal(goalID: goalCell!.goal.id, delete: true)
                 self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
+                self.manageAddButton()
             } else {
                 self.dataManager.updateOrDeleteTask(taskID: taskCell!.task.id, goalID: taskCell!.goal.id, delete: true)
-                self.tableView.deleteRows(at: [indexPath], with: .fade)
-                taskCell?.checkAndUpdateGroupCompletion()
+                self.tableView.deleteRows(at: [indexPath], with: .none)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    taskCell?.checkAndUpdateGroupCompletion()
+                }
             }
             self.updateIndexPathForCells()
             completionHandler(true)
@@ -100,14 +121,17 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     func sectionChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
         tableView.reloadSections(IndexSet(integer: indexPath.section), with: animation)
+        manageAddButton()
     }
     
     func cellChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
         tableView.reloadRows(at: [indexPath], with: animation)
+        manageAddButton()
     }
     
     func cellAdded(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
         tableView.insertRows(at: [indexPath], with: animation)
+        manageAddButton()
     }
     
     
@@ -176,8 +200,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //  MARK:- Actions
     
-    //  TODO: Prevent this if there is alrady an empty goal.
-    //  TODO: Automaticly set the cursor in the new field.
     @IBAction func addNewGoalButton(_ sender: Any) {
         addNewGoal()
         
@@ -216,5 +238,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         if goals.count == 0 {
             dataManager.fetchAllGoals()
         }
+        manageAddButton()
     }
 }

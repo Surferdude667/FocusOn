@@ -32,7 +32,7 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
-    // TODO: Mark all corosponding tasks completed with this check.
+    
     func updateTaskGoalMark() {
         if goal.completed == false {
             var tasks = goal.tasks!.allObjects as! [Task]
@@ -48,7 +48,7 @@ class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func processInput(from textField: UITextField?) {
         if let textField = textField {
-            let newCaption = CellFunctions().fetchInput(textField: textField)
+            let newCaption = textField.text
             if newCaption != oldCaption {
                 dataManager.updateOrDeleteGoal(goalID: goal.id, newTitle: newCaption)
                 delegate?.cellChanged(at: indexPath, with: .left)

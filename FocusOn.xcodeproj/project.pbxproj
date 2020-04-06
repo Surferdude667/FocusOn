@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		F62CE640243207D900731DA6 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62CE63F243207D900731DA6 /* Goal.swift */; };
 		F62CE64224320EDB00731DA6 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62CE64124320EDB00731DA6 /* Task.swift */; };
-		F66330C6242A1AFF008FA137 /* CellFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66330C5242A1AFF008FA137 /* CellFunctions.swift */; };
 		F67981DC2422137600B518DE /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67981DB2422137600B518DE /* HistoryController.swift */; };
 		F67981DE2422139C00B518DE /* ProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67981DD2422139C00B518DE /* ProgressController.swift */; };
 		F689AAB7242E28E30037D003 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F689AAB6242E28E30037D003 /* DataManager.swift */; };
@@ -39,7 +38,6 @@
 /* Begin PBXFileReference section */
 		F62CE63F243207D900731DA6 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		F62CE64124320EDB00731DA6 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
-		F66330C5242A1AFF008FA137 /* CellFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellFunctions.swift; sourceTree = "<group>"; };
 		F67981DB2422137600B518DE /* HistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
 		F67981DD2422139C00B518DE /* ProgressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressController.swift; sourceTree = "<group>"; };
 		F689AAB6242E28E30037D003 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -81,7 +79,6 @@
 		F6017B0F2433AC10009C15C6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				F66330C5242A1AFF008FA137 /* CellFunctions.swift */,
 				F6C799D62424BE5C00B1C455 /* GoalTableViewCell.swift */,
 				F6C799D82424BE9900B1C455 /* TaskTableViewCell.swift */,
 			);
@@ -273,7 +270,6 @@
 				F6C799D72424BE5C00B1C455 /* GoalTableViewCell.swift in Sources */,
 				F6AE8FFB2438DED400EFC4B7 /* CellDelegate.swift in Sources */,
 				F689AAB7242E28E30037D003 /* DataManager.swift in Sources */,
-				F66330C6242A1AFF008FA137 /* CellFunctions.swift in Sources */,
 				F6C1568024163FF800228264 /* TodayController.swift in Sources */,
 				F6C799D92424BE9900B1C455 /* TaskTableViewCell.swift in Sources */,
 				F6C1568624163FF900228264 /* FocusOn.xcdatamodeld in Sources */,

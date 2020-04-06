@@ -50,9 +50,11 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
             }
         }
         
-        if tasksCompleted == tasks.count {
+        if tasksCompleted == tasks.count && goal.completed == false {
             dataManager.updateOrDeleteGoal(goalID: goal.id, completed: true)
             delegate?.cellChanged(at: IndexPath(row: 0, section: indexPath.section), with: .fade)
+            // TODO: Make delegate success message with Goal title included.
+            print("HURAAA")
         }
         
         if tasksCompleted != tasks.count && goal.completed == true {
@@ -61,8 +63,6 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
         }
     }
     
-    // TODO: Mark goal completed if all tasks in that goal is checked.
-    // TODO: Don't count the placeholder
     func updateTaskCheckMark() {
         if task.completed == false {
             dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: true)
@@ -77,7 +77,7 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
     
     func processTextInput(from textField: UITextField?) {
         if let textField = textField {
-            let newCaption = CellFunctions().fetchInput(textField: textField)
+            let newCaption = textField.text
             
             if oldCaption != newCaption {
                 dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, newTitle: newCaption)
@@ -113,7 +113,7 @@ class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelega
     @IBAction func taskEditBegun(_ sender: Any) {
         let textField = sender as? UITextField
         if let textField = textField {
-            oldCaption = CellFunctions().fetchInput(textField: textField)
+            oldCaption = textField.text
         }
     }
     

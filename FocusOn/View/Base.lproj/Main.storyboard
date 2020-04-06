@@ -88,7 +88,7 @@
                                                     <rect key="frame" x="58" y="4" width="331" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                     <connections>
                                                         <action selector="goalEditBegun:" destination="k1s-7n-Tky" eventType="editingDidBegin" id="lcS-Nc-p8F"/>
                                                         <action selector="goalEditEnded:" destination="k1s-7n-Tky" eventType="editingDidEnd" id="vQj-fw-meb"/>
@@ -113,7 +113,7 @@
                                                     <rect key="frame" x="60" y="5" width="334" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" spellCheckingType="yes" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="taskEditBegun:" destination="RQl-T8-yXA" eventType="editingDidBegin" id="QOk-7l-k1F"/>
                                                         <action selector="taskEditEnded:" destination="RQl-T8-yXA" eventType="editingDidEnd" id="1TJ-aW-xp3"/>
@@ -148,6 +148,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Today" id="zu4-Eb-MZp"/>
                     <connections>
+                        <outlet property="addNewGoalButton" destination="eMm-l9-mzQ" id="Jqc-52-CsC"/>
                         <outlet property="tableView" destination="JkM-vv-dZY" id="v3Z-c4-WAm"/>
                     </connections>
                 </viewController>
