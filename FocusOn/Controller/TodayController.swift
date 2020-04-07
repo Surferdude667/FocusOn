@@ -11,6 +11,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     @IBOutlet weak var addNewGoalButton: UIButton!
     
     let dataManager = DataManager()
+    let timeManager = TimeManager()
     var yesterdaysUncompletedGoals = [Goal]()
     var goals = [Goal]()
     
@@ -96,11 +97,19 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             let taskCell = self.tableView.cellForRow(at: indexPath) as? TaskTableViewCell
             
             if indexPath.row == 0 {
-                // TODO: Present alert controller to confirm deletion.
-                self.goals.remove(at: indexPath.section)
-                self.dataManager.updateOrDeleteGoal(goalID: goalCell!.goal.id, delete: true)
-                self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
-                self.manageAddButton()
+                let alertController = UIAlertController(title: "Delete whole section?", message: "Make sure lalal...", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                
+                let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action:UIAlertAction) in
+                    self.goals.remove(at: indexPath.section)
+                    self.dataManager.updateOrDeleteGoal(goalID: goalCell!.goal.id, delete: true)
+                    self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
+                    self.manageAddButton()
+                }
+
+                alertController.addAction(cancelAction)
+                alertController.addAction(deleteAction)
+                self.present(alertController, animated: true, completion: nil)
             } else {
                 self.dataManager.updateOrDeleteTask(taskID: taskCell!.task.id, goalID: taskCell!.goal.id, delete: true)
                 self.tableView.deleteRows(at: [indexPath], with: .none)
@@ -172,8 +181,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             task.task = taskForRow
             task.goal = goals[indexPath.section]
             task.indexPath = indexPath
-            task.delegate = self
             task.setTaskCheckMark()
+            task.delegate = self
             return task
         }
     }
@@ -181,22 +190,20 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     // MARK:- Dataloading
     
     // TODO: Some if this could maybe be moved out of the ViewController.
-    func transferYesterdaysGoals() {
-        
+    func askToTransferYesterdaysGoals() {
         let alertController = UIAlertController(title: "Unfinished tasks", message: "Want to transfer from yesterday?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "No", style: .destructive)
         let transferAction = UIAlertAction(title: "Yes", style: .cancel) { (action:UIAlertAction) in
             
             for goal in self.yesterdaysUncompletedGoals {
-                self.dataManager.updateOrDeleteGoal(goalID: goal.id, newCreation: TimeManager().today)
+                self.dataManager.updateOrDeleteGoal(goalID: goal.id, newCreation: self.timeManager.today)
             }
             
-            self.goals = self.dataManager.fetchGoals(date: TimeManager().today)
+            self.goals = self.dataManager.fetchGoals(date: self.timeManager.today)
             self.tableView.reloadData()
+            self.yesterdaysUncompletedGoals.removeAll()
             self.manageAddButton()
-        }
-        
-        let cancelAction = UIAlertAction(title: "No", style: .destructive) { (action:UIAlertAction) in
-            // Do nothing.
         }
         
         alertController.addAction(cancelAction)
@@ -204,14 +211,14 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func fetchTodaysGoals() {
+    func fetchTodayGoals() {
         // Fetch goals for today.
         if goals.count == 0 {
-            goals = dataManager.fetchGoals(date: TimeManager().today)
+            goals = dataManager.fetchGoals(date: timeManager.today)
             
             // If no goals found for today. Fetch yesterday.
             if goals.count == 0 {
-                let yesterdays = dataManager.fetchGoals(date: TimeManager().yesterday)
+                let yesterdays = dataManager.fetchGoals(date: timeManager.yesterday)
                 
                 // If any of yesterdays goals is uncompleted append them.
                 if yesterdays.count != 0 {
@@ -252,31 +259,29 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         addNewGoal()
     }
     
-    //  MARK:- ViewController lifecycle
+    //  MARK:- UIViewController lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
         
-        
-        print("Today: \(TimeManager().today)")
-        print("Yesterday: \(TimeManager().yesterday)")
-        
-        print("Today: \(TimeManager().formattedDate(for: TimeManager().today))")
-        print("Yesterday: \(TimeManager().formattedDate(for: TimeManager().yesterday))")
+//        print("Today: \(timeManager.today)")
+//        print("Yesterday: \(timeManager.yesterday)")
+//
+//        print("Today: \(timeManager.formattedDate(for: timeManager.today))")
+//        print("Yesterday: \(timeManager.formattedDate(for: timeManager.yesterday))")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         if yesterdaysUncompletedGoals.count != 0 {
-            transferYesterdaysGoals()
+            askToTransferYesterdaysGoals()
         }
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        fetchTodaysGoals()
+        super.viewWillAppear(true)
+        fetchTodayGoals()
         manageAddButton()
     }
 }
