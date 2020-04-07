@@ -34,8 +34,8 @@
             filePath = "FocusOn/Model/DataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "fetchAllGoals()"
             landmarkType = "7">
          </BreakpointContent>
@@ -50,9 +50,9 @@
             filePath = "FocusOn/Model/DataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "updateOrDeleteGoal(goalID:newTitle:completed:delete:)"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "updateOrDeleteGoal(goalID:newTitle:newCreation:completed:delete:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

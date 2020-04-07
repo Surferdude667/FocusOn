@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F62CE640243207D900731DA6 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62CE63F243207D900731DA6 /* Goal.swift */; };
 		F62CE64224320EDB00731DA6 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62CE64124320EDB00731DA6 /* Task.swift */; };
+		F634E04F243C964B00E09571 /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F634E04E243C964B00E09571 /* TimeManager.swift */; };
 		F67981DC2422137600B518DE /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67981DB2422137600B518DE /* HistoryController.swift */; };
 		F67981DE2422139C00B518DE /* ProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67981DD2422139C00B518DE /* ProgressController.swift */; };
 		F689AAB7242E28E30037D003 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F689AAB6242E28E30037D003 /* DataManager.swift */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		F62CE63F243207D900731DA6 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		F62CE64124320EDB00731DA6 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		F634E04E243C964B00E09571 /* TimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
 		F67981DB2422137600B518DE /* HistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
 		F67981DD2422139C00B518DE /* ProgressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressController.swift; sourceTree = "<group>"; };
 		F689AAB6242E28E30037D003 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				F6C1568424163FF800228264 /* FocusOn.xcdatamodeld */,
+				F634E04E243C964B00E09571 /* TimeManager.swift */,
 				F689AAB6242E28E30037D003 /* DataManager.swift */,
 				F6AE8FFA2438DED400EFC4B7 /* CellDelegate.swift */,
 				F62CE63F243207D900731DA6 /* Goal.swift */,
@@ -275,6 +278,7 @@
 				F6C1568624163FF900228264 /* FocusOn.xcdatamodeld in Sources */,
 				F62CE640243207D900731DA6 /* Goal.swift in Sources */,
 				F62CE64224320EDB00731DA6 /* Task.swift in Sources */,
+				F634E04F243C964B00E09571 /* TimeManager.swift in Sources */,
 				F67981DE2422139C00B518DE /* ProgressController.swift in Sources */,
 				F6C1567C24163FF800228264 /* AppDelegate.swift in Sources */,
 				F67981DC2422137600B518DE /* HistoryController.swift in Sources */,

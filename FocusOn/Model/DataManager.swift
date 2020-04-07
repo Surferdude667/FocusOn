@@ -17,6 +17,7 @@ class DataManager {
     
     var delegate: DataManagerDelegate!
     var managedContext: NSManagedObjectContext
+    var timeManager = TimeManager()
     
     init() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -28,12 +29,11 @@ class DataManager {
     
     func addNewEmptyGoalAndTask() {
         let emptyGoal = NSEntityDescription.insertNewObject(forEntityName: Goal.entityName, into: managedContext) as! Goal
-        let creationDate = Date()
         
         emptyGoal.id = UUID()
         emptyGoal.title = ""
         emptyGoal.completed = false
-        emptyGoal.creation = creationDate
+        emptyGoal.creation = timeManager.yesterday
         delegate.goals.append(emptyGoal)
         
         addNewEmptyTask(forGoal: emptyGoal.id)
@@ -72,7 +72,7 @@ class DataManager {
     
     // Update or delete goal on specified ID.
     // Provided nill values for optionals will stay untouched.
-    func updateOrDeleteGoal(goalID: UUID, newTitle: String? = nil, completed: Bool? = nil, delete: Bool = false) {
+    func updateOrDeleteGoal(goalID: UUID, newTitle: String? = nil, newCreation: Date? = nil, completed: Bool? = nil, delete: Bool = false) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Goal.entityName)
         fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Goal.id), goalID as CVarArg)
         
@@ -88,6 +88,7 @@ class DataManager {
                     } else {
                         // Set new values for goal if not nill.
                         if let newTitle = newTitle { fetchedGoal.title = newTitle }
+                        if let newCreation = newCreation { fetchedGoal.creation = newCreation }
                         if let completed = completed { fetchedGoal.completed = completed }
                     }
                     
@@ -146,13 +147,58 @@ class DataManager {
     
     func fetchAllGoals() {
         let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
+        fetchRequest.returnsObjectsAsFaults = false
         
         do {
             let goals = try managedContext.fetch(fetchRequest)
+            print(goals.count)
             delegate?.goals.append(contentsOf: goals)
         } catch {
             print("Could not fetch goals. \(error)")
         }
     }
+    
+    // TEST
+    func fetchGoals(date: Date) -> [Goal] {
+        let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
+        fetchRequest.predicate = NSPredicate(format: "creation = %@", timeManager.startOfDay(for: date) as NSDate)
+        
+        do {
+            let goals = try managedContext.fetch(fetchRequest)
+            return goals
+        } catch {
+            print("Could not fetch goals. \(error)")
+        }
+        return [Goal]()
+    }
+    
+    
+    // TEST
+    func logs(from: Date?, to: Date?) {
+        let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
+        
+        var predicate: NSPredicate?
+        if let from = from, let to = to {
+            predicate = NSPredicate(format: "creation >= %@ AND creation <= %@", timeManager.startOfDay(for: from) as NSDate, timeManager.startOfDay(for: to) as NSDate)
+        } else if let from = from {
+            predicate = NSPredicate(format: "creation >= %@ ", timeManager.startOfDay(for: from) as NSDate)
+        } else if let to = to {
+            predicate = NSPredicate(format: "creation <= %@ ", timeManager.startOfDay(for: to) as NSDate)
+        }
+        
+        fetchRequest.predicate = predicate
+        
+        let sectionSortDescriptor = NSSortDescriptor(key: "creation", ascending: false)
+        fetchRequest.sortDescriptors = [sectionSortDescriptor]
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            delegate.goals.append(contentsOf: result)
+        } catch {
+           print("Something went wrong \(error)")
+        }
+    }
+    
     
 }

@@ -6,12 +6,14 @@
 import UIKit
 
 class TodayController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataManagerDelegate, CellDelegate {
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addNewGoalButton: UIButton!
     
     let dataManager = DataManager()
+    var yesterdaysUncompletedGoals = [Goal]()
     var goals = [Goal]()
+    
     
     //  MARK:- Configuration
     
@@ -47,7 +49,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         let bottomRow = tableView.numberOfRows(inSection: sections)-1
         let bottomIndexPath = IndexPath(row: bottomRow, section: sections)
         
-        
         let newGoal = tableView.cellForRow(at: IndexPath(row: 0, section: bottomIndexPath.section)) as! GoalTableViewCell
         newGoal.goalTextField.becomeFirstResponder()
         
@@ -55,6 +56,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             self.tableView.scrollToRow(at: bottomIndexPath, at: .top, animated: true)
         }
     }
+    
     
     //  Updates the indexPath property on all available cells in the TableView.
     //  This needs to be performed after any type of deletion in the TabelView.
@@ -85,7 +87,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         return nil
     }
     
-
+    
     func deleteContextualAction(forRowAt indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Delete") {
             (contextualAction: UIContextualAction, swipeButton: UIView, completionHandler: (Bool) -> Void) in
@@ -161,7 +163,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             goal.delegate = self
             return goal
         }
-        //  Set task data in remaining rows.
+            //  Set task data in remaining rows.
         else {
             let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
             let tasksInSection = goals[indexPath.section].tasks?.allObjects as! [Task]
@@ -176,6 +178,52 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
     }
     
+    // MARK:- Dataloading
+    
+    // TODO: Some if this could maybe be moved out of the ViewController.
+    func transferYesterdaysGoals() {
+        
+        let alertController = UIAlertController(title: "Unfinished tasks", message: "Want to transfer from yesterday?", preferredStyle: .alert)
+        let transferAction = UIAlertAction(title: "Yes", style: .cancel) { (action:UIAlertAction) in
+            
+            for goal in self.yesterdaysUncompletedGoals {
+                self.dataManager.updateOrDeleteGoal(goalID: goal.id, newCreation: TimeManager().today)
+            }
+            
+            self.goals = self.dataManager.fetchGoals(date: TimeManager().today)
+            self.tableView.reloadData()
+            self.manageAddButton()
+        }
+        
+        let cancelAction = UIAlertAction(title: "No", style: .destructive) { (action:UIAlertAction) in
+            // Do nothing.
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(transferAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func fetchTodaysGoals() {
+        // Fetch goals for today.
+        if goals.count == 0 {
+            goals = dataManager.fetchGoals(date: TimeManager().today)
+            
+            // If no goals found for today. Fetch yesterday.
+            if goals.count == 0 {
+                let yesterdays = dataManager.fetchGoals(date: TimeManager().yesterday)
+                
+                // If any of yesterdays goals is uncompleted append them.
+                if yesterdays.count != 0 {
+                    for goal in yesterdays {
+                        if goal.completed == false {
+                            yesterdaysUncompletedGoals.append(goal)
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     //  MARK:- Keyboard handling
     
@@ -202,16 +250,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @IBAction func addNewGoalButton(_ sender: Any) {
         addNewGoal()
-        
-        // DEMO
-//        for objects in goals {
-//            print("Goal: \(objects.title) ID: \(objects.id)")
-//
-//            let tasks = objects.tasks?.allObjects as! [Task]
-//            for element in tasks {
-//                print("Task: \(element.title) ID: \(element.id)")
-//            }
-//        }
     }
     
     //  MARK:- ViewController lifecycle
@@ -219,25 +257,26 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+        
+        
+        print("Today: \(TimeManager().today)")
+        print("Yesterday: \(TimeManager().yesterday)")
+        
+        print("Today: \(TimeManager().formattedDate(for: TimeManager().today))")
+        print("Yesterday: \(TimeManager().formattedDate(for: TimeManager().yesterday))")
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if yesterdaysUncompletedGoals.count != 0 {
+            transferYesterdaysGoals()
+        }
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // TODO: Look at this!
-        // Load today goals only. (On date).
-        // If no today goals available.
-        // Load yestadays goals.
-        // If any uncompleted goals, ask user if they should be transfered to today.
-        // If yes, change date to today on those goals.
-        // Reload today.
-        // If user says no, do nothing. (Will keep asking until there is any goal on today).
-        // If no yestaday do nothing.
-        // Present empy tableview ready to add goals for the day.
-        
-        if goals.count == 0 {
-            dataManager.fetchAllGoals()
-        }
+        fetchTodaysGoals()
         manageAddButton()
     }
 }
