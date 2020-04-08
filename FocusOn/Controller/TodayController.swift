@@ -194,13 +194,13 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         let alertController = UIAlertController(title: "Unfinished tasks", message: "Want to transfer from yesterday?", preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "No", style: .destructive)
-        let transferAction = UIAlertAction(title: "Yes", style: .cancel) { (action:UIAlertAction) in
+        let transferAction = UIAlertAction(title: "Yes", style: .default) { (action:UIAlertAction) in
             
             for goal in self.yesterdaysUncompletedGoals {
                 self.dataManager.updateOrDeleteGoal(goalID: goal.id, newCreation: self.timeManager.today)
             }
             
-            self.goals = self.dataManager.fetchGoals(date: self.timeManager.today)
+            self.goals = self.dataManager.fetchGoals(from: self.timeManager.today)
             self.tableView.reloadData()
             self.yesterdaysUncompletedGoals.removeAll()
             self.manageAddButton()
@@ -211,14 +211,15 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         self.present(alertController, animated: true, completion: nil)
     }
     
+    
     func fetchTodayGoals() {
         // Fetch goals for today.
         if goals.count == 0 {
-            goals = dataManager.fetchGoals(date: timeManager.today)
+            goals = dataManager.fetchGoals(from: timeManager.today)
             
             // If no goals found for today. Fetch yesterday.
             if goals.count == 0 {
-                let yesterdays = dataManager.fetchGoals(date: timeManager.yesterday)
+                let yesterdays = dataManager.fetchGoals(from: timeManager.yesterday)
                 
                 // If any of yesterdays goals is uncompleted append them.
                 if yesterdays.count != 0 {

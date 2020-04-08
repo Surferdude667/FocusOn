@@ -145,21 +145,21 @@ class DataManager {
     
     // MARK:- Fetch
     
-    func fetchAllGoals() {
-        let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
-        fetchRequest.returnsObjectsAsFaults = false
-        
-        do {
-            let goals = try managedContext.fetch(fetchRequest)
-            print(goals.count)
-            delegate?.goals.append(contentsOf: goals)
-        } catch {
-            print("Could not fetch goals. \(error)")
-        }
-    }
+//    func fetchAllGoals() {
+//        let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
+//        fetchRequest.returnsObjectsAsFaults = false
+//
+//        do {
+//            let goals = try managedContext.fetch(fetchRequest)
+//            print(goals.count)
+//            delegate?.goals.append(contentsOf: goals)
+//        } catch {
+//            print("Could not fetch goals. \(error)")
+//        }
+//    }
     
     // TEST
-    func fetchGoals(date: Date) -> [Goal] {
+    func fetchGoals(from date: Date) -> [Goal] {
         let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
         fetchRequest.predicate = NSPredicate(format: "creation = %@", timeManager.startOfDay(for: date) as NSDate)
         
@@ -174,7 +174,7 @@ class DataManager {
     
     
     // TEST
-    func logs(from: Date?, to: Date?) {
+    func fetchHistory(from: Date?, to: Date?) -> [Goal]? {
         let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
         
         var predicate: NSPredicate?
@@ -194,10 +194,11 @@ class DataManager {
         
         do {
             let result = try managedContext.fetch(fetchRequest)
-            delegate.goals.append(contentsOf: result)
+            return result
         } catch {
            print("Something went wrong \(error)")
         }
+        return nil
     }
     
     

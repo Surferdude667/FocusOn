@@ -32,4 +32,13 @@ class TimeManager {
         
         return dateFormatter.string(from: date)
     }
+    
+    
+    func formattedMonth(for date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "LLLL"
+        let nameOfMonth = dateFormatter.string(from: date)
+        
+        return nameOfMonth
+    }
 }
