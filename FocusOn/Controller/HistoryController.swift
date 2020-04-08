@@ -12,68 +12,98 @@ import CoreData
 class HistoryController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var dataManager = DataManager()
-    var history: [Goal]?
+    var timeManager = TimeManager()
+    var completeHistory: [Goal]?
+    var historyByMonth = [MonthHistory]()
     
-    
-    struct History {
-        // ------ SECTION ------ //
-        let header: String? // Date
-        let summary: String? // Summary of month string
         
-        // ------ SECTION FOR EACH goalsAndTasks ------ //
-        let goalsAndTasks: [ [Goal : [Task] ] ]?
-        
-        // HEADER: Goal date.
-        // Index 0: Goal
-        // Index 0...: Task
+    struct DayHistory {
+        let day: String
+        let entries: [Goal]
     }
-    
-    
-    
-    
     
     struct MonthHistory {
         let month: String
         let summary: String
-        let entries: [History]
+        let entries: [DayHistory]
     }
     
     
-    
-    func populateHistory(goals: [Goal]) -> [History] {
-        var result = [History]()
+    func createMontlyHistory(with goals: [Goal]) -> [MonthHistory] {
+        
+        var goalsForThisDay = [Goal]()
+        var goalsForThisMonth = [DayHistory]()
+        var result = [MonthHistory]()
+        
+        let totalGoalsProvided = goals.count
+        var goalsIterated = 0
         
         var currentMonth: String?
+        var currentDay: String?
         
-        for goal in goals {
-            
-            func appendNewGoal() {
-                let day = TimeManager().formattedDate(for: goal.creation)
-                let tasks = goal.tasks?.allObjects as! [Task]
-                result.append(History(header: day, summary: nil, goalsAndTasks: [[goal : tasks]]))
-            }
-            
-            func appendNewMonth() {
-                result.append(History(header: currentMonth, summary: "Summary", goalsAndTasks: nil))
-            }
-            
-            
-            if currentMonth == nil {
-                currentMonth = TimeManager().formattedMonth(for: goal.creation)
-                appendNewMonth()
-            } else {
+        func saveToMonth(date: Date) {
+            if goalsForThisMonth.count != 0 {
                 
-                if currentMonth != TimeManager().formattedMonth(for: goal.creation) {
-                    currentMonth = TimeManager().formattedMonth(for: goal.creation)
-                    appendNewMonth()
-                    appendNewGoal()
-                } else {
-                    appendNewGoal()
+                var completed = 0
+                let total = goalsForThisMonth.count
+                
+                for goalInMonth in goalsForThisMonth {
+                    for goal in goalInMonth.entries {
+                        if goal.completed {
+                            completed += 1
+                        }
+                    }
                 }
+                
+                result.append(MonthHistory(month: currentMonth!, summary: "Summary: \(completed)/\(total)", entries: goalsForThisMonth))
+                currentMonth = timeManager.formattedMonth(for: date)
+                goalsForThisMonth.removeAll()
+            
             }
         }
-        return [History]()
+        
+        for goal in goals {
+            if currentMonth == nil { currentMonth = timeManager.formattedMonth(for: goal.creation) }
+            if currentDay == nil { currentDay = timeManager.formattedDay(for: goal.creation) }
+            
+            
+            
+            // ------------------------ IF CURRENT MONTH START ------------------------ //
+            if currentMonth == timeManager.formattedMonth(for: goal.creation) {
+                
+                goalsIterated += 1
+                print(totalGoalsProvided)
+                print("Iter: \(goalsIterated)")
+                // ------------------------ IF CURRENT DAY START ------------------------ //
+                if currentDay == timeManager.formattedDay(for: goal.creation) {
+                    goalsForThisDay.append(goal)
+                } else {
+                    
+                    if goalsForThisDay.count != 0 {
+                        goalsForThisMonth.append(DayHistory(day: currentDay!, entries: goalsForThisDay))
+                        goalsForThisDay.removeAll()
+                    }
+                    
+                    currentDay = timeManager.formattedDay(for: goal.creation)
+                    goalsForThisDay.append(goal)
+                }
+                // ------------------------ IF CURRENT DAY END ------------------------ //
+                
+                
+            } else if currentMonth != timeManager.formattedMonth(for: goal.creation) || goalsIterated == totalGoalsProvided {
+                saveToMonth(date: goal.creation)
+            }
+            // ------------------------ IF CURRENT MONTH END ------------------------ //
+            
+            if goalsIterated == totalGoalsProvided || result.count == 0 {
+                saveToMonth(date: goal.creation)
+            }
+            
+        }
+        
+        return result
     }
+    
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -82,21 +112,29 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        history = dataManager.fetchHistory(from: nil, to: nil)
+        completeHistory = dataManager.fetchHistory(from: nil, to: nil)
+        print(createMontlyHistory(with: completeHistory!))
+        historyByMonth = createMontlyHistory(with: completeHistory!)
     }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return history!.count
+        return historyByMonth[section].entries.count + historyByMonth.count
     }
+    
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath)
-        cell.textLabel?.text = history![indexPath.row].title
+        
+
+        
+        cell.textLabel?.text = completeHistory![indexPath.row].title
         return cell
     }
     

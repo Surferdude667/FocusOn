@@ -36,7 +36,17 @@ class TimeManager {
     
     func formattedMonth(for date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "LLLL"
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "LLLL yyyy"
+        let nameOfMonth = dateFormatter.string(from: date)
+        
+        return nameOfMonth
+    }
+    
+    func formattedDay(for date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "MMM d yyyy"
         let nameOfMonth = dateFormatter.string(from: date)
         
         return nameOfMonth
