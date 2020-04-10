@@ -18,6 +18,10 @@ class TimeManager {
         return startOfDay(for: Calendar.current.date(byAdding: .day, value: -1, to: today)!)
     }
     
+    var lastMonth: Date {
+        return startOfDay(for: Calendar.current.date(byAdding: .day, value: -45, to: today)!)
+    }
+    
     func startOfDay(for date: Date) -> Date {
         var calender = Calendar.current
         calender.timeZone = TimeZone.current

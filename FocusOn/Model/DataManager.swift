@@ -145,18 +145,18 @@ class DataManager {
     
     // MARK:- Fetch
     
-//    func fetchAllGoals() {
-//        let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
-//        fetchRequest.returnsObjectsAsFaults = false
-//
-//        do {
-//            let goals = try managedContext.fetch(fetchRequest)
-//            print(goals.count)
-//            delegate?.goals.append(contentsOf: goals)
-//        } catch {
-//            print("Could not fetch goals. \(error)")
-//        }
-//    }
+    func fetchAllGoals() -> [Goal]? {
+        let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
+        fetchRequest.returnsObjectsAsFaults = false
+
+        do {
+            let goals = try managedContext.fetch(fetchRequest)
+            return goals
+        } catch {
+            print("Could not fetch goals. \(error)")
+        }
+        return nil
+    }
     
     // TEST
     func fetchGoals(from date: Date) -> [Goal] {
@@ -188,12 +188,13 @@ class DataManager {
         
         fetchRequest.predicate = predicate
         
-        let sectionSortDescriptor = NSSortDescriptor(key: "creation", ascending: false)
+        let sectionSortDescriptor = NSSortDescriptor(key: "creation", ascending: true)
         fetchRequest.sortDescriptors = [sectionSortDescriptor]
-        fetchRequest.returnsObjectsAsFaults = false
+        //fetchRequest.returnsObjectsAsFaults = false
         
         do {
             let result = try managedContext.fetch(fetchRequest)
+            print(result)
             return result
         } catch {
            print("Something went wrong \(error)")
