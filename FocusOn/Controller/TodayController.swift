@@ -77,7 +77,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     
-    // MARK:- SWIPE ACTIONS
+    // MARK:- Swipe actions
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let lastRow = tableView.numberOfRows(inSection: indexPath.section)-1
@@ -260,17 +260,11 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         addNewGoal()
     }
     
-    //  MARK:- UIViewController lifecycle
+    //  MARK:- ViewController lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
-        
-//        print("Today: \(timeManager.today)")
-//        print("Yesterday: \(timeManager.yesterday)")
-//
-//        print("Today: \(timeManager.formattedDate(for: timeManager.today))")
-//        print("Yesterday: \(timeManager.formattedDate(for: timeManager.yesterday))")
     }
     
     override func viewDidAppear(_ animated: Bool) {

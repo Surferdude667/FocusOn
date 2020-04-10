@@ -145,6 +145,7 @@ class DataManager {
     
     // MARK:- Fetch
     
+    // Fetch all goals.
     func fetchAllGoals() -> [Goal]? {
         let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
         fetchRequest.returnsObjectsAsFaults = false
@@ -159,7 +160,7 @@ class DataManager {
         return nil
     }
     
-    // TEST
+    // Fetch goals from specific day.
     func fetchGoals(from date: Date) -> [Goal] {
         let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
         fetchRequest.predicate = NSPredicate(format: "creation = %@", timeManager.startOfDay(for: date) as NSDate)
@@ -174,7 +175,7 @@ class DataManager {
     }
     
     
-    // TEST
+    // Fetch goals from and to specific date.
     func fetchHistory(from: Date?, to: Date?) -> [Goal]? {
         let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
         
@@ -191,7 +192,7 @@ class DataManager {
         
         let sectionSortDescriptor = NSSortDescriptor(key: "creation", ascending: true)
         fetchRequest.sortDescriptors = [sectionSortDescriptor]
-        //fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.returnsObjectsAsFaults = false
         
         do {
             let result = try managedContext.fetch(fetchRequest)

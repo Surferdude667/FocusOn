@@ -18,57 +18,52 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
 
     @IBOutlet weak var tableView: UITableView!
     
+    
+    
+    // MARK:- TableView delegates
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return history.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return history[section].date
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch history[section].type {
+        case .month:
+            return 1
+        case .day:
+            return history[section].goals?.count ?? 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch history[indexPath.section].type {
+        case .month:
+            let summary = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath)
+            summary.textLabel?.text = history[indexPath.section].summary
+            return summary
+        case .day:
+            let goal = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath)
+            goal.textLabel?.text = history[indexPath.section].goals![indexPath.row].title
+            return goal
+        }
+    }
+    
+    // MARK:- ViewController lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         history = historyManager.sortHistoryData(goals: dataManager.fetchAllGoals()!)
-        //print(history)
-    }
-    
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return history.count
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if history[section].type == .month {
-            return 1
-        }
-        
-        if history[section].type == .day {
-            return history[section].descriptions?.count ?? 0
-        }
-        
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if history[indexPath.section].type == .month {
-            let summary = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath)
-            summary.textLabel?.text = history[indexPath.section].headline
-            return summary
-        }
-        
-        if history[indexPath.section].type == .day {
-            let goal = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath)
-            goal.textLabel?.text = history[indexPath.section].descriptions![indexPath.row].title
-            return goal
-        }
-
-        return UITableViewCell()
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let text = history[section].date
-        return text
+        tableView.reloadData()
     }
     
 }
