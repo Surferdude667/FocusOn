@@ -8,27 +8,29 @@
 
 import Foundation
 
+struct History {
+    var date: String // Section header
+    var headline: String? // Always first cell
+    var descriptions: [Goal]? // This is for all the tasks. Always nill if HistoryType .month
+    var type: historyType // Shows if the data is month or day.
+    
+    enum historyType {
+        case month
+        case day
+    }
+}
+
+struct MonthDayGoals {
+    var month: Int
+    var day: Int
+    var goals: [Goal]?
+}
+
 class HistoryManager {
     
     var timeManager = TimeManager()
     
-    struct History {
-        var date: String // Section header
-        var headline: String? // Always first cell
-        var descriptions: [Goal]? // This is for all the tasks. Always nill if HistoryType .month
-        var type: historyType // Shows if the data is month or day.
-        
-        enum historyType {
-            case month
-            case day
-        }
-    }
-    
-    struct MonthDayGoals {
-        var month: Int
-        var day: Int
-        var goals: [Goal]?
-    }
+
     
     
     func sortHistoryData(goals: [Goal]) -> [History] {

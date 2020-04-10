@@ -14,6 +14,7 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
     var dataManager = DataManager()
     var historyManager = HistoryManager()
     var completeHistory: [Goal]?
+    var history = [History]()
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -26,26 +27,48 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        completeHistory = dataManager.fetchAllGoals()
-        let haha = historyManager.sortHistoryData(goals: completeHistory!)
-        print(haha)
+        history = historyManager.sortHistoryData(goals: dataManager.fetchAllGoals()!)
+        //print(history)
     }
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
+        return history.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        
+        if history[section].type == .month {
+            return 1
+        }
+        
+        if history[section].type == .day {
+            return history[section].descriptions?.count ?? 0
+        }
+        
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if history[indexPath.section].type == .month {
+            let summary = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath)
+            summary.textLabel?.text = history[indexPath.section].headline
+            return summary
+        }
+        
+        if history[indexPath.section].type == .day {
+            let goal = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath)
+            goal.textLabel?.text = history[indexPath.section].descriptions![indexPath.row].title
+            return goal
+        }
+
         return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Section \(section)"
+        let text = history[section].date
+        return text
     }
     
 }

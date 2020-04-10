@@ -150,7 +150,8 @@ class DataManager {
         fetchRequest.returnsObjectsAsFaults = false
 
         do {
-            let goals = try managedContext.fetch(fetchRequest)
+            var goals = try managedContext.fetch(fetchRequest)
+            goals.reverse()
             return goals
         } catch {
             print("Could not fetch goals. \(error)")
