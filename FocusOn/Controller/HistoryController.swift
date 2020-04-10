@@ -14,19 +14,25 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
     var dataManager = DataManager()
     var timeManager = TimeManager()
     var completeHistory: [Goal]?
-    var historyByMonth = [MonthHistory]()
+    //var historyByMonth = [MonthHistory]()
     
     
     struct History {
         var date: String // Section header
-        var headline: String // Always first cell
-        var descriptions: [String]? // This is for all the tasks. Always nill if HistoryType .month
+        var headline: String? // Always first cell
+        var descriptions: [Goal]? // This is for all the tasks. Always nill if HistoryType .month
         var type: historyType // Shows if the data is month or day.
         
         enum historyType {
             case month
             case day
         }
+    }
+    
+    struct MonthDayGoals {
+        var month: Int
+        var day: Int
+        var goals: [Goal]?
     }
     
     
@@ -98,94 +104,6 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
             totalDaysInMonth.append(differentDays)
         }
         
-        //print(totalDaysInMonth)
-        
-        // [Month : [Day : [Goals]]
-        //var goalsInDaysOfMonth = [Int : [Int : Goal]]()
-        
-
-        
-        
-        
-//        var goalsInEachDay = [[[Goal?]]](repeatElement([[nil]], count: differentMonths.count))
-//
-//        for month in 0..<differentMonths.count {
-//            for day in 0..<totalDaysInMonth[month].count {
-//
-//
-//                var dayInMonth = [[Goal]]()
-//                var goalInDay = [Goal]()
-//
-//
-//                for goal in goalsInEachMonth[month] {
-//                    if goal != nil {
-//                        if timeManager.formattedDay(for: goal!.creation) == totalDaysInMonth[month][day] {
-//                            goalInDay.append(goal!)
-//                        }
-//                    }
-//                }
-//
-//
-//                dayInMonth.append(goalInDay)
-//                goalsInEachDay.append(dayInMonth)
-//                goalInDay.removeAll()
-//            }
-//        }
-//
-//
-//
-//
-//
-//
-//        var goalsInEachDay = [[Goal]]()
-//
-//        for month in 0..<differentMonths.count {
-//            for day in 0..<totalDaysInMonth[month].count {
-//
-//                var goalInDay = [Goal]()
-//
-//                for goal in goalsInEachMonth[month] {
-//                    if goal != nil {
-//                        if timeManager.formattedDay(for: goal!.creation) == totalDaysInMonth[month][day] {
-//                            goalInDay.append(goal!)
-//
-//                        }
-//                    }
-//                }
-//                goalsInEachDay.append(goalInDay)
-//                goalInDay.removeAll()
-//            }
-//        }
-        
-        
-        
-        
-        //print(differentMonths)
-        //print(goalsInEachMonth)
-        //print(summaryForEachMonth)
-        //print(totalDaysInMonth)
-        //print(goalsInEachDay.description)
-        
-        
-        // [Days[Goals]]
-        
-//        for month in 0..<differentMonths.count {
-//            print("Month: \(differentMonths[month])")
-//            for day in 0..<totalDaysInMonth[month].count {
-//                print("Day: \(totalDaysInMonth[month][day])")
-//
-//
-//
-//            }
-//        }
-        
-        
-        
-        struct MonthDayGoals {
-            var month: Int
-            var day: Int
-            var goals: [Goal]
-        }
         
         var collectionOfGoalsInMonthAndDay = [MonthDayGoals]()
         
@@ -221,16 +139,16 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
                     if goal.month == month {
                         if goal.day == day {
                             
-                            finalResult.append(History(date: totalDaysInMonth[month][day], headline: <#T##String#>, descriptions: <#T##[String]?#>, type: <#T##History.historyType#>))
+                            finalResult.append(History(date: totalDaysInMonth[month][day], headline: nil, descriptions: goal.goals, type: .day))
                             
-                            for G in goal.goals {
+                            for G in goal.goals! {
                                 print("Goal: \(G.title)")
                             }
                         }
                      
                         
                         
-                        //finalResult.append(History(date: totalDaysInMonth[month][day], headline: goal, descriptions: <#T##[String]?#>, type: <#T##History.historyType#>))
+                        
                         
                     }
                 }
@@ -242,137 +160,10 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
         
         
         
-//        for month in 0..<differentMonths.count {
-//            finalResult.append(History(date: differentMonths[month], headline: summaryForEachMonth[month], descriptions: nil, type: .month))
-//
-//            for day in 0..<totalDaysInMonth.count {
-//
-//                var goalsInDay : [Goal] {
-//                    for goal in totalCollection {
-//                        if goal.day == day && goal.month == month {
-//                            return goal.goals
-//                        }
-//                    }
-//                    return [Goal]()
-//                }
-//
-//                var goalsInDayAsString = [String]()
-//                print(goalsInDayAsString)
-//
-//                for goal in goalsInDay {
-//                    goalsInDayAsString.append(goal.title)
-//                }
-//
-//
-//                //finalResult.append(History(date: totalDaysInMonth[month][day], headline: goalsInDayAsString[day], descriptions: goalsInDayAsString, type: .day))
-//            }
-//
-//        }
-        
-        
-        
-        return [History]()
+        return finalResult
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    struct DayHistory {
-        let day: String
-        let goals: [Goal]
-    }
-    
-    struct MonthHistory {
-        let month: String
-        let summary: String
-        let days: [DayHistory]
-    }
-    
-    
-    func createMontlyHistory(with goals: [Goal]) -> [MonthHistory] {
-        var goalsForThisDay = [Goal]()
-        var goalsForThisMonth = [DayHistory]()
-        var result = [MonthHistory]()
-        
-        let totalGoalsProvided = goals.count
-        var goalsIterated = 0
-        
-        var currentMonth: String?
-        var currentDay: String?
-        
-        func saveToMonth(date: Date) {
-            if goalsForThisMonth.count != 0 {
-                
-                // TODO: This calculates wrong...
-                var completed = 0
-                let total = goalsForThisMonth.count
-                
-                for goalInMonth in goalsForThisMonth {
-                    for goal in goalInMonth.goals {
-                        if goal.completed {
-                            completed += 1
-                        }
-                    }
-                }
-                
-                result.append(MonthHistory(month: currentMonth!, summary: "Summary: \(completed)/\(total)", days: goalsForThisMonth))
-                currentMonth = timeManager.formattedMonth(for: date)
-                goalsForThisMonth.removeAll()
-            
-            }
-        }
-        
-        for goal in goals {
-            if currentMonth == nil { currentMonth = timeManager.formattedMonth(for: goal.creation) }
-            if currentDay == nil { currentDay = timeManager.formattedDay(for: goal.creation) }
-            
-            goalsIterated += 1
-            
-            // ------------------------ IF CURRENT MONTH START ------------------------ //
-            if currentMonth == timeManager.formattedMonth(for: goal.creation) {
-            
-                // ------------------------ IF CURRENT DAY START ------------------------ //
-                if currentDay == timeManager.formattedDay(for: goal.creation) {
-                    goalsForThisDay.append(goal)
-                } else {
-                    
-                    if goalsForThisDay.count != 0 {
-                        goalsForThisMonth.append(DayHistory(day: currentDay!, goals: goalsForThisDay))
-                        goalsForThisDay.removeAll()
-                    }
-                    
-                    currentDay = timeManager.formattedDay(for: goal.creation)
-                    goalsForThisDay.append(goal)
-                }
-                // ------------------------ IF CURRENT DAY END ------------------------ //
-                
-                
-            } else if currentMonth != timeManager.formattedMonth(for: goal.creation) || goalsIterated == totalGoalsProvided {
-                saveToMonth(date: goal.creation)
-            }
-            
-            
-            // ------------------------ IF CURRENT MONTH END ------------------------ //
-            
-            if goalsIterated == totalGoalsProvided || result.count == 0 {
-                saveToMonth(date: goal.creation)
-            }
-            
-        }
-        //print(result)
-        return result
-    }
-    
-    
+
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -389,28 +180,23 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
         
         completeHistory = dataManager.fetchAllGoals()
         
-        sortHistoryData(goals: completeHistory!)
-        
+        let haha = sortHistoryData(goals: completeHistory!)
+        print(haha)
         
         
         
         
         
         //print(completeHistory)
-        historyByMonth = createMontlyHistory(with: completeHistory!)
+        //historyByMonth = createMontlyHistory(with: completeHistory!)
         //print(historyByMonth)
     }
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        let numberOfMonths = historyByMonth.count
-        var numberOfDays = 0
-        for month in historyByMonth {
-            numberOfDays += month.days.count
-        }
-        
-        //print("TOTAL Sections: \(numberOfDays + numberOfMonths)")
-        return numberOfMonths + numberOfDays
+       
+
+        return 0
     }
     
     
@@ -418,42 +204,17 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var totalRows = 1
-
-        let numberOfMonths = historyByMonth.count
-        for month in 0..<numberOfMonths {
-            if month == section {
-                for days in 0..<historyByMonth[month].days.count {
-                    totalRows += 1
-                    for _ in 0..<historyByMonth[month].days[days].goals.count {
-                        totalRows += 1
-                    }
-                }
-            }
-        }
-        print("TOTAL ROWS: \(totalRows) in section \(section)")
-        return totalRows
+        
+        return 1
     }
     
     
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath)
+
         
-        
-        let numberOfMonths = historyByMonth.count
-        for monthSection in 0..<numberOfMonths {
-            if monthSection == indexPath.section {
-                if indexPath.row == 0 {
-                   cell.textLabel?.text = historyByMonth[indexPath.section].summary
-                }
-            } else {
-                
-            }
-        }
-        
-        return cell
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
