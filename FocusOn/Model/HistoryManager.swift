@@ -118,7 +118,7 @@ class HistoryManager {
         }
         
         // MARK:- Final result creation
-        // Create filtered result.
+        // Create sorted result.
         for month in 0..<differentMonths.count {
             finalResult.append(History(date: differentMonths[month], summary: summaryForEachMonth[month], goals: nil, type: .month))
             

@@ -42,12 +42,13 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch history[indexPath.section].type {
         case .month:
-            let summary = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath)
+            let summary = tableView.dequeueReusableCell(withIdentifier: "historySummaryCell", for: indexPath)
             summary.textLabel?.text = history[indexPath.section].summary
             return summary
         case .day:
-            let goal = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath)
+            let goal = tableView.dequeueReusableCell(withIdentifier: "historyGoalCell", for: indexPath) as! HistoryGoalTableViewCell
             goal.textLabel?.text = history[indexPath.section].goals![indexPath.row].title
+            goal.goal = history[indexPath.section].goals![indexPath.row]
             return goal
         }
     }

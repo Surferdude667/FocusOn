@@ -14,6 +14,8 @@
 		F67981DE2422139C00B518DE /* ProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67981DD2422139C00B518DE /* ProgressController.swift */; };
 		F689AAB7242E28E30037D003 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F689AAB6242E28E30037D003 /* DataManager.swift */; };
 		F69A87AB2440B813004E9743 /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69A87AA2440B813004E9743 /* HistoryManager.swift */; };
+		F69A87AD24421442004E9743 /* HistoryGoalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69A87AC24421442004E9743 /* HistoryGoalTableViewCell.swift */; };
+		F69A87B1244215AC004E9743 /* HistoryDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69A87B0244215AC004E9743 /* HistoryDetailController.swift */; };
 		F6AE8FFB2438DED400EFC4B7 /* CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AE8FFA2438DED400EFC4B7 /* CellDelegate.swift */; };
 		F6C1567C24163FF800228264 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1567B24163FF800228264 /* AppDelegate.swift */; };
 		F6C1567E24163FF800228264 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1567D24163FF800228264 /* SceneDelegate.swift */; };
@@ -45,6 +47,8 @@
 		F67981DD2422139C00B518DE /* ProgressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressController.swift; sourceTree = "<group>"; };
 		F689AAB6242E28E30037D003 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		F69A87AA2440B813004E9743 /* HistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
+		F69A87AC24421442004E9743 /* HistoryGoalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryGoalTableViewCell.swift; sourceTree = "<group>"; };
+		F69A87B0244215AC004E9743 /* HistoryDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDetailController.swift; sourceTree = "<group>"; };
 		F6AE8FFA2438DED400EFC4B7 /* CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDelegate.swift; sourceTree = "<group>"; };
 		F6C1567824163FF800228264 /* FocusOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6C1567B24163FF800228264 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +89,7 @@
 			children = (
 				F6C799D62424BE5C00B1C455 /* GoalTableViewCell.swift */,
 				F6C799D82424BE9900B1C455 /* TaskTableViewCell.swift */,
+				F69A87AC24421442004E9743 /* HistoryGoalTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -118,6 +123,7 @@
 				F6C1567F24163FF800228264 /* TodayController.swift */,
 				F67981DB2422137600B518DE /* HistoryController.swift */,
 				F67981DD2422139C00B518DE /* ProgressController.swift */,
+				F69A87B0244215AC004E9743 /* HistoryDetailController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -274,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6C799D72424BE5C00B1C455 /* GoalTableViewCell.swift in Sources */,
+				F69A87AD24421442004E9743 /* HistoryGoalTableViewCell.swift in Sources */,
 				F6AE8FFB2438DED400EFC4B7 /* CellDelegate.swift in Sources */,
 				F689AAB7242E28E30037D003 /* DataManager.swift in Sources */,
 				F6C1568024163FF800228264 /* TodayController.swift in Sources */,
@@ -286,6 +293,7 @@
 				F67981DE2422139C00B518DE /* ProgressController.swift in Sources */,
 				F6C1567C24163FF800228264 /* AppDelegate.swift in Sources */,
 				F67981DC2422137600B518DE /* HistoryController.swift in Sources */,
+				F69A87B1244215AC004E9743 /* HistoryDetailController.swift in Sources */,
 				F6C1567E24163FF800228264 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
