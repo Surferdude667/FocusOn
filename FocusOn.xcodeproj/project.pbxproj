@@ -122,8 +122,8 @@
 			children = (
 				F6C1567F24163FF800228264 /* TodayController.swift */,
 				F67981DB2422137600B518DE /* HistoryController.swift */,
-				F67981DD2422139C00B518DE /* ProgressController.swift */,
 				F69A87B0244215AC004E9743 /* HistoryDetailController.swift */,
+				F67981DD2422139C00B518DE /* ProgressController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

@@ -67,4 +67,15 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
         tableView.reloadData()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "historyDetailSeque" {
+            
+            let historyDetailController = segue.destination as! HistoryDetailController
+            let indexPath = self.tableView.indexPathForSelectedRow
+            let cell = self.tableView.cellForRow(at: indexPath!) as! HistoryGoalTableViewCell
+            historyDetailController.goal = cell.goal
+            
+        }
+    }
+    
 }
