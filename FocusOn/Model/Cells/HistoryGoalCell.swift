@@ -9,5 +9,10 @@
 import UIKit
 
 class HistoryGoalCell: UITableViewCell {
+    
+    @IBOutlet weak var checkMarkImage: UIImageView!
+    @IBOutlet weak var goalTitleLabel: UILabel!
+    
+    
     var goal: Goal!
 }

@@ -10,4 +10,7 @@ import UIKit
 
 class DetailTaskCell: UITableViewCell {
     
+    @IBOutlet weak var taskCheckmarkImage: UIImageView!
+    @IBOutlet weak var taskTitleLabel: UILabel!
+    
 }

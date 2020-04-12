@@ -10,4 +10,7 @@ import UIKit
 
 class DetailGoalCell: UITableViewCell {
     
+    @IBOutlet weak var goalCheckmarkImage: UIImageView!
+    @IBOutlet weak var goalTitleLabel: UILabel!
+    
 }

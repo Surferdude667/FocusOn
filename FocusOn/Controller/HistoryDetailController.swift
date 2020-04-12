@@ -18,7 +18,7 @@ class HistoryDetailController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let tasks = goal.tasks?.allObjects {
-            return tasks.count + 1
+            return tasks.count
         }
         return 0
      }
@@ -28,13 +28,13 @@ class HistoryDetailController: UIViewController, UITableViewDataSource, UITableV
         
         switch indexPath.row {
         case 0:
-            let goal = tableView.dequeueReusableCell(withIdentifier: "detailGoalCell", for: indexPath)
-            goal.textLabel?.text = self.goal.title
+            let goal = tableView.dequeueReusableCell(withIdentifier: "detailGoalCell", for: indexPath) as! DetailGoalCell
+            goal.goalTitleLabel.text = self.goal.title
             return goal
         default:
             if let tasks = goal.tasks?.allObjects as? [Task] {
-                let task = tableView.dequeueReusableCell(withIdentifier: "detailTaskCell", for: indexPath)
-                task.textLabel?.text = tasks[indexPath.row-1].title
+                let task = tableView.dequeueReusableCell(withIdentifier: "detailTaskCell", for: indexPath) as! DetailTaskCell
+                task.taskTitleLabel.text = tasks[indexPath.row - 1].title
                 return task
             }
         }

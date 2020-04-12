@@ -10,4 +10,6 @@ import UIKit
 
 class HistorySummaryCell: UITableViewCell {
     
+    @IBOutlet weak var summaryLabel: UILabel!
+    
 }

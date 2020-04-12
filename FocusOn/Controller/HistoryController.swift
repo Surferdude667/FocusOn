@@ -42,12 +42,12 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch history[indexPath.section].type {
         case .month:
-            let summary = tableView.dequeueReusableCell(withIdentifier: "historySummaryCell", for: indexPath)
-            summary.textLabel?.text = history[indexPath.section].summary
+            let summary = tableView.dequeueReusableCell(withIdentifier: "historySummaryCell", for: indexPath) as! HistorySummaryCell
+            summary.summaryLabel.text = history[indexPath.section].summary
             return summary
         case .day:
             let goal = tableView.dequeueReusableCell(withIdentifier: "historyGoalCell", for: indexPath) as! HistoryGoalCell
-            goal.textLabel?.text = history[indexPath.section].goals![indexPath.row].title
+            goal.goalTitleLabel.text = history[indexPath.section].goals![indexPath.row].title
             goal.goal = history[indexPath.section].goals![indexPath.row]
             return goal
         }
@@ -60,10 +60,12 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
             view.tintColor = UIColor.black
             let header = view as! UITableViewHeaderFooterView
             header.textLabel?.textColor = UIColor.white
+            header.textLabel?.textAlignment = .center
         case .day:
-            view.tintColor = UIColor.gray
+            view.tintColor = UIColor.systemGray6
             let header = view as! UITableViewHeaderFooterView
             header.textLabel?.textColor = UIColor.black
+            header.textLabel?.textAlignment = .left
         }
     }
     
