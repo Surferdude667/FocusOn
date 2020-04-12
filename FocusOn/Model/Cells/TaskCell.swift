@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskTableViewCell: UITableViewCell, UITextFieldDelegate, DataManagerDelegate {
+class TaskCell: UITableViewCell, UITextFieldDelegate, DataManagerDelegate {
     
     var dataManager = DataManager()
     var goals = [Goal]()

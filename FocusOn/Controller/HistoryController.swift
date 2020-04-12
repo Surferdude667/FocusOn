@@ -46,7 +46,7 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
             summary.textLabel?.text = history[indexPath.section].summary
             return summary
         case .day:
-            let goal = tableView.dequeueReusableCell(withIdentifier: "historyGoalCell", for: indexPath) as! HistoryGoalTableViewCell
+            let goal = tableView.dequeueReusableCell(withIdentifier: "historyGoalCell", for: indexPath) as! HistoryGoalCell
             goal.textLabel?.text = history[indexPath.section].goals![indexPath.row].title
             goal.goal = history[indexPath.section].goals![indexPath.row]
             return goal
@@ -87,7 +87,7 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
             
             let historyDetailController = segue.destination as! HistoryDetailController
             let indexPath = self.tableView.indexPathForSelectedRow
-            let cell = self.tableView.cellForRow(at: indexPath!) as! HistoryGoalTableViewCell
+            let cell = self.tableView.cellForRow(at: indexPath!) as! HistoryGoalCell
             historyDetailController.goal = cell.goal
         }
     }

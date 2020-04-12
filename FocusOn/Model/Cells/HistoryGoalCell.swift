@@ -8,6 +8,6 @@
 
 import UIKit
 
-class HistoryCell: UITableViewCell {
+class HistoryGoalCell: UITableViewCell {
     var goal: Goal!
 }

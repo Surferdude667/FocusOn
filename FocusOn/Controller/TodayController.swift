@@ -50,7 +50,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         let bottomRow = tableView.numberOfRows(inSection: sections)-1
         let bottomIndexPath = IndexPath(row: bottomRow, section: sections)
         
-        let newGoal = tableView.cellForRow(at: IndexPath(row: 0, section: bottomIndexPath.section)) as! GoalTableViewCell
+        let newGoal = tableView.cellForRow(at: IndexPath(row: 0, section: bottomIndexPath.section)) as! GoalCell
         newGoal.goalTextField.becomeFirstResponder()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -68,9 +68,9 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 let cell = tableView.cellForRow(at: indexPath)
                 
                 if indexPath.row == 0 {
-                    if let goal = cell as? GoalTableViewCell { goal.indexPath = indexPath }
+                    if let goal = cell as? GoalCell { goal.indexPath = indexPath }
                 } else {
-                    if let task = cell as? TaskTableViewCell { task.indexPath = indexPath }
+                    if let task = cell as? TaskCell { task.indexPath = indexPath }
                 }
             }
         }
@@ -93,8 +93,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         let action = UIContextualAction(style: .destructive, title: "Delete") {
             (contextualAction: UIContextualAction, swipeButton: UIView, completionHandler: (Bool) -> Void) in
             
-            let goalCell = self.tableView.cellForRow(at: indexPath) as? GoalTableViewCell
-            let taskCell = self.tableView.cellForRow(at: indexPath) as? TaskTableViewCell
+            let goalCell = self.tableView.cellForRow(at: indexPath) as? GoalCell
+            let taskCell = self.tableView.cellForRow(at: indexPath) as? TaskCell
             
             if indexPath.row == 0 {
                 let alertController = UIAlertController(title: "Delete whole section?", message: "Make sure lalal...", preferredStyle: .alert)
@@ -164,7 +164,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         //  Set goal data in first row.
         if indexPath.row == 0 {
-            let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: indexPath) as! GoalTableViewCell
+            let goal = tableView.dequeueReusableCell(withIdentifier: "GoalCell", for: indexPath) as! GoalCell
             goal.goalTextField.text = goals[indexPath.section].title
             goal.indexPath = indexPath
             goal.goal = goals[indexPath.section]
@@ -174,7 +174,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
             //  Set task data in remaining rows.
         else {
-            let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
+            let task = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskCell
             let tasksInSection = goals[indexPath.section].tasks?.allObjects as! [Task]
             let taskForRow = tasksInSection[indexPath.row-1]
             task.taskTextField.text = taskForRow.title

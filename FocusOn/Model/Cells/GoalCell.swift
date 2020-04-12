@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GoalTableViewCell: UITableViewCell, UITextFieldDelegate {
+class GoalCell: UITableViewCell, UITextFieldDelegate {
     
     var delegate: CellDelegate?
     var dataManager = DataManager()

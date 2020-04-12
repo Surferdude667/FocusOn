@@ -28,12 +28,12 @@ class HistoryDetailController: UIViewController, UITableViewDataSource, UITableV
         
         switch indexPath.row {
         case 0:
-            let goal = tableView.dequeueReusableCell(withIdentifier: "historyDetailGoalCell", for: indexPath)
+            let goal = tableView.dequeueReusableCell(withIdentifier: "detailGoalCell", for: indexPath)
             goal.textLabel?.text = self.goal.title
             return goal
         default:
             if let tasks = goal.tasks?.allObjects as? [Task] {
-                let task = tableView.dequeueReusableCell(withIdentifier: "historyDetailTaskCell", for: indexPath)
+                let task = tableView.dequeueReusableCell(withIdentifier: "detailTaskCell", for: indexPath)
                 task.textLabel?.text = tasks[indexPath.row-1].title
                 return task
             }
