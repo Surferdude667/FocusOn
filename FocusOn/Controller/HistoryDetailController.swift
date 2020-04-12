@@ -15,20 +15,30 @@ class HistoryDetailController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var tableView: UITableView!
     
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let tasks = goal.tasks?.allObjects {
-            return tasks.count
+            return tasks.count + 1
         }
         return 0
      }
      
+        
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let tasks = goal.tasks?.allObjects as? [Task] {
-            let task = tableView.dequeueReusableCell(withIdentifier: "historyGoalCell", for: indexPath)
-            task.textLabel?.text = tasks[indexPath.row].title
-            print("called")
-            return task
+        
+        switch indexPath.row {
+        case 0:
+            let goal = tableView.dequeueReusableCell(withIdentifier: "historyDetailGoalCell", for: indexPath)
+            goal.textLabel?.text = self.goal.title
+            return goal
+        default:
+            if let tasks = goal.tasks?.allObjects as? [Task] {
+                let task = tableView.dequeueReusableCell(withIdentifier: "historyDetailTaskCell", for: indexPath)
+                task.textLabel?.text = tasks[indexPath.row-1].title
+                return task
+            }
         }
+        
         return UITableViewCell()
      }
     
@@ -41,9 +51,6 @@ class HistoryDetailController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
-        
-        
-        print(goal)
     }
     
 

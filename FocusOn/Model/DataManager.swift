@@ -150,9 +150,11 @@ class DataManager {
         let fetchRequest = NSFetchRequest<Goal>(entityName: Goal.entityName)
         fetchRequest.returnsObjectsAsFaults = false
 
+        let sort = NSSortDescriptor(key: #keyPath(Goal.creation), ascending: false)
+        fetchRequest.sortDescriptors = [sort]
+        
         do {
-            var goals = try managedContext.fetch(fetchRequest)
-            goals.reverse()
+            let goals = try managedContext.fetch(fetchRequest)
             return goals
         } catch {
             print("Could not fetch goals. \(error)")

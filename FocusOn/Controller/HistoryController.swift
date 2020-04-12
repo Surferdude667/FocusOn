@@ -52,6 +52,21 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
             return goal
         }
     }
+        
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        switch history[section].type {
+        case .month:
+            view.tintColor = UIColor.black
+            let header = view as! UITableViewHeaderFooterView
+            header.textLabel?.textColor = UIColor.white
+        case .day:
+            view.tintColor = UIColor.gray
+            let header = view as! UITableViewHeaderFooterView
+            header.textLabel?.textColor = UIColor.black
+        }
+    }
+    
     
     // MARK:- ViewController lifecycle
     
@@ -74,7 +89,6 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
             let indexPath = self.tableView.indexPathForSelectedRow
             let cell = self.tableView.cellForRow(at: indexPath!) as! HistoryGoalTableViewCell
             historyDetailController.goal = cell.goal
-            
         }
     }
     
