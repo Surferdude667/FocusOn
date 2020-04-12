@@ -13,6 +13,13 @@ class HistoryGoalCell: UITableViewCell {
     @IBOutlet weak var checkMarkImage: UIImageView!
     @IBOutlet weak var goalTitleLabel: UILabel!
     
-    
     var goal: Goal!
+    
+    func setGoalCheckMark() {
+        if goal.completed {
+            checkMarkImage.backgroundColor = UIColor.green
+        } else {
+            checkMarkImage.backgroundColor = UIColor.red
+        }
+    }
 }

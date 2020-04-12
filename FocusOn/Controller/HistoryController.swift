@@ -49,6 +49,7 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
             let goal = tableView.dequeueReusableCell(withIdentifier: "historyGoalCell", for: indexPath) as! HistoryGoalCell
             goal.goalTitleLabel.text = history[indexPath.section].goals![indexPath.row].title
             goal.goal = history[indexPath.section].goals![indexPath.row]
+            goal.setGoalCheckMark()
             return goal
         }
     }

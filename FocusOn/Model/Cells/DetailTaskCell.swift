@@ -13,4 +13,14 @@ class DetailTaskCell: UITableViewCell {
     @IBOutlet weak var taskCheckmarkImage: UIImageView!
     @IBOutlet weak var taskTitleLabel: UILabel!
     
+    var task: Task!
+    
+    func setTaskCheckMark() {
+        if task.completed {
+            taskCheckmarkImage.backgroundColor = UIColor.green
+        } else {
+            taskCheckmarkImage.backgroundColor = UIColor.red
+        }
+    }
+    
 }
