@@ -26,6 +26,7 @@ struct MonthDayGoals {
     var goals: [Goal]?
 }
 
+
 class HistoryManager {
     
     var timeManager = TimeManager()

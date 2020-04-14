@@ -198,7 +198,7 @@ class DataManager {
         
         do {
             let result = try managedContext.fetch(fetchRequest)
-            print(result)
+            //print(result)
             return result
         } catch {
            print("Something went wrong \(error)")

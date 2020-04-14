@@ -22,6 +22,25 @@ class TimeManager {
         return startOfDay(for: Calendar.current.date(byAdding: .day, value: -45, to: today)!)
     }
     
+    func startOfWeek(for date: Date) -> Date {
+        var calender = Calendar.current
+        calender.timeZone = TimeZone.current
+
+        return calender.date(from: calender.dateComponents([.weekOfYear, .yearForWeekOfYear], from: Date()))!
+    }
+    
+    func startOfMonth(for date: Date) -> Date {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone.current
+        
+        let components = calendar.dateComponents([.year, .month], from: date)
+        let startOfMonth = calendar.date(from: components)!
+
+        return startOfMonth
+    }
+    
+    
+    
     func startOfDay(for date: Date) -> Date {
         var calender = Calendar.current
         calender.timeZone = TimeZone.current
