@@ -30,8 +30,32 @@ class ProgressController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let todayGoals = dataManager.fetchGoals(from: Date())
-        updateChartStats(statsManager.createStats(from: todayGoals))
+        segmentControlUpdate()
+    }
+    
+    func segmentControlUpdate() {
+        switch segmentControl.selectedSegmentIndex {
+        case 0:
+            // TODAY
+            let todayGoals = dataManager.fetchGoals(from: Date())
+            updateChartStats(statsManager.createStats(from: todayGoals))
+        case 1:
+            // WEEK
+            let firstDayInWeek = timeManager.startOfWeek(for: Date())
+            let weekGoals = dataManager.fetchHistory(from: firstDayInWeek, to: Date())
+            updateChartStats(statsManager.createStats(from: weekGoals))
+        case 2:
+            // MONTH
+            let firstDayInMonth = timeManager.startOfMonth(for: Date())
+            let monthGoals = dataManager.fetchHistory(from: firstDayInMonth, to: Date())
+            updateChartStats(statsManager.createStats(from: monthGoals))
+        case 3:
+            // ALL TIME
+            let allGoals = dataManager.fetchHistory(from: nil, to: nil)
+            updateChartStats(statsManager.createStats(from: allGoals))
+        default:
+            break
+        }
     }
     
     func setupChart() {
@@ -89,27 +113,6 @@ class ProgressController: UIViewController {
     
     
     @IBAction func segmentControlAction(_ sender: Any) {
-        switch segmentControl.selectedSegmentIndex {
-        case 0:
-            // TODAY
-            let todayGoals = dataManager.fetchGoals(from: Date())
-            updateChartStats(statsManager.createStats(from: todayGoals))
-        case 1:
-            // WEEK
-            let firstDayInWeek = timeManager.startOfWeek(for: Date())
-            let weekGoals = dataManager.fetchHistory(from: firstDayInWeek, to: Date())
-            updateChartStats(statsManager.createStats(from: weekGoals))
-        case 2:
-            // MONTH
-            let firstDayInMonth = timeManager.startOfMonth(for: Date())
-            let monthGoals = dataManager.fetchHistory(from: firstDayInMonth, to: Date())
-            updateChartStats(statsManager.createStats(from: monthGoals))
-        case 3:
-            // ALL TIME
-            let allGoals = dataManager.fetchHistory(from: nil, to: nil)
-            updateChartStats(statsManager.createStats(from: allGoals))
-        default:
-            break
-        }
+        segmentControlUpdate()
     }
 }
