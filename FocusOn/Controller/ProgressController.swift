@@ -10,20 +10,28 @@ import UIKit
 import Charts
 
 class ProgressController: UIViewController {
-
+    
     @IBOutlet weak var pieChart: PieChartView!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var percentLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var completedLabel: UILabel!
     
     var completedGoalsEntry = PieChartDataEntry()
     var uncompletedGoalsEntry = PieChartDataEntry()
     var allEntries = [PieChartDataEntry]()
     var statsManager = StatsManager()
+    var dataManager = DataManager()
+    var timeManager = TimeManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupChart()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let todayGoals = dataManager.fetchGoals(from: Date())
+        updateChartStats(statsManager.createStats(from: todayGoals))
     }
     
     func setupChart() {
@@ -50,45 +58,56 @@ class ProgressController: UIViewController {
         pieChart.data = chartData
     }
     
-
+    
     func animateIncrement(to: Int, from: Int) {
-        if from == to { return }
+        if from == to {
+            if to == 0 {
+                percentLabel.text = "0%"
+            }
+            return
+        }
         percentLabel.text = "\(0 + from + 1)%"
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.005) {
             self.animateIncrement(to: to, from: from + 1)
         }
     }
     
+    func updateChartStats(_ stats: Stats?) {
+        guard let stats = stats else {
+            percentLabel.text = "🥺"
+            completedLabel.text = "No data yet."
+            return
+        }
+        
+        completedGoalsEntry.value = Double(stats.completed)
+        uncompletedGoalsEntry.value = Double(stats.uncompleted)
+        animateIncrement(to: stats.percent, from: 0)
+        dateLabel.text = "\(stats.from)  -  \(stats.to)"
+        completedLabel.text = "completed"
+        updateChartData()
+    }
+    
     
     @IBAction func segmentControlAction(_ sender: Any) {
         switch segmentControl.selectedSegmentIndex {
         case 0:
-            completedGoalsEntry.value = 10
-            uncompletedGoalsEntry.value = 0
-            updateChartData()
-            animateIncrement(to: 100, from: 0)
-            print("Today")
+            // TODAY
+            let todayGoals = dataManager.fetchGoals(from: Date())
+            updateChartStats(statsManager.createStats(from: todayGoals))
         case 1:
-            completedGoalsEntry.value = 30
-            updateChartData()
-            animateIncrement(to: 100, from: 0)
-            print("This week")
+            // WEEK
+            let firstDayInWeek = timeManager.startOfWeek(for: Date())
+            let weekGoals = dataManager.fetchHistory(from: firstDayInWeek, to: Date())
+            updateChartStats(statsManager.createStats(from: weekGoals))
         case 2:
-            let monthStats = statsManager.thisMonth()
-            // TODO: Move to seperate functions.
-            completedGoalsEntry.value = Double(monthStats.completed)
-            uncompletedGoalsEntry.value = Double(monthStats.uncompleted)
-            updateChartData()
-            animateIncrement(to: monthStats.percent, from: 0)
-            dateLabel.text = "\(monthStats.from)  -  \(monthStats.to)"
-            
-            print("This month")
+            // MONTH
+            let firstDayInMonth = timeManager.startOfMonth(for: Date())
+            let monthGoals = dataManager.fetchHistory(from: firstDayInMonth, to: Date())
+            updateChartStats(statsManager.createStats(from: monthGoals))
         case 3:
-            completedGoalsEntry.value = 50
-            uncompletedGoalsEntry.value = 50
-            updateChartData()
-            animateIncrement(to: 50, from: 0)
-            print("All time")
+            // ALL TIME
+            let allGoals = dataManager.fetchHistory(from: nil, to: nil)
+            updateChartStats(statsManager.createStats(from: allGoals))
         default:
             break
         }

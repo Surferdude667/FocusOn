@@ -33,7 +33,7 @@ class DataManager {
         emptyGoal.id = UUID()
         emptyGoal.title = ""
         emptyGoal.completed = false
-        emptyGoal.creation = timeManager.yesterday
+        emptyGoal.creation = timeManager.today
         delegate.goals.append(emptyGoal)
         
         addNewEmptyTask(forGoal: emptyGoal.id)
@@ -198,7 +198,6 @@ class DataManager {
         
         do {
             let result = try managedContext.fetch(fetchRequest)
-            //print(result)
             return result
         } catch {
            print("Something went wrong \(error)")
