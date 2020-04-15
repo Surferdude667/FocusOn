@@ -40,7 +40,6 @@ class TimeManager {
     }
     
     
-    
     func startOfDay(for date: Date) -> Date {
         var calender = Calendar.current
         calender.timeZone = TimeZone.current

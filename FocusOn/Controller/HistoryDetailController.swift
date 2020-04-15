@@ -15,7 +15,6 @@ class HistoryDetailController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var tableView: UITableView!
     
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let tasks = goal.tasks?.allObjects {
             return tasks.count

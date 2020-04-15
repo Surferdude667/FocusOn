@@ -12,6 +12,4 @@ class HistorySummaryCell: UITableViewCell {
     
     @IBOutlet weak var summaryLabel: UILabel!
     
-    
-    
 }

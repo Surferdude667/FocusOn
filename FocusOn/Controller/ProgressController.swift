@@ -106,8 +106,14 @@ class ProgressController: UIViewController {
         completedGoalsEntry.value = Double(stats.completed)
         uncompletedGoalsEntry.value = Double(stats.uncompleted)
         animateIncrement(to: stats.percent, from: 0)
-        dateLabel.text = "\(stats.from)  -  \(stats.to)"
         completedLabel.text = "completed"
+        
+        if stats.from == stats.to {
+            dateLabel.text = stats.from
+        } else {
+           dateLabel.text = "\(stats.from)  -  \(stats.to)"
+        }
+        
         updateChartData()
     }
     

@@ -23,13 +23,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         tableView.dataSource = self
         dataManager.delegate = self
         registerForKeyboardNotifications()
-        
-        // This week
-        print("First day in month: \(timeManager.formattedDay(for: timeManager.startOfMonth(for: timeManager.today)))")
-        print("First day in week: \(timeManager.formattedDay(for: timeManager.startOfWeek(for: timeManager.today)))")
-        print("Today: \(timeManager.formattedDay(for: timeManager.today))")
-        
-        //timeManager.startOfWeek(for: Date())
     }
     
     func manageAddButton() {
