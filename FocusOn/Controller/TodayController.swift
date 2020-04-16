@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class TodayController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataManagerDelegate, CellDelegate {
     
@@ -12,7 +13,9 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     let dataManager = DataManager()
     let timeManager = TimeManager()
+    let statsManager = StatsManager()
     var yesterdaysUncompletedGoals = [Goal]()
+    let userNotificationCenter = UNUserNotificationCenter.current()
     var goals = [Goal]()
     
     
@@ -23,6 +26,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         tableView.dataSource = self
         dataManager.delegate = self
         registerForKeyboardNotifications()
+        requestNotificationAuthorization()
+        createNotification()
     }
     
     func manageAddButton() {
@@ -34,6 +39,44 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             addNewGoalButton.isUserInteractionEnabled = true
         }
     }
+    
+    // MARK: - User Notifications
+
+    
+    func requestNotificationAuthorization() {
+        let authOptions = UNAuthorizationOptions.init(arrayLiteral: .alert, .badge, .sound)
+        
+        self.userNotificationCenter.requestAuthorization(options: authOptions) { (success, error) in
+            if let error = error {
+                print("Error: ", error)
+            }
+        }
+    }
+
+    func createNotification() {
+        let notificationContent = UNMutableNotificationContent()
+        
+        var body = ""
+            
+        if let stats = statsManager.createStats(from: dataManager.fetchGoals(from: timeManager.today)) {
+            body = "Keep going! \(stats.completed) completed already! \(stats.uncompleted) to go!"
+        } else {
+            body = "Time to set some goals for the day?"
+        }
+        
+        notificationContent.title = "Good morning!"
+        notificationContent.body = body
+        
+        let timedTrigger = UNCalendarNotificationTrigger(dateMatching: timeManager.notificationTime(), repeats: false)
+        let timedRequest = UNNotificationRequest(identifier: "notification", content: notificationContent, trigger: timedTrigger)
+        
+        userNotificationCenter.add(timedRequest) { (error) in
+            if let error = error {
+                print("Notification Error: ", error)
+            }
+        }
+    }
+    
     
     //MARK:- TableView Manipluation
     
@@ -133,16 +176,19 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     func sectionChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
         tableView.reloadSections(IndexSet(integer: indexPath.section), with: animation)
         manageAddButton()
+        createNotification()
     }
     
     func cellChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
         tableView.reloadRows(at: [indexPath], with: animation)
         manageAddButton()
+        createNotification()
     }
     
     func cellAdded(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
         tableView.insertRows(at: [indexPath], with: animation)
         manageAddButton()
+        createNotification()
     }
     
     

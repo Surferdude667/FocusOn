@@ -39,12 +39,23 @@ class TimeManager {
         return startOfMonth
     }
     
+    func notificationTime() -> DateComponents {
+        var dateComponent = DateComponents()
+        dateComponent.hour = 10
+        dateComponent.minute = 0
+        
+        return dateComponent
+    }
+    
     
     func startOfDay(for date: Date) -> Date {
         var calender = Calendar.current
         calender.timeZone = TimeZone.current
         return calender.startOfDay(for: date)
     }
+    
+
+    
     
     func formattedDate(for date: Date) -> String {
         let dateFormatter = DateFormatter()
