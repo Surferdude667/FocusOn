@@ -54,8 +54,6 @@ class TimeManager {
         return calender.startOfDay(for: date)
     }
     
-
-    
     
     func formattedDate(for date: Date) -> String {
         let dateFormatter = DateFormatter()

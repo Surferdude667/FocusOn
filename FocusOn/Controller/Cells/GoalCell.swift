@@ -17,7 +17,7 @@ class GoalCell: UITableViewCell, UITextFieldDelegate {
     var goal: Goal!
     
     @IBOutlet weak var goalTextField: UITextField!
-    @IBOutlet weak var goalCheckButton: UIButton!
+    @IBOutlet weak var goalCheckButton: SpringButton!
     
     func configure() {
         goalTextField.delegate = self
@@ -33,7 +33,7 @@ class GoalCell: UITableViewCell, UITextFieldDelegate {
     }
     
     
-    func updateTaskGoalMark() {
+    func updateTaskGoalMark() {        
         if goal.completed == false {
             var tasks = goal.tasks!.allObjects as! [Task]
             tasks.removeLast()

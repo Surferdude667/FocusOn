@@ -42,7 +42,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     // MARK: - User Notifications
 
-    
     func requestNotificationAuthorization() {
         let authOptions = UNAuthorizationOptions.init(arrayLiteral: .alert, .badge, .sound)
         
@@ -55,7 +54,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
 
     func createNotification() {
         let notificationContent = UNMutableNotificationContent()
-        
         var body = ""
             
         if let stats = statsManager.createStats(from: dataManager.fetchGoals(from: timeManager.today)) {
