@@ -55,11 +55,6 @@ class TaskCell: UITableViewCell, UITextFieldDelegate, DataManagerDelegate {
             delegate?.cellChanged(at: IndexPath(row: 0, section: indexPath.section), with: .fade)
             // TODO: Make delegate success message with Goal title included.
             
-            //DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                //self.taskCheckButton.animation = "pop"
-                //self.taskCheckButton.animate()
-            //}
-            
             print("HURAAA")
         }
         

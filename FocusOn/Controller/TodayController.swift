@@ -181,6 +181,15 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         tableView.reloadRows(at: [indexPath], with: animation)
         manageAddButton()
         createNotification()
+        
+        let cell = tableView.cellForRow(at: indexPath) as? TaskCell
+        
+        if let cell = cell {
+        cell.taskCheckButton.animation = "pop"
+        cell.taskCheckButton.curve = "spring"
+        cell.taskCheckButton.animate()
+        }
+        
     }
     
     func cellAdded(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
