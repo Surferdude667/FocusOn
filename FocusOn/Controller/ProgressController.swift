@@ -26,6 +26,7 @@ class ProgressController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .dark
         setupChart()
     }
     

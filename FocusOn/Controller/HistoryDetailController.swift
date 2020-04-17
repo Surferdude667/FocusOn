@@ -49,6 +49,7 @@ class HistoryDetailController: UIViewController, UITableViewDataSource, UITableV
     func configure() {
         tableView.delegate = self
         tableView.dataSource = self
+        overrideUserInterfaceStyle = .dark
     }
     
     override func viewDidLoad() {

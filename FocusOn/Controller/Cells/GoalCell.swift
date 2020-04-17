@@ -19,6 +19,14 @@ class GoalCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var goalTextField: UITextField!
     @IBOutlet weak var goalCheckButton: SpringButton!
     
+    @IBOutlet weak var exerciseView: UIView! {
+        didSet {
+            self.exerciseView.layer.cornerRadius = 15
+            self.exerciseView.layer.masksToBounds = true
+        }
+    }
+    
+    
     func configure() {
         goalTextField.delegate = self
     }
@@ -64,6 +72,8 @@ class GoalCell: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
+        
+
     }
     
     

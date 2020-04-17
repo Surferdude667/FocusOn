@@ -74,8 +74,10 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .dark
         tableView.delegate = self
         tableView.dataSource = self
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

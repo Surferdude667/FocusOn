@@ -38,6 +38,7 @@
 		F630C240244859B3005F8944 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F630C223244859B3005F8944 /* LoadingView.swift */; };
 		F630C242244859B3005F8944 /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F630C225244859B3005F8944 /* AsyncImageView.swift */; };
 		F634E04F243C964B00E09571 /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F634E04E243C964B00E09571 /* TimeManager.swift */; };
+		F66F8A772449CFD5005C26A0 /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66F8A762449CFD5005C26A0 /* BaseTabBarController.swift */; };
 		F67981DC2422137600B518DE /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67981DB2422137600B518DE /* HistoryController.swift */; };
 		F67981DE2422139C00B518DE /* ProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67981DD2422139C00B518DE /* ProgressController.swift */; };
 		F689AAB7242E28E30037D003 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F689AAB6242E28E30037D003 /* DataManager.swift */; };
@@ -135,6 +136,7 @@
 		F630C224244859B3005F8944 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F630C225244859B3005F8944 /* AsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
 		F634E04E243C964B00E09571 /* TimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
+		F66F8A762449CFD5005C26A0 /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		F67981DB2422137600B518DE /* HistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
 		F67981DD2422139C00B518DE /* ProgressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressController.swift; sourceTree = "<group>"; };
 		F689AAB6242E28E30037D003 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				F6AE8FFA2438DED400EFC4B7 /* CellDelegate.swift */,
 				F62CE63F243207D900731DA6 /* Goal.swift */,
 				F62CE64124320EDB00731DA6 /* Task.swift */,
+				F66F8A762449CFD5005C26A0 /* BaseTabBarController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 		F67981DA24220EC700B518DE /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				F630C207244859B3005F8944 /* Spring */,
 				F6C1567B24163FF800228264 /* AppDelegate.swift */,
 				F6C1567D24163FF800228264 /* SceneDelegate.swift */,
 				F6C1568924163FFB00228264 /* LaunchScreen.storyboard */,
@@ -301,7 +305,6 @@
 		F6C1567A24163FF800228264 /* FocusOn */ = {
 			isa = PBXGroup;
 			children = (
-				F630C207244859B3005F8944 /* Spring */,
 				F67981D624220E6200B518DE /* Model */,
 				F67981D724220E6D00B518DE /* View */,
 				F67981D824220E7300B518DE /* Controller */,
@@ -464,6 +467,7 @@
 			files = (
 				F6C799D72424BE5C00B1C455 /* GoalCell.swift in Sources */,
 				F630C233244859B3005F8944 /* Misc.swift in Sources */,
+				F66F8A772449CFD5005C26A0 /* BaseTabBarController.swift in Sources */,
 				F630C228244859B3005F8944 /* TransitionManager.swift in Sources */,
 				F630C23C244859B3005F8944 /* DesignableTextView.swift in Sources */,
 				F630C22E244859B3005F8944 /* SoundPlayer.swift in Sources */,
@@ -671,6 +675,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SBGL4S82U2;
 				INFOPLIST_FILE = FocusOn/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -689,6 +694,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SBGL4S82U2;
 				INFOPLIST_FILE = FocusOn/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

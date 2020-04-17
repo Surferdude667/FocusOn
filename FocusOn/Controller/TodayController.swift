@@ -22,6 +22,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //  MARK:- Configuration
     
     func configure() {
+        overrideUserInterfaceStyle = .dark
         tableView.delegate = self
         tableView.dataSource = self
         dataManager.delegate = self
