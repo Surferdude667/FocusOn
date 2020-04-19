@@ -45,6 +45,9 @@
 		F69A87AB2440B813004E9743 /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69A87AA2440B813004E9743 /* HistoryManager.swift */; };
 		F69A87AD24421442004E9743 /* HistoryGoalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69A87AC24421442004E9743 /* HistoryGoalCell.swift */; };
 		F69A87B1244215AC004E9743 /* HistoryDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69A87B0244215AC004E9743 /* HistoryDetailController.swift */; };
+		F6AA27B5244CA152009B64FC /* SF-Pro-Rounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = F6AA27B4244CA152009B64FC /* SF-Pro-Rounded-Medium.otf */; };
+		F6AA27B7244CA1A7009B64FC /* SF-Pro-Rounded-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F6AA27B6244CA1A7009B64FC /* SF-Pro-Rounded-Light.otf */; };
+		F6AA27B9244CA1D7009B64FC /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F6AA27B8244CA1D7009B64FC /* SF-Pro-Display-Bold.otf */; };
 		F6AE8FFB2438DED400EFC4B7 /* CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AE8FFA2438DED400EFC4B7 /* CellDelegate.swift */; };
 		F6C1567C24163FF800228264 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1567B24163FF800228264 /* AppDelegate.swift */; };
 		F6C1567E24163FF800228264 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1567D24163FF800228264 /* SceneDelegate.swift */; };
@@ -144,6 +147,9 @@
 		F69A87AA2440B813004E9743 /* HistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
 		F69A87AC24421442004E9743 /* HistoryGoalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryGoalCell.swift; sourceTree = "<group>"; };
 		F69A87B0244215AC004E9743 /* HistoryDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDetailController.swift; sourceTree = "<group>"; };
+		F6AA27B4244CA152009B64FC /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
+		F6AA27B6244CA1A7009B64FC /* SF-Pro-Rounded-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Light.otf"; sourceTree = "<group>"; };
+		F6AA27B8244CA1D7009B64FC /* SF-Pro-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Bold.otf"; sourceTree = "<group>"; };
 		F6AE8FFA2438DED400EFC4B7 /* CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDelegate.swift; sourceTree = "<group>"; };
 		F6C1567824163FF800228264 /* FocusOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6C1567B24163FF800228264 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -275,6 +281,7 @@
 		F67981DA24220EC700B518DE /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				F6AA27B1244CA100009B64FC /* Fonts */,
 				F630C207244859B3005F8944 /* Spring */,
 				F6C1567B24163FF800228264 /* AppDelegate.swift */,
 				F6C1567D24163FF800228264 /* SceneDelegate.swift */,
@@ -282,6 +289,16 @@
 				F6C1568C24163FFB00228264 /* Info.plist */,
 			);
 			name = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		F6AA27B1244CA100009B64FC /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F6AA27B8244CA1D7009B64FC /* SF-Pro-Display-Bold.otf */,
+				F6AA27B6244CA1A7009B64FC /* SF-Pro-Rounded-Light.otf */,
+				F6AA27B4244CA152009B64FC /* SF-Pro-Rounded-Medium.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		F6C1566F24163FF800228264 = {
@@ -456,7 +473,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6C1568B24163FFB00228264 /* LaunchScreen.storyboard in Resources */,
+				F6AA27B7244CA1A7009B64FC /* SF-Pro-Rounded-Light.otf in Resources */,
+				F6AA27B5244CA152009B64FC /* SF-Pro-Rounded-Medium.otf in Resources */,
 				F630C23A244859B3005F8944 /* LoadingView.xib in Resources */,
+				F6AA27B9244CA1D7009B64FC /* SF-Pro-Display-Bold.otf in Resources */,
 				F6C1568824163FFB00228264 /* Assets.xcassets in Resources */,
 				F6C1568324163FF800228264 /* Main.storyboard in Resources */,
 			);

@@ -20,6 +20,7 @@ class TaskCell: UITableViewCell, UITextFieldDelegate, DataManagerDelegate {
     
     @IBOutlet weak var taskTextField: UITextField!
     @IBOutlet weak var taskCheckButton: SpringButton!
+    @IBOutlet weak var background: GradientView!
     
     func configure() {
         taskTextField.delegate = self
@@ -28,13 +29,19 @@ class TaskCell: UITableViewCell, UITextFieldDelegate, DataManagerDelegate {
     
     func setTaskCheckMark() {
         if task.completed && task.title != "" {
-            taskCheckButton.backgroundColor = UIColor.green
+            background.firstColor = #colorLiteral(red: 0.1959999949, green: 0.8429999948, blue: 0.2939999998, alpha: 1)
+            background.secondColor = #colorLiteral(red: 0.9450980392, green: 0.8666666667, blue: 0.6, alpha: 1)
+            taskCheckButton.setImage(#imageLiteral(resourceName: "checkmark.pdf"), for: .normal)
             taskCheckButton.isUserInteractionEnabled = true
         } else if task.completed == false && task.title != "" {
-            taskCheckButton.backgroundColor = UIColor.red
+            background.firstColor = #colorLiteral(red: 1, green: 0.2160000056, blue: 0.3729999959, alpha: 1)
+            background.secondColor = #colorLiteral(red: 0.9450980392, green: 0.8666666667, blue: 0.6, alpha: 1)
+            taskCheckButton.setImage(#imageLiteral(resourceName: "circle.pdf"), for: .normal)
             taskCheckButton.isUserInteractionEnabled = true
         } else {
-            taskCheckButton.backgroundColor = UIColor.gray
+            background.firstColor = #colorLiteral(red: 0.2039999962, green: 0.2039999962, blue: 0.2039999962, alpha: 1)
+            background.secondColor = #colorLiteral(red: 0.2039999962, green: 0.2039999962, blue: 0.2039999962, alpha: 1)
+            taskCheckButton.setImage(#imageLiteral(resourceName: "plus.pdf"), for: .normal)
             taskCheckButton.isUserInteractionEnabled = false
         }
     }

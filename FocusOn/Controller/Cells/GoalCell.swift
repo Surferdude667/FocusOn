@@ -18,25 +18,24 @@ class GoalCell: UITableViewCell, UITextFieldDelegate {
     
     @IBOutlet weak var goalTextField: UITextField!
     @IBOutlet weak var goalCheckButton: SpringButton!
-    
-    @IBOutlet weak var exerciseView: UIView! {
-        didSet {
-            self.exerciseView.layer.cornerRadius = 15
-            self.exerciseView.layer.masksToBounds = true
-        }
-    }
+    @IBOutlet weak var background: UIView!
     
     
     func configure() {
         goalTextField.delegate = self
+        
     }
     
     
     func setGoalCheckMark() {
         if goal.completed {
-            goalCheckButton.backgroundColor = UIColor.green
+            goalCheckButton.setImage(#imageLiteral(resourceName: "checkmark.pdf"), for: .normal)
+            goalCheckButton.tintColor = #colorLiteral(red: 0.1959999949, green: 0.8429999948, blue: 0.2939999998, alpha: 1)
+            goalTextField.textColor = #colorLiteral(red: 0.1959999949, green: 0.8429999948, blue: 0.2939999998, alpha: 1)
         } else {
-            goalCheckButton.backgroundColor = UIColor.red
+            goalCheckButton.setImage(#imageLiteral(resourceName: "circle.pdf"), for: .normal)
+            goalCheckButton.tintColor = #colorLiteral(red: 1, green: 0.2160000056, blue: 0.3729999959, alpha: 1)
+            goalTextField.textColor = #colorLiteral(red: 1, green: 0.2160000056, blue: 0.3729999959, alpha: 1)
         }
     }
     
@@ -74,23 +73,7 @@ class GoalCell: UITableViewCell, UITextFieldDelegate {
         configure()
     }
     
-//    override var frame: CGRect {
-//        get {
-//            return super.frame
-//        }
-//        set (newFrame) {
-//            var frame = newFrame
-//            let newWidth = frame.width * 0.90 // get 80% width here
-//            let space = (frame.width - newWidth) / 2
-//            frame.size.width = newWidth
-//            frame.origin.x += space
-//
-//            super.frame = frame
-//
-//        }
-//    }
-    
-    
+        
     @IBAction func goalEditBegun(_ sender: Any) {
         let textField = sender as? UITextField
         if let textField = textField {

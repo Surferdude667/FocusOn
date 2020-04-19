@@ -3,9 +3,21 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Bold.otf">
+            <string>SFProDisplay-Bold</string>
+        </array>
+        <array key="SF-Pro-Rounded-Light.otf">
+            <string>SFProRounded-Light</string>
+        </array>
+        <array key="SF-Pro-Rounded-Medium.otf">
+            <string>SFProRounded-Medium</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--History-->
         <scene sceneID="ams-AI-47Q">
@@ -259,7 +271,9 @@
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="6L1-dI-7Ty"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Progress" id="S5A-J1-KYv"/>
+                    <tabBarItem key="tabBarItem" title="Progress" image="progress" id="S5A-J1-KYv">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="completedLabel" destination="jgn-Oo-8IO" id="JTy-GA-gGP"/>
                         <outlet property="dateLabel" destination="txm-so-9ja" id="ZQX-t1-XtC"/>
@@ -280,108 +294,205 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JkM-vv-dZY">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JkM-vv-dZY">
                                 <rect key="frame" x="0.0" y="20" width="414" height="793"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eMm-l9-mzQ">
-                                    <rect key="frame" x="0.0" y="172.5" width="414" height="44"/>
+                                <color key="backgroundColor" name="Background"/>
+                                <color key="tintColor" name="Background"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="XoW-2Z-04S">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Add element"/>
-                                    <connections>
-                                        <action selector="addNewGoalButton:" destination="G69-9R-9EF" eventType="touchUpInside" id="Xiv-6P-J8b"/>
-                                    </connections>
-                                </button>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXG-a2-rSo">
+                                            <rect key="frame" x="15" y="24" width="93.5" height="46"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="46" id="hb7-qH-ltP"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="SFProDisplay-Bold" family="SF Pro Display" pointSize="34"/>
+                                            <color key="textColor" name="Pure White"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMm-l9-mzQ">
+                                            <rect key="frame" x="265" y="38" width="134" height="30"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="GaS-rS-e1O"/>
+                                                <constraint firstAttribute="width" constant="134" id="dBo-Uz-SVY"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="SFProRounded-Medium" family="SF Pro Rounded" pointSize="19"/>
+                                            <color key="tintColor" name="Pure White"/>
+                                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="32" maxY="0.0"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-71" maxY="0.0"/>
+                                            <state key="normal" title="Add goal" image="plus"/>
+                                            <connections>
+                                                <action selector="addNewGoalButton:" destination="G69-9R-9EF" eventType="touchUpInside" id="Xiv-6P-J8b"/>
+                                            </connections>
+                                        </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EcX-o2-3kN">
+                                            <rect key="frame" x="15" y="87" width="384" height="1"/>
+                                            <color key="backgroundColor" name="Dark Gray"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="gM0-ER-xKd"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" name="Background"/>
+                                    <constraints>
+                                        <constraint firstItem="hXG-a2-rSo" firstAttribute="leading" secondItem="XoW-2Z-04S" secondAttribute="leading" constant="15" id="K24-lf-2s2"/>
+                                        <constraint firstItem="EcX-o2-3kN" firstAttribute="top" secondItem="hXG-a2-rSo" secondAttribute="bottom" constant="17" id="ONx-Mn-rrX"/>
+                                        <constraint firstItem="EcX-o2-3kN" firstAttribute="leading" secondItem="XoW-2Z-04S" secondAttribute="leading" constant="15" id="S4o-CN-Fkd"/>
+                                        <constraint firstAttribute="trailing" secondItem="EcX-o2-3kN" secondAttribute="trailing" constant="15" id="U6k-j0-gra"/>
+                                        <constraint firstItem="EcX-o2-3kN" firstAttribute="top" secondItem="eMm-l9-mzQ" secondAttribute="bottom" constant="19" id="W6v-tn-t9B"/>
+                                        <constraint firstAttribute="trailing" secondItem="eMm-l9-mzQ" secondAttribute="trailing" constant="15" id="m66-TS-U5G"/>
+                                        <constraint firstAttribute="bottom" secondItem="EcX-o2-3kN" secondAttribute="bottom" constant="2" id="r8a-2b-8sC"/>
+                                        <constraint firstItem="eMm-l9-mzQ" firstAttribute="leading" relation="lessThanOrEqual" secondItem="hXG-a2-rSo" secondAttribute="trailing" constant="156.5" id="zp8-O2-SYg"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GoalCell" rowHeight="73" id="k1s-7n-Tky" customClass="GoalCell" customModule="FocusOn" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="73"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GoalCell" rowHeight="64" id="k1s-7n-Tky" customClass="GoalCell" customModule="FocusOn" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="118" width="414" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="k1s-7n-Tky" id="Jon-CA-Cqp">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="73"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MUA-KC-Oii" customClass="GradientView" customModule="FocusOn" customModuleProvider="target">
-                                                    <rect key="frame" x="15" y="0.0" width="384" height="73"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MUA-KC-Oii">
+                                                    <rect key="frame" x="15" y="2" width="384" height="60"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EVw-m7-czz" customClass="SpringButton" customModule="FocusOn" customModuleProvider="target">
-                                                            <rect key="frame" x="4" y="18" width="35" height="37"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EVw-m7-czz" customClass="SpringButton" customModule="FocusOn" customModuleProvider="target">
+                                                            <rect key="frame" x="15" y="18" width="25" height="25"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="25" id="L9c-KU-v0B"/>
+                                                                <constraint firstAttribute="height" constant="25" id="XEu-dZ-quO"/>
+                                                            </constraints>
                                                             <color key="tintColor" red="0.79752033950000001" green="0.26084935669999998" blue="0.1724962592" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                            <state key="normal" image="circle" catalog="system">
-                                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                                            <state key="normal" image="circle">
+                                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
                                                             </state>
                                                             <connections>
                                                                 <action selector="goalCheckButtonTapped:" destination="k1s-7n-Tky" eventType="touchUpInside" id="a3a-P5-TXN"/>
                                                             </connections>
                                                         </button>
-                                                        <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Set a goal for the day..." textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="ywZ-2Q-XvC">
-                                                            <rect key="frame" x="47" y="19" width="218" height="34"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Set a goal for the day..." textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="ywZ-2Q-XvC">
+                                                            <rect key="frame" x="46" y="8" width="303" height="44"/>
+                                                            <color key="textColor" name="Red"/>
+                                                            <fontDescription key="fontDescription" name="SFProRounded-Medium" family="SF Pro Rounded" pointSize="19"/>
                                                             <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
+                                                                    <color key="value" name="Light Gray"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                             <connections>
                                                                 <action selector="goalEditBegun:" destination="k1s-7n-Tky" eventType="editingDidBegin" id="lcS-Nc-p8F"/>
                                                                 <action selector="goalEditEnded:" destination="k1s-7n-Tky" eventType="editingDidEnd" id="vQj-fw-meb"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" name="White"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="73" id="5y5-52-8FO"/>
+                                                        <constraint firstItem="ywZ-2Q-XvC" firstAttribute="top" secondItem="MUA-KC-Oii" secondAttribute="topMargin" id="24x-sP-en7"/>
+                                                        <constraint firstAttribute="height" constant="60" id="5y5-52-8FO"/>
+                                                        <constraint firstItem="EVw-m7-czz" firstAttribute="top" secondItem="MUA-KC-Oii" secondAttribute="top" constant="18" id="7hu-YX-Vct"/>
+                                                        <constraint firstAttribute="bottom" secondItem="EVw-m7-czz" secondAttribute="bottom" constant="17" id="Mb1-qd-iEz"/>
+                                                        <constraint firstAttribute="trailing" secondItem="ywZ-2Q-XvC" secondAttribute="trailing" constant="35" id="iwU-A8-vGb"/>
+                                                        <constraint firstItem="EVw-m7-czz" firstAttribute="centerY" secondItem="ywZ-2Q-XvC" secondAttribute="centerY" id="jJC-Or-ij4"/>
+                                                        <constraint firstItem="EVw-m7-czz" firstAttribute="leading" secondItem="MUA-KC-Oii" secondAttribute="leading" constant="15" id="kOG-sX-HE8"/>
+                                                        <constraint firstItem="ywZ-2Q-XvC" firstAttribute="leading" secondItem="EVw-m7-czz" secondAttribute="trailing" constant="6" id="olE-Hg-XDL"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <integer key="value" value="10"/>
+                                                            <integer key="value" value="12"/>
                                                         </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="MUA-KC-Oii" secondAttribute="trailing" constant="15" id="ISJ-BI-OEY"/>
+                                                <constraint firstItem="MUA-KC-Oii" firstAttribute="top" secondItem="Jon-CA-Cqp" secondAttribute="top" constant="2" id="OjA-b8-hFD"/>
+                                                <constraint firstAttribute="bottom" secondItem="MUA-KC-Oii" secondAttribute="bottom" constant="2" id="To3-Wx-2LK"/>
+                                                <constraint firstItem="MUA-KC-Oii" firstAttribute="leading" secondItem="Jon-CA-Cqp" secondAttribute="leading" constant="15" id="aK1-9d-bf3"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="background" destination="MUA-KC-Oii" id="SX1-2d-cAX"/>
+                                            <outlet property="goalCheckButton" destination="EVw-m7-czz" id="SZT-FQ-0QY"/>
+                                            <outlet property="goalTextField" destination="ywZ-2Q-XvC" id="8lc-Cg-3xJ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TaskCell" rowHeight="52" id="RQl-T8-yXA" customClass="TaskCell" customModule="FocusOn" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="182" width="414" height="52"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RQl-T8-yXA" id="jsn-DM-EY2">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6H1-0V-a4J" customClass="GradientView" customModule="FocusOn" customModuleProvider="target">
+                                                    <rect key="frame" x="15" y="2" width="384" height="48"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OT3-ZH-5tj" customClass="SpringButton" customModule="FocusOn" customModuleProvider="target">
+                                                            <rect key="frame" x="15" y="12" width="25" height="25"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="25" id="2ZO-JP-Xp5"/>
+                                                                <constraint firstAttribute="width" constant="25" id="v9i-6s-cuC"/>
+                                                            </constraints>
+                                                            <color key="tintColor" name="Pure White"/>
+                                                            <state key="normal" image="circle">
+                                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="taskCheckButtonTapped:" destination="RQl-T8-yXA" eventType="touchUpInside" id="lXE-u3-vOh"/>
+                                                            </connections>
+                                                        </button>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Set a task for your goal..." textAlignment="natural" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="dwQ-Zs-APE">
+                                                            <rect key="frame" x="46" y="8" width="330" height="32"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="32" id="ltq-9a-XKY"/>
+                                                            </constraints>
+                                                            <color key="textColor" name="Pure White"/>
+                                                            <fontDescription key="fontDescription" name="SFProRounded-Light" family="SF Pro Rounded" pointSize="19"/>
+                                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                            <connections>
+                                                                <action selector="taskEditBegun:" destination="RQl-T8-yXA" eventType="editingDidBegin" id="QOk-7l-k1F"/>
+                                                                <action selector="taskEditEnded:" destination="RQl-T8-yXA" eventType="editingDidEnd" id="1TJ-aW-xp3"/>
+                                                            </connections>
+                                                        </textField>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="OT3-ZH-5tj" secondAttribute="bottom" constant="11" id="EnY-zd-qIJ"/>
+                                                        <constraint firstAttribute="trailing" secondItem="dwQ-Zs-APE" secondAttribute="trailing" constant="8" id="NTR-fu-Vhy"/>
+                                                        <constraint firstAttribute="bottom" secondItem="dwQ-Zs-APE" secondAttribute="bottom" constant="8" id="Nnc-7m-dLd"/>
+                                                        <constraint firstItem="OT3-ZH-5tj" firstAttribute="leading" secondItem="6H1-0V-a4J" secondAttribute="leading" constant="15" id="WlK-Xn-3jf"/>
+                                                        <constraint firstItem="dwQ-Zs-APE" firstAttribute="top" secondItem="6H1-0V-a4J" secondAttribute="top" constant="8" id="XHq-wz-PjW"/>
+                                                        <constraint firstAttribute="height" constant="48" id="Y43-HW-uFd"/>
+                                                        <constraint firstItem="OT3-ZH-5tj" firstAttribute="top" secondItem="6H1-0V-a4J" secondAttribute="top" constant="12" id="oV2-83-1nb"/>
+                                                        <constraint firstItem="dwQ-Zs-APE" firstAttribute="leading" secondItem="OT3-ZH-5tj" secondAttribute="trailing" constant="6" id="v3U-Co-9zJ"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="firstColor">
-                                                            <color key="value" red="0.49000018839999998" green="0.12918666009999999" blue="0.83534216880000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <color key="value" name="Red"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="secondColor">
-                                                            <color key="value" red="0.99799090619999997" green="0.98548144100000001" blue="0.63915103669999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <color key="value" name="Yellow"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <integer key="value" value="12"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHorizontal" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="MUA-KC-Oii" secondAttribute="trailing" constant="15" id="ISJ-BI-OEY"/>
-                                                <constraint firstItem="MUA-KC-Oii" firstAttribute="top" secondItem="Jon-CA-Cqp" secondAttribute="top" id="OjA-b8-hFD"/>
-                                                <constraint firstAttribute="bottom" secondItem="MUA-KC-Oii" secondAttribute="bottom" id="To3-Wx-2LK"/>
-                                                <constraint firstItem="MUA-KC-Oii" firstAttribute="leading" secondItem="Jon-CA-Cqp" secondAttribute="leading" constant="15" id="aK1-9d-bf3"/>
+                                                <constraint firstItem="6H1-0V-a4J" firstAttribute="top" secondItem="jsn-DM-EY2" secondAttribute="top" constant="2" id="1pq-NE-XCe"/>
+                                                <constraint firstAttribute="bottom" secondItem="6H1-0V-a4J" secondAttribute="bottom" constant="2" id="T8e-kj-f2V"/>
+                                                <constraint firstAttribute="trailing" secondItem="6H1-0V-a4J" secondAttribute="trailing" constant="15" id="VtR-e5-fv4"/>
+                                                <constraint firstItem="6H1-0V-a4J" firstAttribute="leading" secondItem="jsn-DM-EY2" secondAttribute="leading" constant="15" id="VwU-Cc-kLD"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="goalCheckButton" destination="EVw-m7-czz" id="SZT-FQ-0QY"/>
-                                            <outlet property="goalTextField" destination="ywZ-2Q-XvC" id="8lc-Cg-3xJ"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TaskCell" id="RQl-T8-yXA" customClass="TaskCell" customModule="FocusOn" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="101" width="414" height="43.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RQl-T8-yXA" id="jsn-DM-EY2">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Set a task for your goal..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dwQ-Zs-APE">
-                                                    <rect key="frame" x="60" y="5" width="334" height="34"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                                    <connections>
-                                                        <action selector="taskEditBegun:" destination="RQl-T8-yXA" eventType="editingDidBegin" id="QOk-7l-k1F"/>
-                                                        <action selector="taskEditEnded:" destination="RQl-T8-yXA" eventType="editingDidEnd" id="1TJ-aW-xp3"/>
-                                                    </connections>
-                                                </textField>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OT3-ZH-5tj" customClass="SpringButton" customModule="FocusOn" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="5" width="30" height="34"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <connections>
-                                                        <action selector="taskCheckButtonTapped:" destination="RQl-T8-yXA" eventType="touchUpInside" id="lXE-u3-vOh"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
+                                            <outlet property="background" destination="6H1-0V-a4J" id="e0W-ry-chs"/>
                                             <outlet property="taskCheckButton" destination="OT3-ZH-5tj" id="d5N-xD-5zc"/>
                                             <outlet property="taskTextField" destination="dwQ-Zs-APE" id="v3J-Jd-Woj"/>
                                         </connections>
@@ -389,7 +500,8 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" name="Background"/>
+                        <color key="tintColor" name="Background"/>
                         <constraints>
                             <constraint firstItem="JkM-vv-dZY" firstAttribute="top" secondItem="YD1-9D-Yyp" secondAttribute="top" constant="20" symbolic="YES" id="GPj-uj-dCW"/>
                             <constraint firstItem="JkM-vv-dZY" firstAttribute="leading" secondItem="15z-DC-QRf" secondAttribute="leading" id="MBJ-BQ-sy5"/>
@@ -398,7 +510,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="15z-DC-QRf"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Today" id="zu4-Eb-MZp">
+                    <tabBarItem key="tabBarItem" title="Today" image="today" id="zu4-Eb-MZp">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="selected" value="YES"/>
                         </userDefinedRuntimeAttributes>
@@ -420,6 +532,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" name="Pure White"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </tabBar>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="defaultIndex">
@@ -440,7 +557,7 @@
         <scene sceneID="MSH-uj-ihf">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cyY-NN-Xgf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="History" id="Pbo-LO-eKX"/>
+                    <tabBarItem key="tabBarItem" title="History" image="history" id="Pbo-LO-eKX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="b4D-E1-imc">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -457,6 +574,31 @@
         </scene>
     </scenes>
     <resources>
-        <image name="circle" catalog="system" width="128" height="121"/>
+        <image name="circle" width="23" height="22"/>
+        <image name="history" width="25" height="25"/>
+        <image name="plus" width="23" height="22"/>
+        <image name="progress" width="25" height="25"/>
+        <image name="today" width="25" height="25"/>
+        <namedColor name="Background">
+            <color red="0.027450980392156862" green="0.035294117647058823" blue="0.043137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Dark Gray">
+            <color red="0.11800000071525574" green="0.11800000071525574" blue="0.11800000071525574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Light Gray">
+            <color red="0.20399999618530273" green="0.20399999618530273" blue="0.20399999618530273" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Pure White">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Red">
+            <color red="1" green="0.21600000560283661" blue="0.37299999594688416" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="White">
+            <color red="0.94499999284744263" green="0.94499999284744263" blue="0.94499999284744263" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Yellow">
+            <color red="0.94509803921568625" green="0.8666666666666667" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

@@ -33,10 +33,12 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     func manageAddButton() {
         if goals.last?.title == "" {
-            addNewGoalButton.backgroundColor = UIColor.gray
+            addNewGoalButton.tintColor = UIColor.gray
+            addNewGoalButton.setTitleColor(UIColor.gray, for: .normal)
             addNewGoalButton.isUserInteractionEnabled = false
         } else {
-            addNewGoalButton.backgroundColor = UIColor.green
+            addNewGoalButton.tintColor = UIColor.white
+            addNewGoalButton.setTitleColor(UIColor.white, for: .normal)
             addNewGoalButton.isUserInteractionEnabled = true
         }
     }
@@ -92,8 +94,11 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         let bottomRow = tableView.numberOfRows(inSection: sections)-1
         let bottomIndexPath = IndexPath(row: bottomRow, section: sections)
         
-        let newGoal = tableView.cellForRow(at: IndexPath(row: 0, section: bottomIndexPath.section)) as! GoalCell
-        newGoal.goalTextField.becomeFirstResponder()
+        let newGoal = tableView.cellForRow(at: IndexPath(row: 0, section: bottomIndexPath.section)) as? GoalCell
+        if let newGoal = newGoal {
+            newGoal.goalTextField.becomeFirstResponder()
+        }
+        
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.tableView.scrollToRow(at: bottomIndexPath, at: .top, animated: true)
@@ -239,6 +244,15 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             task.delegate = self
             return task
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 20.0
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let headerView = view as? UITableViewHeaderFooterView else { return }
+        headerView.tintColor = .clear
     }
     
     // MARK:- Dataloading
