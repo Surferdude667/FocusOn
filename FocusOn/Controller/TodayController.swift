@@ -139,7 +139,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             let taskCell = self.tableView.cellForRow(at: indexPath) as? TaskCell
             
             if indexPath.row == 0 {
-                let alertController = UIAlertController(title: "Delete whole section?", message: "Make sure lalal...", preferredStyle: .alert)
+                let alertController = UIAlertController(title: "Are you sure?", message: "All corosponding tasks will also be deleted.", preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
                 
                 let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action:UIAlertAction) in
@@ -164,8 +164,8 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             completionHandler(true)
         }
         
-        action.backgroundColor = .red
-        //action.image = .remove
+        action.backgroundColor = .black
+        action.image = .remove
         return action
     }
     

@@ -62,6 +62,7 @@
 		F6C799D72424BE5C00B1C455 /* GoalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C799D62424BE5C00B1C455 /* GoalCell.swift */; };
 		F6C799D92424BE9900B1C455 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C799D82424BE9900B1C455 /* TaskCell.swift */; };
 		F6F9DAF7244638CE00E30497 /* StatsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F9DAF6244638CE00E30497 /* StatsManager.swift */; };
+		F6FA8B87244C731F00A01D73 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FA8B86244C731F00A01D73 /* GradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,6 +164,7 @@
 		F6C799D62424BE5C00B1C455 /* GoalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCell.swift; sourceTree = "<group>"; };
 		F6C799D82424BE9900B1C455 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		F6F9DAF6244638CE00E30497 /* StatsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsManager.swift; sourceTree = "<group>"; };
+		F6FA8B86244C731F00A01D73 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,7 +247,6 @@
 				F6AE8FFA2438DED400EFC4B7 /* CellDelegate.swift */,
 				F62CE63F243207D900731DA6 /* Goal.swift */,
 				F62CE64124320EDB00731DA6 /* Task.swift */,
-				F66F8A762449CFD5005C26A0 /* BaseTabBarController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -254,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				F6C1568124163FF800228264 /* Main.storyboard */,
+				F6FA8B8A244C740800A01D73 /* IBInspectables */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -337,6 +339,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F6FA8B8A244C740800A01D73 /* IBInspectables */ = {
+			isa = PBXGroup;
+			children = (
+				F66F8A762449CFD5005C26A0 /* BaseTabBarController.swift */,
+				F6FA8B86244C731F00A01D73 /* GradientView.swift */,
+			);
+			path = IBInspectables;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -490,6 +501,7 @@
 				F630C227244859B3005F8944 /* KeyboardLayoutConstraint.swift in Sources */,
 				F630C23B244859B3005F8944 /* SpringLabel.swift in Sources */,
 				F630C229244859B3005F8944 /* TransitionZoom.swift in Sources */,
+				F6FA8B87244C731F00A01D73 /* GradientView.swift in Sources */,
 				F630C22F244859B3005F8944 /* BlurView.swift in Sources */,
 				F630C226244859B3005F8944 /* DesignableImageView.swift in Sources */,
 				F630C238244859B3005F8944 /* DesignableTabBarController.swift in Sources */,
