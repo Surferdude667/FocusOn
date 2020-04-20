@@ -57,16 +57,28 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         switch history[section].type {
         case .month:
-            view.tintColor = UIColor.black
+            view.tintColor = #colorLiteral(red: 0.02745098039, green: 0.03529411765, blue: 0.0431372549, alpha: 1)
             let header = view as! UITableViewHeaderFooterView
-            header.textLabel?.textColor = UIColor.white
+            header.textLabel?.textColor = #colorLiteral(red: 0.0390000008, green: 0.7919999957, blue: 0.7570000291, alpha: 1)
             header.textLabel?.textAlignment = .center
         case .day:
-            view.tintColor = UIColor.systemGray6
+            view.tintColor = #colorLiteral(red: 0.02745098039, green: 0.03529411765, blue: 0.0431372549, alpha: 1)
             let header = view as! UITableViewHeaderFooterView
-            header.textLabel?.textColor = UIColor.black
-            header.textLabel?.textAlignment = .left
+            header.textLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            header.textLabel?.textAlignment = .center
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40.0
+    }
+    
+    func setStatusBar() {
+        let app = UIApplication.shared
+        let statusBarHeight: CGFloat = app.statusBarFrame.size.height
+        let statusbarView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: statusBarHeight))
+        statusbarView.backgroundColor = #colorLiteral(red: 0.02745098039, green: 0.03529411765, blue: 0.0431372549, alpha: 1)
+        view.addSubview(statusbarView)
     }
     
     
@@ -77,13 +89,15 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
         overrideUserInterfaceStyle = .dark
         tableView.delegate = self
         tableView.dataSource = self
-        
+        setStatusBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         history = historyManager.sortHistoryData(goals: dataManager.fetchAllGoals()!)
         tableView.reloadData()
+        self.navigationController?.navigationBar.isHidden = true
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

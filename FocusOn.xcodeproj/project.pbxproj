@@ -66,6 +66,7 @@
 		F6C799D92424BE9900B1C455 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C799D82424BE9900B1C455 /* TaskCell.swift */; };
 		F6F9DAF7244638CE00E30497 /* StatsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F9DAF6244638CE00E30497 /* StatsManager.swift */; };
 		F6FA8B87244C731F00A01D73 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FA8B86244C731F00A01D73 /* GradientView.swift */; };
+		F6FF54ED244DA40500C412C8 /* CornerRadiusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FF54EC244DA40500C412C8 /* CornerRadiusView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -171,6 +172,7 @@
 		F6C799D82424BE9900B1C455 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		F6F9DAF6244638CE00E30497 /* StatsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsManager.swift; sourceTree = "<group>"; };
 		F6FA8B86244C731F00A01D73 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		F6FF54EC244DA40500C412C8 /* CornerRadiusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,7 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				F6C1568124163FF800228264 /* Main.storyboard */,
-				F6FA8B8A244C740800A01D73 /* IBInspectables */,
+				F6FA8B8A244C740800A01D73 /* IB Design & Inspectables */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -358,13 +360,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F6FA8B8A244C740800A01D73 /* IBInspectables */ = {
+		F6FA8B8A244C740800A01D73 /* IB Design & Inspectables */ = {
 			isa = PBXGroup;
 			children = (
 				F66F8A762449CFD5005C26A0 /* BaseTabBarController.swift */,
 				F6FA8B86244C731F00A01D73 /* GradientView.swift */,
+				F6FF54EC244DA40500C412C8 /* CornerRadiusView.swift */,
 			);
-			path = IBInspectables;
+			path = "IB Design & Inspectables";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -498,6 +501,7 @@
 			files = (
 				F6C799D72424BE5C00B1C455 /* GoalCell.swift in Sources */,
 				F630C233244859B3005F8944 /* Misc.swift in Sources */,
+				F6FF54ED244DA40500C412C8 /* CornerRadiusView.swift in Sources */,
 				F66F8A772449CFD5005C26A0 /* BaseTabBarController.swift in Sources */,
 				F630C228244859B3005F8944 /* TransitionManager.swift in Sources */,
 				F630C23C244859B3005F8944 /* DesignableTextView.swift in Sources */,

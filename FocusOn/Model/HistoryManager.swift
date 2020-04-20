@@ -70,7 +70,7 @@ class HistoryManager {
                 }
             }
             
-            summaryForEachMonth.append("Summary for \(differentMonths[month]): \(completedGoalsInMonth)/\(totalGoalsInMonth) completed")
+            summaryForEachMonth.append("\(completedGoalsInMonth) completed out of \(totalGoalsInMonth) goals")
             completedGoalsInMonth = 0
         }
         
