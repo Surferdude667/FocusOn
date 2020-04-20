@@ -59,6 +59,7 @@ class HistoryDetailController: UIViewController, UITableViewDataSource, UITableV
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false
+        
     }
     
 

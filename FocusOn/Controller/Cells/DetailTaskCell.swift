@@ -17,9 +17,13 @@ class DetailTaskCell: UITableViewCell {
     
     func setTaskCheckMark() {
         if task.completed {
-            taskCheckmarkImage.backgroundColor = UIColor.green
+            taskCheckmarkImage.image = #imageLiteral(resourceName: "checkmark.pdf")
+            taskCheckmarkImage.tintColor = #colorLiteral(red: 0.1959999949, green: 0.8429999948, blue: 0.2939999998, alpha: 1)
+            taskTitleLabel.textColor = #colorLiteral(red: 0.1959999949, green: 0.8429999948, blue: 0.2939999998, alpha: 1)
         } else {
-            taskCheckmarkImage.backgroundColor = UIColor.red
+            taskCheckmarkImage.image = #imageLiteral(resourceName: "circle.pdf")
+            taskCheckmarkImage.tintColor = #colorLiteral(red: 1, green: 0.2160000056, blue: 0.3729999959, alpha: 1)
+            taskTitleLabel.textColor = #colorLiteral(red: 1, green: 0.2160000056, blue: 0.3729999959, alpha: 1)
         }
     }
     
