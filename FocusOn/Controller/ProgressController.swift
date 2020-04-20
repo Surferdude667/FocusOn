@@ -14,7 +14,7 @@ class ProgressController: UIViewController {
     @IBOutlet weak var pieChart: PieChartView!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var percentLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var dateLabel: SpringLabel!
     @IBOutlet weak var completedLabel: UILabel!
     
     var completedGoalsEntry = PieChartDataEntry()
@@ -61,7 +61,7 @@ class ProgressController: UIViewController {
     
     func setupChart() {
         pieChart.legend.enabled = false
-        pieChart.holeColor = .black
+        pieChart.holeColor = #colorLiteral(red: 0.05900000036, green: 0.07500000298, blue: 0.09000000358, alpha: 1)
         pieChart.holeRadiusPercent = 0.95
         pieChart.transparentCircleRadiusPercent = 0.0
         allEntries = [completedGoalsEntry, uncompletedGoalsEntry]
@@ -72,7 +72,7 @@ class ProgressController: UIViewController {
     func updateChartData() {
         let chartDataSet = PieChartDataSet(entries: allEntries, label: nil)
         let chartData = PieChartData(dataSet: chartDataSet)
-        let colors = [UIColor.green, UIColor.red]
+        let colors = [#colorLiteral(red: 0.1959999949, green: 0.8429999948, blue: 0.2939999998, alpha: 1), #colorLiteral(red: 1, green: 0.2160000056, blue: 0.3729999959, alpha: 1)]
         
         chartDataSet.drawValuesEnabled = false
         chartDataSet.selectionShift = 0.0
@@ -81,6 +81,10 @@ class ProgressController: UIViewController {
         pieChart.animate(xAxisDuration: 0.5, yAxisDuration: 0.5)
         pieChart.spin(duration: 1.0, fromAngle: 0.0, toAngle: 360.0, easingOption: .easeInOutQuad)
         pieChart.data = chartData
+        
+        dateLabel.animation = "pop"
+        dateLabel.duration = 1
+        dateLabel.animate()
     }
     
     
