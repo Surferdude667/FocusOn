@@ -87,10 +87,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         tableView.insertSections(IndexSet(integer: tableView.numberOfSections), with: .top)
         scrollToBottom()
         manageAddButton()
-        
-        //updateChart(section: self.tableView.numberOfSections)
-        
-        
     }
     
     func scrollToBottom() {
@@ -105,6 +101,13 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.tableView.scrollToRow(at: bottomIndexPath, at: .top, animated: true)
+        }
+    }
+    
+    func updateChart(section: Int) {
+        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? GoalCell
+        if let cell = cell {
+             cell.setChartData(animated: true)
         }
     }
     
@@ -179,13 +182,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     
-    func updateChart(section: Int) {
-        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? GoalCell
-        if let cell = cell {
-             cell.setChartData()
-        }
-    }
-    
     // MARK:- CellDelegate
     
     func sectionChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
@@ -241,7 +237,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             goal.indexPath = indexPath
             goal.goal = goals[indexPath.section]
             goal.setGoalCheckMark()
-            goal.setChartData()
+            goal.setChartData(animated: false)
             goal.delegate = self
             return goal
         }

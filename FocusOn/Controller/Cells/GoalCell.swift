@@ -34,8 +34,13 @@ class GoalCell: UITableViewCell, UITextFieldDelegate {
         setupChart()
     }
     
-    func setChartData() {
+    func setChartData(animated: Bool) {
         self.updateChartStats(statsManager.createStats(from: [goal], tasksOnly: true))
+        
+        if animated {
+            pieChart.animate(xAxisDuration: 0.5, yAxisDuration: 0.5)
+            pieChart.spin(duration: 1.0, fromAngle: 0.0, toAngle: 360.0, easingOption: .easeInOutQuad)
+        }
     }
     
     func setupChart() {
@@ -73,8 +78,6 @@ class GoalCell: UITableViewCell, UITextFieldDelegate {
         chartDataSet.selectionShift = 0.0
         chartDataSet.colors = colors
         
-        pieChart.animate(xAxisDuration: 0.5, yAxisDuration: 0.5)
-        pieChart.spin(duration: 1.0, fromAngle: 0.0, toAngle: 360.0, easingOption: .easeInOutQuad)
         pieChart.data = chartData
     }
     
@@ -90,20 +93,18 @@ class GoalCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
-    func updateTaskGoalMark() {        
+    func updateTaskGoalMark() {
+        var tasks = goal.tasks!.allObjects as! [Task]
+        tasks.removeLast()
+        
         if goal.completed == false {
-            var tasks = goal.tasks!.allObjects as! [Task]
-            tasks.removeLast()
-            for task in tasks {
-                dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: true)
-            }
+            for task in tasks { dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: true) }
             dataManager.updateOrDeleteGoal(goalID: goal.id, completed: true)
             delegate?.sectionChanged(at: indexPath, with: .middle)
         } else if goal.completed == true {
-            if goal.tasks?.count == 1 {
-                dataManager.updateOrDeleteGoal(goalID: goal.id, completed: false)
-                delegate?.sectionChanged(at: indexPath, with: .middle)
-            }
+            for task in tasks { dataManager.updateOrDeleteTask(taskID: task.id, goalID: goal.id, completed: false) }
+            dataManager.updateOrDeleteGoal(goalID: goal.id, completed: false)
+            delegate?.sectionChanged(at: indexPath, with: .middle)
         }
     }
     
