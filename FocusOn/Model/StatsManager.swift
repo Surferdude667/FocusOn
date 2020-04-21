@@ -35,11 +35,11 @@ class StatsManager {
                 if let tasks = tasks {
                     for task in tasks {
                         if task.title != "" {
-                        if task.completed == true {
-                            completed += 1
-                        } else if task.completed == false {
-                            uncompleted += 1
-                        }
+                            if task.completed == true {
+                                completed += 1
+                            } else if task.completed == false {
+                                uncompleted += 1
+                            }
                         }
                     }
                 }
@@ -53,6 +53,7 @@ class StatsManager {
                 }
             }
         }
+        
         
         let percent = completed * 100 / (completed + uncompleted)
         guard !(percent.isNaN || percent.isInfinite) else { return nil }

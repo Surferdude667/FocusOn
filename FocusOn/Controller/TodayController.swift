@@ -87,6 +87,10 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         tableView.insertSections(IndexSet(integer: tableView.numberOfSections), with: .top)
         scrollToBottom()
         manageAddButton()
+        
+        //updateChart(section: self.tableView.numberOfSections)
+        
+        
     }
     
     func scrollToBottom() {
@@ -98,7 +102,6 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         if let newGoal = newGoal {
             newGoal.goalTextField.becomeFirstResponder()
         }
-        
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.tableView.scrollToRow(at: bottomIndexPath, at: .top, animated: true)
@@ -160,6 +163,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             } else {
                 self.dataManager.updateOrDeleteTask(taskID: taskCell!.task.id, goalID: taskCell!.goal.id, delete: true)
                 self.tableView.deleteRows(at: [indexPath], with: .none)
+                self.updateChart(section: indexPath.section)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                     taskCell?.checkAndUpdateGroupCompletion()
@@ -175,33 +179,42 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     
+    func updateChart(section: Int) {
+        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? GoalCell
+        if let cell = cell {
+             cell.setChartData()
+        }
+    }
+    
     // MARK:- CellDelegate
     
     func sectionChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
         tableView.reloadSections(IndexSet(integer: indexPath.section), with: animation)
         manageAddButton()
         createNotification()
+        updateChart(section: indexPath.section)
     }
     
     func cellChanged(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
         tableView.reloadRows(at: [indexPath], with: animation)
         manageAddButton()
         createNotification()
+        updateChart(section: indexPath.section)
         
         let cell = tableView.cellForRow(at: indexPath) as? TaskCell
         
         if let cell = cell {
-        cell.taskCheckButton.animation = "pop"
-        cell.taskCheckButton.curve = "spring"
-        cell.taskCheckButton.animate()
+            cell.taskCheckButton.animation = "pop"
+            cell.taskCheckButton.curve = "spring"
+            cell.taskCheckButton.animate()
         }
-        
     }
     
     func cellAdded(at indexPath: IndexPath, with animation: UITableView.RowAnimation) {
         tableView.insertRows(at: [indexPath], with: animation)
         manageAddButton()
         createNotification()
+        updateChart(section: indexPath.section)
     }
     
     
@@ -228,6 +241,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
             goal.indexPath = indexPath
             goal.goal = goals[indexPath.section]
             goal.setGoalCheckMark()
+            goal.setChartData()
             goal.delegate = self
             return goal
         }

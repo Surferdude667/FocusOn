@@ -57,7 +57,7 @@ class TaskCell: UITableViewCell, UITextFieldDelegate, DataManagerDelegate {
             }
         }
         
-        if tasksCompleted == tasks.count && goal.completed == false {
+        if tasksCompleted == tasks.count && goal.completed == false && tasks.count != 0 {
             dataManager.updateOrDeleteGoal(goalID: goal.id, completed: true)
             delegate?.cellChanged(at: IndexPath(row: 0, section: indexPath.section), with: .fade)
             // TODO: Make delegate success message with Goal title included.

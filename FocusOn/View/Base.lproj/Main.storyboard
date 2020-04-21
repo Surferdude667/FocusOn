@@ -679,9 +679,12 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MUA-KC-Oii" customClass="CornerRadiusView" customModule="FocusOn" customModuleProvider="target">
                                                     <rect key="frame" x="15" y="2" width="384" height="60"/>
                                                     <subviews>
-                                                        <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Set a goal for the day..." textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="ywZ-2Q-XvC">
-                                                            <rect key="frame" x="46" y="8" width="303" height="44"/>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Set a goal for the day..." textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="ywZ-2Q-XvC">
+                                                            <rect key="frame" x="46" y="8" width="278" height="44"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="44" id="nYX-9G-20P"/>
+                                                            </constraints>
                                                             <color key="textColor" name="Red"/>
                                                             <fontDescription key="fontDescription" name="SFProRounded-Medium" family="SF Pro Rounded" pointSize="19"/>
                                                             <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
@@ -710,17 +713,41 @@
                                                                 <action selector="goalCheckButtonTapped:" destination="k1s-7n-Tky" eventType="touchUpInside" id="a3a-P5-TXN"/>
                                                             </connections>
                                                         </button>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4GO-Nf-8oQ" customClass="PieChartView" customModule="Charts">
+                                                            <rect key="frame" x="327" y="8" width="44" height="44"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ELg-jN-d3P" customClass="SpringLabel" customModule="FocusOn" customModuleProvider="target">
+                                                                    <rect key="frame" x="22" y="22" width="0.0" height="0.0"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" secondItem="ELg-jN-d3P" secondAttribute="height" multiplier="12:7" id="104-gQ-3eZ"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="SFProDisplay-Bold" family="SF Pro Display" pointSize="11"/>
+                                                                    <color key="textColor" name="Background"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="44" id="AmX-3E-om7"/>
+                                                                <constraint firstItem="ELg-jN-d3P" firstAttribute="centerY" secondItem="4GO-Nf-8oQ" secondAttribute="centerY" id="SQw-Hr-MaF"/>
+                                                                <constraint firstAttribute="height" constant="44" id="glK-qN-AZ1"/>
+                                                                <constraint firstItem="ELg-jN-d3P" firstAttribute="centerX" secondItem="4GO-Nf-8oQ" secondAttribute="centerX" id="yhc-5f-vEb"/>
+                                                            </constraints>
+                                                        </view>
                                                     </subviews>
                                                     <color key="backgroundColor" name="White"/>
                                                     <constraints>
-                                                        <constraint firstItem="ywZ-2Q-XvC" firstAttribute="top" secondItem="MUA-KC-Oii" secondAttribute="topMargin" id="24x-sP-en7"/>
+                                                        <constraint firstAttribute="bottom" secondItem="ywZ-2Q-XvC" secondAttribute="bottom" constant="8" id="1zn-jf-wf5"/>
                                                         <constraint firstAttribute="height" constant="60" id="5y5-52-8FO"/>
                                                         <constraint firstItem="EVw-m7-czz" firstAttribute="top" secondItem="MUA-KC-Oii" secondAttribute="top" constant="18" id="7hu-YX-Vct"/>
                                                         <constraint firstAttribute="bottom" secondItem="EVw-m7-czz" secondAttribute="bottom" constant="17" id="Mb1-qd-iEz"/>
-                                                        <constraint firstAttribute="trailing" secondItem="ywZ-2Q-XvC" secondAttribute="trailing" constant="35" id="iwU-A8-vGb"/>
-                                                        <constraint firstItem="EVw-m7-czz" firstAttribute="centerY" secondItem="ywZ-2Q-XvC" secondAttribute="centerY" id="jJC-Or-ij4"/>
+                                                        <constraint firstItem="4GO-Nf-8oQ" firstAttribute="top" secondItem="MUA-KC-Oii" secondAttribute="top" constant="8" id="TEB-RG-800"/>
+                                                        <constraint firstItem="4GO-Nf-8oQ" firstAttribute="leading" secondItem="ywZ-2Q-XvC" secondAttribute="trailing" constant="3" id="Td6-uv-lgi"/>
+                                                        <constraint firstAttribute="trailing" secondItem="4GO-Nf-8oQ" secondAttribute="trailing" constant="13" id="ePU-j5-Var"/>
+                                                        <constraint firstItem="ywZ-2Q-XvC" firstAttribute="top" secondItem="MUA-KC-Oii" secondAttribute="top" constant="8" id="fYG-7d-Lst"/>
                                                         <constraint firstItem="EVw-m7-czz" firstAttribute="leading" secondItem="MUA-KC-Oii" secondAttribute="leading" constant="15" id="kOG-sX-HE8"/>
-                                                        <constraint firstItem="ywZ-2Q-XvC" firstAttribute="leading" secondItem="EVw-m7-czz" secondAttribute="trailing" constant="6" id="olE-Hg-XDL"/>
+                                                        <constraint firstItem="ywZ-2Q-XvC" firstAttribute="leading" secondItem="EVw-m7-czz" secondAttribute="trailing" constant="6" id="l1H-N3-eM9"/>
+                                                        <constraint firstAttribute="bottom" secondItem="4GO-Nf-8oQ" secondAttribute="bottom" constant="8" id="tHb-Mu-eqn"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusValue">
@@ -740,6 +767,8 @@
                                             <outlet property="background" destination="MUA-KC-Oii" id="SX1-2d-cAX"/>
                                             <outlet property="goalCheckButton" destination="EVw-m7-czz" id="SZT-FQ-0QY"/>
                                             <outlet property="goalTextField" destination="ywZ-2Q-XvC" id="8lc-Cg-3xJ"/>
+                                            <outlet property="percentLabel" destination="ELg-jN-d3P" id="HOA-NJ-asK"/>
+                                            <outlet property="pieChart" destination="4GO-Nf-8oQ" id="ygW-9P-YMG"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TaskCell" rowHeight="52" id="RQl-T8-yXA" customClass="TaskCell" customModule="FocusOn" customModuleProvider="target">
