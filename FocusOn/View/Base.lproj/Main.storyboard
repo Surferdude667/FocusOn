@@ -24,7 +24,7 @@
             <objects>
                 <viewController interfaceStyle="dark" id="3Uz-Kq-B1b" customClass="HistoryController" customModule="FocusOn" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="quU-rR-Kto">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e4l-RA-isM">
@@ -206,7 +206,7 @@
             <objects>
                 <viewController id="1Yc-Ej-7XN" customClass="HistoryDetailController" customModule="FocusOn" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lPJ-yb-Ihc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ryc-Pe-FE3">
@@ -444,11 +444,14 @@
                                 </constraints>
                                 <segments>
                                     <segment title="Goals only"/>
-                                    <segment title="Goals &amp; Tasks"/>
+                                    <segment title="Tasks only"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentControlAction:" destination="zqf-TY-CWT" eventType="valueChanged" id="Cj4-0G-lKM"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txm-so-9ja" customClass="SpringLabel" customModule="FocusOn" customModuleProvider="target">
-                                <rect key="frame" x="20" y="154" width="374" height="23"/>
+                                <rect key="frame" x="20" y="152" width="374" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="Ggf-zb-CqY"/>
                                 </constraints>
@@ -460,7 +463,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TRv-x5-hdM">
-                                        <rect key="frame" x="15" y="24" width="139" height="46"/>
+                                        <rect key="frame" x="15" y="24" width="135" height="46"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="46" id="auR-o3-lil"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="vh4-FT-IfS"/>
@@ -505,13 +508,13 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Completed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cQ-dw-GJn">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Completed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cQ-dw-GJn">
                                         <rect key="frame" x="53" y="22" width="77" height="20"/>
                                         <fontDescription key="fontDescription" name="SFProRounded-Medium" family="SF Pro Rounded" pointSize="16"/>
                                         <color key="textColor" name="Pure White"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U6g-8j-uFq" customClass="CornerRadiusView" customModule="FocusOn" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U6g-8j-uFq" customClass="CornerRadiusView" customModule="FocusOn" customModuleProvider="target">
                                         <rect key="frame" x="178" y="20" width="25" height="25"/>
                                         <color key="backgroundColor" name="Red"/>
                                         <constraints>
@@ -524,7 +527,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unfinished" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iqz-yV-yqV">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Unfinished" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iqz-yV-yqV">
                                         <rect key="frame" x="211" y="22" width="75" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="KC5-xK-T4s"/>
@@ -563,7 +566,7 @@
                             <constraint firstItem="txm-so-9ja" firstAttribute="leading" secondItem="6L1-dI-7Ty" secondAttribute="leading" constant="20" id="Aw7-sC-Dwj"/>
                             <constraint firstItem="ZQ0-ul-lCc" firstAttribute="top" secondItem="RGl-y7-GIh" secondAttribute="bottom" constant="20" id="CBE-Jh-JRK"/>
                             <constraint firstItem="eHc-M8-MP1" firstAttribute="leading" secondItem="6L1-dI-7Ty" secondAttribute="leading" constant="29" id="GQr-9U-Fku"/>
-                            <constraint firstItem="RGl-y7-GIh" firstAttribute="top" secondItem="txm-so-9ja" secondAttribute="bottom" constant="16" id="KH6-CQ-HYd"/>
+                            <constraint firstItem="RGl-y7-GIh" firstAttribute="top" secondItem="txm-so-9ja" secondAttribute="bottom" constant="18" id="KH6-CQ-HYd"/>
                             <constraint firstItem="Tde-nV-RBS" firstAttribute="top" secondItem="ZQ0-ul-lCc" secondAttribute="bottom" constant="16" id="NFe-NQ-N83"/>
                             <constraint firstItem="IM4-tk-Edm" firstAttribute="top" secondItem="6L1-dI-7Ty" secondAttribute="top" id="Oij-TN-4hi"/>
                             <constraint firstItem="eHc-M8-MP1" firstAttribute="centerX" secondItem="BSw-jl-Xwz" secondAttribute="centerX" id="SJC-Tv-2XO"/>
@@ -576,11 +579,11 @@
                             <constraint firstItem="ZQ0-ul-lCc" firstAttribute="top" secondItem="RGl-y7-GIh" secondAttribute="bottom" constant="20" id="YIq-TB-6TT"/>
                             <constraint firstItem="WUD-Xh-gve" firstAttribute="centerX" secondItem="BSw-jl-Xwz" secondAttribute="centerX" id="e8e-aN-DNo"/>
                             <constraint firstItem="6L1-dI-7Ty" firstAttribute="trailing" secondItem="ZQ0-ul-lCc" secondAttribute="trailing" constant="19" id="eIl-u7-gEr"/>
-                            <constraint firstItem="RGl-y7-GIh" firstAttribute="top" secondItem="txm-so-9ja" secondAttribute="bottom" constant="16" id="fy6-Xx-OOY"/>
+                            <constraint firstItem="RGl-y7-GIh" firstAttribute="top" secondItem="txm-so-9ja" secondAttribute="bottom" constant="18" id="fy6-Xx-OOY"/>
                             <constraint firstItem="6L1-dI-7Ty" firstAttribute="trailing" secondItem="Tde-nV-RBS" secondAttribute="trailing" constant="74" id="hP6-MJ-ZZt"/>
                             <constraint firstItem="Tde-nV-RBS" firstAttribute="top" secondItem="ZQ0-ul-lCc" secondAttribute="bottom" constant="16" id="iW4-p9-Ex5"/>
                             <constraint firstItem="WUD-Xh-gve" firstAttribute="top" secondItem="eHc-M8-MP1" secondAttribute="bottom" constant="8" id="mGh-G5-DIZ"/>
-                            <constraint firstItem="txm-so-9ja" firstAttribute="top" secondItem="IM4-tk-Edm" secondAttribute="bottom" constant="20" id="mJO-Gm-6bC"/>
+                            <constraint firstItem="txm-so-9ja" firstAttribute="top" secondItem="IM4-tk-Edm" secondAttribute="bottom" constant="18" id="mJO-Gm-6bC"/>
                             <constraint firstItem="IM4-tk-Edm" firstAttribute="trailing" secondItem="6L1-dI-7Ty" secondAttribute="trailing" id="sEP-Bi-Qtw"/>
                             <constraint firstAttribute="trailing" secondItem="RGl-y7-GIh" secondAttribute="trailing" constant="15" id="wbI-1h-WIG"/>
                             <constraint firstItem="IM4-tk-Edm" firstAttribute="leading" secondItem="6L1-dI-7Ty" secondAttribute="leading" id="x3B-1b-NF5"/>
@@ -594,9 +597,10 @@
                     <connections>
                         <outlet property="completedLabel" destination="jgn-Oo-8IO" id="JTy-GA-gGP"/>
                         <outlet property="dateLabel" destination="txm-so-9ja" id="ZQX-t1-XtC"/>
+                        <outlet property="dateSegment" destination="ZQ0-ul-lCc" id="kkg-rN-zP9"/>
+                        <outlet property="goalsTasksSegment" destination="Tde-nV-RBS" id="aKn-XK-YHc"/>
                         <outlet property="percentLabel" destination="ApY-7B-CsL" id="Gnc-Lq-goA"/>
                         <outlet property="pieChart" destination="eHc-M8-MP1" id="HOA-IJ-PJF"/>
-                        <outlet property="segmentControl" destination="ZQ0-ul-lCc" id="kkg-rN-zP9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MjW-Kx-ugv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -620,7 +624,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXG-a2-rSo">
-                                            <rect key="frame" x="15" y="24" width="93.666666666666671" height="46"/>
+                                            <rect key="frame" x="15" y="24" width="91" height="46"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="46" id="hb7-qH-ltP"/>
                                             </constraints>
@@ -629,7 +633,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMm-l9-mzQ">
-                                            <rect key="frame" x="265" y="38" width="134" height="30"/>
+                                            <rect key="frame" x="262.66666666666669" y="38" width="136.33333333333331" height="30"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="GaS-rS-e1O"/>

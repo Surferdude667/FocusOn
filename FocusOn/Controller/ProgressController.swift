@@ -12,7 +12,8 @@ import Charts
 class ProgressController: UIViewController {
     
     @IBOutlet weak var pieChart: PieChartView!
-    @IBOutlet weak var segmentControl: UISegmentedControl!
+    @IBOutlet weak var dateSegment: UISegmentedControl!
+    @IBOutlet weak var goalsTasksSegment: UISegmentedControl!
     @IBOutlet weak var percentLabel: UILabel!
     @IBOutlet weak var dateLabel: SpringLabel!
     @IBOutlet weak var completedLabel: UILabel!
@@ -35,25 +36,41 @@ class ProgressController: UIViewController {
     }
     
     func segmentControlUpdate() {
-        switch segmentControl.selectedSegmentIndex {
+        switch dateSegment.selectedSegmentIndex {
         case 0:
             // TODAY
             let todayGoals = dataManager.fetchGoals(from: Date())
-            updateChartStats(statsManager.createStats(from: todayGoals))
+            if goalsTasksSegment.selectedSegmentIndex == 0 {
+                updateChartStats(statsManager.createStats(from: todayGoals, tasksOnly: false))
+            } else if goalsTasksSegment.selectedSegmentIndex == 1 {
+                updateChartStats(statsManager.createStats(from: todayGoals, tasksOnly: true))
+            }
         case 1:
             // WEEK
             let firstDayInWeek = timeManager.startOfWeek(for: Date())
             let weekGoals = dataManager.fetchHistory(from: firstDayInWeek, to: Date())
-            updateChartStats(statsManager.createStats(from: weekGoals))
+            if goalsTasksSegment.selectedSegmentIndex == 0 {
+                updateChartStats(statsManager.createStats(from: weekGoals, tasksOnly: false))
+            } else if goalsTasksSegment.selectedSegmentIndex == 1 {
+                updateChartStats(statsManager.createStats(from: weekGoals, tasksOnly: true))
+            }
         case 2:
             // MONTH
             let firstDayInMonth = timeManager.startOfMonth(for: Date())
             let monthGoals = dataManager.fetchHistory(from: firstDayInMonth, to: Date())
-            updateChartStats(statsManager.createStats(from: monthGoals))
+            if goalsTasksSegment.selectedSegmentIndex == 0 {
+                updateChartStats(statsManager.createStats(from: monthGoals, tasksOnly: false))
+            } else if goalsTasksSegment.selectedSegmentIndex == 1 {
+                updateChartStats(statsManager.createStats(from: monthGoals, tasksOnly: true))
+            }
         case 3:
             // ALL TIME
             let allGoals = dataManager.fetchHistory(from: nil, to: nil)
-            updateChartStats(statsManager.createStats(from: allGoals))
+            if goalsTasksSegment.selectedSegmentIndex == 0 {
+                updateChartStats(statsManager.createStats(from: allGoals, tasksOnly: false))
+            } else if goalsTasksSegment.selectedSegmentIndex == 1 {
+                updateChartStats(statsManager.createStats(from: allGoals, tasksOnly: true))
+            }
         default:
             break
         }

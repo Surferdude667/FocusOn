@@ -59,7 +59,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         let notificationContent = UNMutableNotificationContent()
         var body = ""
             
-        if let stats = statsManager.createStats(from: dataManager.fetchGoals(from: timeManager.today)) {
+        if let stats = statsManager.createStats(from: dataManager.fetchGoals(from: timeManager.today), tasksOnly: false) {
             body = "Keep going! \(stats.completed) completed already! \(stats.uncompleted) to go!"
         } else {
             body = "Time to set some goals for the day?"
