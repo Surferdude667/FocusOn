@@ -41,8 +41,8 @@ class TimeManager {
     
     func notificationTime() -> DateComponents {
         var dateComponent = DateComponents()
-        dateComponent.hour = 10
-        dateComponent.minute = 0
+        dateComponent.hour = 19
+        dateComponent.minute = 26
         
         return dateComponent
     }
@@ -63,7 +63,6 @@ class TimeManager {
         
         return dateFormatter.string(from: date)
     }
-    
     
     func formattedMonth(for date: Date) -> String {
         let dateFormatter = DateFormatter()
