@@ -20,17 +20,18 @@ struct History {
     }
 }
 
-struct MonthDayGoals {
-    var month: Int
-    var day: Int
-    var goals: [Goal]?
-}
-
 
 class HistoryManager {
     
-    var timeManager = TimeManager()
+    private var timeManager = TimeManager()
     
+    private struct MonthDayGoals {
+        var month: Int
+        var day: Int
+        var goals: [Goal]?
+    }
+    
+    // One history object corresponds 1 section in the table view.
     func sortHistoryData(goals: [Goal]) -> [History] {
         var finalResult = [History]()
         

@@ -16,6 +16,7 @@ class StatsManagerTest: XCTestCase {
     var timeManager: TimeManager!
     var statsManager: StatsManager!
     var managedContext: NSManagedObjectContext!
+    
     var goals = [Goal]()
     
     override func setUp() {
