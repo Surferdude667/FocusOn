@@ -343,6 +343,10 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+        
+        // ****** DEMO ****** //
+        DemoManager().populateDemoData()
+        // ****** DEMO ****** //
     }
     
     override func viewDidAppear(_ animated: Bool) {

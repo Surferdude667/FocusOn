@@ -10,10 +10,8 @@ import XCTest
 import CoreData
 @testable import FocusOn
 
-
-
 class DataManagerTest: XCTestCase {
-
+    
     var dataManager: DataManager!
     var timeManager: TimeManager!
     var managedContext: NSManagedObjectContext!
@@ -29,7 +27,7 @@ class DataManagerTest: XCTestCase {
         managedContext = dataManager.managedContext
         objectsBeforeCreation = managedContext.registeredObjects.count
     }
-
+    
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         dataManager = nil
@@ -62,7 +60,7 @@ class DataManagerTest: XCTestCase {
         objectsAfterCreation = managedContext.registeredObjects.count
         XCTAssert(objectsBeforeCreation! == objectsAfterCreation)
     }
-
+    
     // HELPER FUNCTION - Tested above.
     func deleteGoalFromContext(id: UUID) {
         dataManager.updateOrDeleteGoal(goalID: id, delete: true)
@@ -78,15 +76,10 @@ class DataManagerTest: XCTestCase {
                 let goal = object as! Goal
                 if goal.id == goalID {
                     task = goal.tasks?.allObjects[0] as? Task
-                }
-            }
-        }
-        
-        for object in managedContext.registeredObjects {
-            if object.entity.name == Task.entityName {
-                let taskToDelete = object as! Task
-                if taskToDelete.id == task!.id {
-                    dataManager.updateOrDeleteTask(taskID: taskToDelete.id, goalID: goalID, delete: true)
+                    
+                    if let task = task {
+                        dataManager.updateOrDeleteTask(taskID: task.id, goalID: goalID, delete: true)
+                    }
                 }
             }
         }
@@ -94,12 +87,14 @@ class DataManagerTest: XCTestCase {
         for object in managedContext.registeredObjects {
             if object.entity.name == Goal.entityName {
                 let goal = object as! Goal
-                XCTAssert(goal.tasks?.allObjects.count == 0)
+                if goal.id == goalID {
+                    XCTAssert(goal.tasks?.allObjects.count == 0)
+                }
             }
         }
+        
         deleteGoalFromContext(id: goalID)
     }
-    
     
     // Testing if the goal object is updated.
     func testGoalUpdate() {
@@ -154,9 +149,9 @@ class DataManagerTest: XCTestCase {
         let goal1 = addGoalToContext()
         let goal2 = addGoalToContext()
         let goal3 = addGoalToContext()
-
+        
         let fetchResult = dataManager.fetchAllGoals()
-        XCTAssert(fetchResult!.count == 3)
+        XCTAssert(fetchResult!.count >= 3)
         
         deleteGoalFromContext(id: goal1)
         deleteGoalFromContext(id: goal2)
@@ -167,9 +162,9 @@ class DataManagerTest: XCTestCase {
         let goal1 = addGoalToContext()
         let goal2 = addGoalToContext()
         let goal3 = addGoalToContext()
-
+        
         let fetchResult = dataManager.fetchGoals(from: timeManager.today)
-        XCTAssert(fetchResult.count == 3)
+        XCTAssert(fetchResult.count >= 3)
         
         deleteGoalFromContext(id: goal1)
         deleteGoalFromContext(id: goal2)
@@ -179,9 +174,9 @@ class DataManagerTest: XCTestCase {
     func testFetchHistory() {
         let goal1 = addGoalToContext()
         let goal2 = addGoalToContext()
-
+        
         let fetchResult = dataManager.fetchHistory(from: timeManager.today, to: timeManager.today)
-        XCTAssert(fetchResult!.count == 2)
+        XCTAssert(fetchResult!.count >= 2)
         
         deleteGoalFromContext(id: goal1)
         deleteGoalFromContext(id: goal2)

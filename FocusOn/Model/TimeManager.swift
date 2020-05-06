@@ -18,8 +18,16 @@ class TimeManager {
         return startOfDay(for: Calendar.current.date(byAdding: .day, value: -1, to: today)!)
     }
     
+    var lastWeek: Date {
+        return startOfDay(for: Calendar.current.date(byAdding: .day, value: -7, to: today)!)
+    }
+    
     var lastMonth: Date {
-        return startOfDay(for: Calendar.current.date(byAdding: .day, value: -45, to: today)!)
+        return startOfDay(for: Calendar.current.date(byAdding: .day, value: -30, to: today)!)
+    }
+    
+    var twoMonthsAgo: Date {
+        return startOfDay(for: Calendar.current.date(byAdding: .day, value: -60, to: today)!)
     }
     
     func startOfWeek(for date: Date) -> Date {
