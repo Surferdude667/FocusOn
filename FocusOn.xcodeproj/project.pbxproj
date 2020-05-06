@@ -65,6 +65,7 @@
 		F6C36FCB2445C3CA00A844A6 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F6C36FC62445C3A800A844A6 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F6C799D72424BE5C00B1C455 /* GoalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C799D62424BE5C00B1C455 /* GoalCell.swift */; };
 		F6C799D92424BE9900B1C455 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C799D82424BE9900B1C455 /* TaskCell.swift */; };
+		F6CFC32424601FBD00A0CE2D /* DataManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CFC32324601FBD00A0CE2D /* DataManagerTest.swift */; };
 		F6F9DAF7244638CE00E30497 /* StatsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F9DAF6244638CE00E30497 /* StatsManager.swift */; };
 		F6FA8B87244C731F00A01D73 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FA8B86244C731F00A01D73 /* GradientView.swift */; };
 		F6FF54ED244DA40500C412C8 /* CornerRadiusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FF54EC244DA40500C412C8 /* CornerRadiusView.swift */; };
@@ -172,6 +173,7 @@
 		F6C36FC02445C3A800A844A6 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../../Downloads/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
 		F6C799D62424BE5C00B1C455 /* GoalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCell.swift; sourceTree = "<group>"; };
 		F6C799D82424BE9900B1C455 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
+		F6CFC32324601FBD00A0CE2D /* DataManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerTest.swift; sourceTree = "<group>"; };
 		F6F9DAF6244638CE00E30497 /* StatsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsManager.swift; sourceTree = "<group>"; };
 		F6FA8B86244C731F00A01D73 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		F6FF54EC244DA40500C412C8 /* CornerRadiusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusView.swift; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 			children = (
 				F6974E98245069A900401CFF /* StatsManagerTest.swift */,
 				F6636F2624581611001BB8C1 /* HistoryManagerTest.swift */,
+				F6CFC32324601FBD00A0CE2D /* DataManagerTest.swift */,
 				F6C1569724163FFB00228264 /* Info.plist */,
 			);
 			path = FocusOnTests;
@@ -559,6 +562,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6CFC32424601FBD00A0CE2D /* DataManagerTest.swift in Sources */,
 				F6636F2724581611001BB8C1 /* HistoryManagerTest.swift in Sources */,
 				F6974E99245069A900401CFF /* StatsManagerTest.swift in Sources */,
 			);

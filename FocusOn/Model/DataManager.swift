@@ -15,7 +15,7 @@ protocol DataManagerDelegate {
 
 class DataManager {
     
-    var delegate: DataManagerDelegate!
+    var delegate: DataManagerDelegate?
     var managedContext: NSManagedObjectContext
     var timeManager = TimeManager()
     
@@ -27,16 +27,18 @@ class DataManager {
     
     // MARK:- Add new data
     
-    func addNewEmptyGoalAndTask() {
+    func addNewEmptyGoalAndTask() -> UUID {
         let emptyGoal = NSEntityDescription.insertNewObject(forEntityName: Goal.entityName, into: managedContext) as! Goal
         
         emptyGoal.id = UUID()
         emptyGoal.title = ""
         emptyGoal.completed = false
         emptyGoal.creation = timeManager.today
-        delegate.goals.append(emptyGoal)
+        delegate?.goals.append(emptyGoal)
         
         addNewEmptyTask(forGoal: emptyGoal.id)
+        
+        return emptyGoal.id
     }
     
     func addNewEmptyTask(forGoal goalID: UUID) {

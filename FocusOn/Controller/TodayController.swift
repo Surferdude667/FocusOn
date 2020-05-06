@@ -83,7 +83,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     // Add new empty section with 1 empty goal and 1 empty task
     func addNewGoal() {
-        dataManager.addNewEmptyGoalAndTask()
+        _ = dataManager.addNewEmptyGoalAndTask()
         tableView.insertSections(IndexSet(integer: tableView.numberOfSections), with: .top)
         scrollToBottom()
         manageAddButton()
