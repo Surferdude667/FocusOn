@@ -42,12 +42,6 @@ class DemoManager {
         task3goal1.completed = false
         task3goal1.goal = goal1
         
-        let task4goal1 = NSEntityDescription.insertNewObject(forEntityName: Task.entityName, into: managedContext) as! Task
-        task4goal1.id = UUID()
-        task4goal1.title = "Bedroom"
-        task4goal1.completed = false
-        task4goal1.goal = goal1
-        
         let task5goal1 = NSEntityDescription.insertNewObject(forEntityName: Task.entityName, into: managedContext) as! Task
         task5goal1.id = UUID()
         task5goal1.title = ""

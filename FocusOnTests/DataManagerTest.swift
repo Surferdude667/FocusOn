@@ -18,8 +18,6 @@ class DataManagerTest: XCTestCase {
     var objectsBeforeCreation: Int!
     var objectsAfterCreation: Int?
     
-    var goals = [Goal]()
-    
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         dataManager = DataManager()

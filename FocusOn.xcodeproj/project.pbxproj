@@ -158,7 +158,7 @@
 		F6AA27B6244CA1A7009B64FC /* SF-Pro-Rounded-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Light.otf"; sourceTree = "<group>"; };
 		F6AA27B8244CA1D7009B64FC /* SF-Pro-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Bold.otf"; sourceTree = "<group>"; };
 		F6AE8FFA2438DED400EFC4B7 /* CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDelegate.swift; sourceTree = "<group>"; };
-		F6C1567824163FF800228264 /* FocusOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6C1567824163FF800228264 /* Goals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Goals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6C1567B24163FF800228264 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F6C1567D24163FF800228264 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F6C1567F24163FF800228264 /* TodayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayController.swift; sourceTree = "<group>"; };
@@ -254,7 +254,6 @@
 			isa = PBXGroup;
 			children = (
 				F6C1568424163FF800228264 /* FocusOn.xcdatamodeld */,
-				F698CA112462F9D1005D1B19 /* DemoManager.swift */,
 				F634E04E243C964B00E09571 /* TimeManager.swift */,
 				F689AAB6242E28E30037D003 /* DataManager.swift */,
 				F69A87AA2440B813004E9743 /* HistoryManager.swift */,
@@ -290,6 +289,7 @@
 		F67981DA24220EC700B518DE /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				F698CA112462F9D1005D1B19 /* DemoManager.swift */,
 				F6AA27B1244CA100009B64FC /* Fonts */,
 				F630C207244859B3005F8944 /* Spring */,
 				F6C1567B24163FF800228264 /* AppDelegate.swift */,
@@ -324,7 +324,7 @@
 		F6C1567924163FF800228264 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F6C1567824163FF800228264 /* FocusOn.app */,
+				F6C1567824163FF800228264 /* Goals.app */,
 				F6C1569124163FFB00228264 /* FocusOnTests.xctest */,
 			);
 			name = Products;
@@ -397,7 +397,7 @@
 			);
 			name = FocusOn;
 			productName = FocusOn;
-			productReference = F6C1567824163FF800228264 /* FocusOn.app */;
+			productReference = F6C1567824163FF800228264 /* Goals.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F6C1569024163FFB00228264 /* FocusOnTests */ = {
@@ -729,7 +729,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = art.bjornlau.FocusOn;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Goals;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -748,7 +748,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = art.bjornlau.FocusOn;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Goals;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
