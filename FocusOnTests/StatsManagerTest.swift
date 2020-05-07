@@ -36,7 +36,7 @@ class StatsManagerTest: XCTestCase {
     }
 
     // Tests if the Stats object contains the correct return values from the createStats() function.
-    func testOutputIsCorrect() {
+    func testIfOutputIsCorrect() {
         let goal1 = NSEntityDescription.insertNewObject(forEntityName: Goal.entityName, into: managedContext) as! Goal
         let goal2 = NSEntityDescription.insertNewObject(forEntityName: Goal.entityName, into: managedContext) as! Goal
         

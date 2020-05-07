@@ -158,7 +158,7 @@
 		F6AA27B6244CA1A7009B64FC /* SF-Pro-Rounded-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Light.otf"; sourceTree = "<group>"; };
 		F6AA27B8244CA1D7009B64FC /* SF-Pro-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Bold.otf"; sourceTree = "<group>"; };
 		F6AE8FFA2438DED400EFC4B7 /* CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDelegate.swift; sourceTree = "<group>"; };
-		F6C1567824163FF800228264 /* Goals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Goals.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6C1567824163FF800228264 /* FocusOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6C1567B24163FF800228264 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F6C1567D24163FF800228264 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F6C1567F24163FF800228264 /* TodayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayController.swift; sourceTree = "<group>"; };
@@ -324,7 +324,7 @@
 		F6C1567924163FF800228264 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F6C1567824163FF800228264 /* Goals.app */,
+				F6C1567824163FF800228264 /* FocusOn.app */,
 				F6C1569124163FFB00228264 /* FocusOnTests.xctest */,
 			);
 			name = Products;
@@ -397,7 +397,7 @@
 			);
 			name = FocusOn;
 			productName = FocusOn;
-			productReference = F6C1567824163FF800228264 /* Goals.app */;
+			productReference = F6C1567824163FF800228264 /* FocusOn.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F6C1569024163FFB00228264 /* FocusOnTests */ = {
@@ -729,7 +729,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = art.bjornlau.FocusOn;
-				PRODUCT_NAME = Goals;
+				PRODUCT_NAME = FocusOn;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -748,7 +748,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = art.bjornlau.FocusOn;
-				PRODUCT_NAME = Goals;
+				PRODUCT_NAME = FocusOn;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
