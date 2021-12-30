@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vl7-su-Pw7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vl7-su-Pw7">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -64,7 +66,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="historySummaryCell" rowHeight="64" id="sh0-le-3WA" customClass="HistorySummaryCell" customModule="FocusOn" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="118" width="414" height="64"/>
+                                        <rect key="frame" x="0.0" y="134.66666603088379" width="414" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sh0-le-3WA" id="Osk-kU-AKR">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
@@ -111,7 +113,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="historyGoalCell" rowHeight="65" id="u6Y-NB-pG4" customClass="HistoryGoalCell" customModule="FocusOn" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="182" width="414" height="65"/>
+                                        <rect key="frame" x="0.0" y="198.66666603088379" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="u6Y-NB-pG4" id="vIQ-v7-ddd">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
@@ -182,6 +184,7 @@
                                 <sections/>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="jLd-8D-agd"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="Background"/>
                         <constraints>
@@ -190,7 +193,6 @@
                             <constraint firstItem="e4l-RA-isM" firstAttribute="top" secondItem="quU-rR-Kto" secondAttribute="top" id="rFr-Le-nNY"/>
                             <constraint firstItem="e4l-RA-isM" firstAttribute="trailing" secondItem="jLd-8D-agd" secondAttribute="trailing" id="wFI-yP-z4N"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="jLd-8D-agd"/>
                     </view>
                     <navigationItem key="navigationItem" title="History" id="8fT-iV-j63"/>
                     <connections>
@@ -211,15 +213,15 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ryc-Pe-FE3">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="p5q-F8-vID">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="detailGoalCell" rowHeight="64" id="zsj-Rb-Eoh" customClass="DetailGoalCell" customModule="FocusOn" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="58" width="414" height="64"/>
+                                        <rect key="frame" x="0.0" y="74.666666030883789" width="414" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zsj-Rb-Eoh" id="qnG-CS-QXg">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
@@ -282,7 +284,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="detailTaskCell" rowHeight="53" id="fLy-yK-2tr" customClass="DetailTaskCell" customModule="FocusOn" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="122" width="414" height="53"/>
+                                        <rect key="frame" x="0.0" y="138.66666603088379" width="414" height="53"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fLy-yK-2tr" id="IeK-wi-3qp">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="53"/>
@@ -344,14 +346,14 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="ILJ-Sb-cYQ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ryc-Pe-FE3" firstAttribute="leading" secondItem="ILJ-Sb-cYQ" secondAttribute="leading" id="RtU-U1-5ZP"/>
                             <constraint firstItem="ryc-Pe-FE3" firstAttribute="trailing" secondItem="ILJ-Sb-cYQ" secondAttribute="trailing" id="bYE-5T-5cq"/>
                             <constraint firstItem="ryc-Pe-FE3" firstAttribute="top" secondItem="ILJ-Sb-cYQ" secondAttribute="top" id="lhK-7s-DVc"/>
                             <constraint firstItem="ryc-Pe-FE3" firstAttribute="bottom" secondItem="ILJ-Sb-cYQ" secondAttribute="bottom" id="sOW-hz-1zl"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="ILJ-Sb-cYQ"/>
                     </view>
                     <navigationItem key="navigationItem" title="Overview" id="JXR-Iz-gfj"/>
                     <connections>
@@ -463,7 +465,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TRv-x5-hdM">
-                                        <rect key="frame" x="15" y="24" width="135" height="46"/>
+                                        <rect key="frame" x="15" y="24" width="138.33333333333334" height="46"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="46" id="auR-o3-lil"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="vh4-FT-IfS"/>
@@ -508,13 +510,13 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Completed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cQ-dw-GJn">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Completed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cQ-dw-GJn">
                                         <rect key="frame" x="53" y="22" width="77" height="20"/>
                                         <fontDescription key="fontDescription" name="SFProRounded-Medium" family="SF Pro Rounded" pointSize="16"/>
                                         <color key="textColor" name="Pure White"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U6g-8j-uFq" customClass="CornerRadiusView" customModule="FocusOn" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U6g-8j-uFq" customClass="CornerRadiusView" customModule="FocusOn" customModuleProvider="target">
                                         <rect key="frame" x="178" y="20" width="25" height="25"/>
                                         <color key="backgroundColor" name="Red"/>
                                         <constraints>
@@ -527,7 +529,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Unfinished" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iqz-yV-yqV">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unfinished" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iqz-yV-yqV">
                                         <rect key="frame" x="211" y="22" width="75" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="KC5-xK-T4s"/>
@@ -561,6 +563,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="6L1-dI-7Ty"/>
                         <color key="backgroundColor" name="Background"/>
                         <constraints>
                             <constraint firstItem="txm-so-9ja" firstAttribute="leading" secondItem="6L1-dI-7Ty" secondAttribute="leading" constant="20" id="Aw7-sC-Dwj"/>
@@ -589,7 +592,6 @@
                             <constraint firstItem="IM4-tk-Edm" firstAttribute="leading" secondItem="6L1-dI-7Ty" secondAttribute="leading" id="x3B-1b-NF5"/>
                             <constraint firstItem="6L1-dI-7Ty" firstAttribute="trailing" secondItem="eHc-M8-MP1" secondAttribute="trailing" constant="29" id="ybT-ag-UeX"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6L1-dI-7Ty"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Progress" image="progress" id="S5A-J1-KYv">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
@@ -624,7 +626,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXG-a2-rSo">
-                                            <rect key="frame" x="15" y="24" width="91" height="46"/>
+                                            <rect key="frame" x="15" y="24" width="93.333333333333329" height="46"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="46" id="hb7-qH-ltP"/>
                                             </constraints>
@@ -633,7 +635,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMm-l9-mzQ">
-                                            <rect key="frame" x="262.66666666666669" y="38" width="136.33333333333331" height="30"/>
+                                            <rect key="frame" x="265" y="38" width="134" height="30"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="GaS-rS-e1O"/>
@@ -670,7 +672,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GoalCell" rowHeight="64" id="k1s-7n-Tky" customClass="GoalCell" customModule="FocusOn" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="118" width="414" height="64"/>
+                                        <rect key="frame" x="0.0" y="134.66666603088379" width="414" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="k1s-7n-Tky" id="Jon-CA-Cqp">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
@@ -772,7 +774,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TaskCell" rowHeight="52" id="RQl-T8-yXA" customClass="TaskCell" customModule="FocusOn" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="182" width="414" height="52"/>
+                                        <rect key="frame" x="0.0" y="198.66666603088379" width="414" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RQl-T8-yXA" id="jsn-DM-EY2">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
@@ -810,7 +812,7 @@
                                                             </connections>
                                                         </textField>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="OT3-ZH-5tj" secondAttribute="bottom" constant="11" id="EnY-zd-qIJ"/>
                                                         <constraint firstAttribute="trailing" secondItem="dwQ-Zs-APE" secondAttribute="trailing" constant="8" id="NTR-fu-Vhy"/>
@@ -851,6 +853,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="15z-DC-QRf"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="Background"/>
                         <constraints>
@@ -859,7 +862,6 @@
                             <constraint firstItem="JkM-vv-dZY" firstAttribute="bottom" secondItem="15z-DC-QRf" secondAttribute="bottom" id="MNC-ly-yoz"/>
                             <constraint firstItem="JkM-vv-dZY" firstAttribute="trailing" secondItem="15z-DC-QRf" secondAttribute="trailing" id="wu9-GA-cG2"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="15z-DC-QRf"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Today" image="today" id="zu4-Eb-MZp">
                         <userDefinedRuntimeAttributes>
@@ -930,6 +932,7 @@
             <point key="canvasLocation" x="1311.5942028985507" y="547.76785714285711"/>
         </scene>
     </scenes>
+    <color key="tintColor" name="Background"/>
     <resources>
         <image name="arrow" width="8" height="12"/>
         <image name="circle" width="23" height="22"/>
@@ -967,5 +970,8 @@
         <namedColor name="Yellow">
             <color red="0.94509803921568625" green="0.8666666666666667" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

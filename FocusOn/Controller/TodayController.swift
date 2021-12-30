@@ -29,6 +29,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         registerForKeyboardNotifications()
         requestNotificationAuthorization()
         createNotification()
+        setStatusBar()
     }
     
     func manageAddButton() {
@@ -262,7 +263,7 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let headerView = view as? UITableViewHeaderFooterView else { return }
-        headerView.tintColor = .clear
+        headerView.tintColor = #colorLiteral(red: 0.02745098039, green: 0.03529411765, blue: 0.0431372549, alpha: 1)
     }
     
     // MARK:- Dataloading
@@ -332,6 +333,13 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
         tableView.contentInset.bottom = targetHeight
     }
     
+    func setStatusBar() {
+        let statusBarFrame = UIApplication.shared.statusBarFrame
+        let statusBarView = UIView(frame: statusBarFrame)
+        self.view.addSubview(statusBarView)
+        statusBarView.backgroundColor = #colorLiteral(red: 0.02745098039, green: 0.03529411765, blue: 0.0431372549, alpha: 1)
+    }
+    
     //  MARK:- Actions
     
     @IBAction func addNewGoalButton(_ sender: Any) {
@@ -343,9 +351,10 @@ class TodayController: UIViewController, UITableViewDataSource, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
-        
+
+    
         // ****** DEMO ****** //
-        DemoManager().populateDemoData()
+        // DemoManager().populateDemoData()
         // ****** DEMO ****** //
     }
     

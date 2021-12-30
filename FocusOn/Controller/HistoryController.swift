@@ -74,14 +74,13 @@ class HistoryController: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func setStatusBar() {
-        let app = UIApplication.shared
-        let statusBarHeight: CGFloat = app.statusBarFrame.size.height
-        let statusbarView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: statusBarHeight))
-        statusbarView.backgroundColor = #colorLiteral(red: 0.02745098039, green: 0.03529411765, blue: 0.0431372549, alpha: 1)
-        view.addSubview(statusbarView)
+        let statusBarFrame = UIApplication.shared.statusBarFrame
+        let statusBarView = UIView(frame: statusBarFrame)
+        self.view.addSubview(statusBarView)
+        statusBarView.backgroundColor = #colorLiteral(red: 0.02745098039, green: 0.03529411765, blue: 0.0431372549, alpha: 1)
     }
     
-    
+        
     // MARK:- ViewController lifecycle
     
     override func viewDidLoad() {
